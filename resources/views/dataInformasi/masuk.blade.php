@@ -26,78 +26,94 @@
                                         <div class="card-body">
 
                                             @can('superadmin')
-                                                
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th> ID </th>
-                                                        <th> Nomor Surat </th>
-                                                        <th> Nama Data </th>
-                                                        <th> konfirmasi </th>
-                                                        <th> Waktu </th>
-                                                        <th> Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>20002-1999</td>
-                                                        <td>Lorem ipsum dolor sit amet.</td>
-                                                        <td> <button type="button" class="btn btn-info btn-rounded btn-icon">
-                                                            <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                        </button>
-                                                    </td>
-                                                        <td>5 menit</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-info btn-rounded btn-icon">
-                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-rounded btn-icon">
-                                                                <i class="mdi mdi-tooltip-edit" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
-                                                                <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                              </button>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th> ID </th>
+                                                            <th> Nomor Surat </th>
+                                                            <th> Nama Data </th>
+                                                            <th> konfirmasi </th>
+                                                            <th> Waktu </th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $data->nomor_surat }}</td>
+                                                            <td>{{ $data->judul }}</td>
+                                                            <td>{{ $data->status }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
                                                             </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                            <td> <button type="button"
+                                                                    class="btn btn-info btn-rounded btn-icon">
+                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button"
+                                                                    class="btn btn-info btn-rounded btn-icon">
+                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-primary btn-rounded btn-icon">
+                                                                    <i class="mdi mdi-tooltip-edit"
+                                                                        style="font-size: 15px;"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-rounded btn-icon"
+                                                                    fdprocessedid="91w77s">
+                                                                    <i class="mdi mdi-delete" style="font-size: 15px;"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             @else
-                                            <a href="{{ route('tambah') }}"><button type="button"
-                                                class="btn btn-primary btn-fw">Tambah Data</button>
-                                        </a>
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th> ID </th>
-                                                        <th> Nomor Surat </th>
-                                                        <th> Nama Data </th>
-                                                        <th> Pesan </th>
-                                                        <th> Waktu </th>
-                                                        <th> Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>20002-1999</td>
-                                                        <td>Lorem ipsum dolor sit amet.</td>
-                                                        <td>proses</td>
-                                                        <td>5 menit</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-info btn-rounded btn-icon">
-                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-primary btn-rounded btn-icon">
-                                                                <i class="mdi mdi-tooltip-edit" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
-                                                                <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                              </button>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                <a href="{{ route('tambah') }}"><button type="button"
+                                                        class="btn btn-primary btn-fw">Tambah Data</button>
+                                                </a>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th> ID </th>
+                                                            <th> Nomor Surat </th>
+                                                            <th> Nama Data </th>
+                                                            <th> Pesan </th>
+                                                            <th> Waktu </th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($data as $data)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $data->nomor_surat }}</td>
+                                                                <td>{{ $data->judul }}</td>
+                                                                <td>{{ $data->status }}</td>
+                                                                <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
+                                                                </td>
+                                                                <td>
+                                                                    <a href="/storage/{{ $data->file }}" class="btn btn-primary btn-rounded " target="blank">
+                                                                        <i class="mdi mdi-eye" style="font-size: 15px;"></i></a>
+                                                                    <button type="button"
+                                                                        class="btn btn-primary btn-rounded btn-icon">
+                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                            style="font-size: 15px;"></i>
+                                                                    </button>
+                                                                    <form action="/{{ $data->id }}/hapus" method="POST">
+                                                                        @csrf
+                                                                        <button type="submit"
+                                                                        class="btn btn-danger btn-rounded btn-icon"
+                                                                            fdprocessedid="91w77s">
+                                                                            <i class="mdi mdi-delete" style="font-size: 15px;"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             @endcan
                                         </div>
                                     </div>
@@ -110,4 +126,3 @@
         </div>
     </div>
 @endsection
-
