@@ -13723,7 +13723,7 @@ dl {
           height: auto;
           border-top: 0; }
           .sidebar .nav.sub-menu .nav-item .nav-link:before {
-            content: "\F054";
+            /* content: "\F054"; */
             font-family: "Material Design Icons";
             display: block;
             position: absolute;
@@ -13740,8 +13740,11 @@ dl {
           .sidebar .nav.sub-menu .nav-item .nav-link.active {
             color: #44ce42;
             background: transparent; }
-            .sidebar .nav.sub-menu .nav-item .nav-link.active:before {
-              color: #44ce42; }
+            /* .sidebar .nav.sub-menu .nav-item .nav-link.active:before {
+              color: #44ce42; } */
+              .sidebar .nav.sub-menu .nav-item .nav-link.active:before {
+                content: none; /* Menghapus pseudo-element before */
+            }
           .sidebar .nav.sub-menu .nav-item .nav-link:hover {
             color: #555555; }
         .sidebar .nav.sub-menu .nav-item:hover {

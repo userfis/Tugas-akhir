@@ -2,51 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Data;
 use App\Models\Divisi;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class DataInformasicontroller extends Controller
+class KeuanganController extends Controller
 {
     public function master(){
 
-        return view('dataInformasi.master',[
+        return view('Keuangan.masterKeuangan',[
 
-            'Halaman' => 'Data & Informasi'
+            'Halaman' => 'Keuangan'
         ]);
     }
+
     public function masuk(){
         
-        $data = Data::where('divisi_id', '=', '1')
+        $data = Data::where('divisi_id', '=', '2')
         ->latest()->get();
         // $data = Data::all();
-        return view('dataInformasi.masuk',[
+        return view('Keuangan.masukKeuangan',[
 
-            'Halaman' => 'Data & Informasi',
-            'data' => $data
+            'data' => $data,
+            'Halaman' => 'Keuangan'
         ]);
     }
 
     public function viewTambah(){
 
         $data = Divisi::all();
-        return view('dataInformasi.tambahdata',[
+        return view('Keuangan.createKeu',[
             'data' => $data
         ]);
     }
 
-    public function viewEdit(Data $data){
-
-        return view('dataInformasi.editData',[
-            'data' => $data,
-            'divisi' => Divisi::all()
-            // 'divisi' => Divisi::all()
-        ]);
-
-    }
-
-    public function createDataInformasi(Request $request)
+    public function createKeuangan(Request $request)
     {
         $validatedData = $request->validate([
             'divisi_id' => 'required',
@@ -62,15 +53,34 @@ class DataInformasicontroller extends Controller
         // dd($validatedData);
 
         if ($request->file('file')) {
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $validatedData['file'] = $request->file('file')->store('keuangan');
         }
         
         Data::create($validatedData);
-        return redirect('/data-masuk');
+        return redirect('/keuangan/data-masuk');
         // ->with('success', 'Data berhasil di upload')
     }
 
-    public function editDataInformasi(Data $data, Request $request)
+    public function hapusKeuangan(Data $data)
+    {
+
+        Data::destroy($data->id);
+
+        return redirect('/keuangan/data-masuk');
+        // ->with('success', 'Data Berhasil di Hapus !')
+    }
+
+    public function viewEdit(Data $data){
+
+        return view('Keuangan.editKeu',[
+            'data' => $data,
+            'divisi' => Divisi::all()
+            // 'divisi' => Divisi::all()
+        ]);
+
+    }
+
+    public function editKeuangan(Data $data, Request $request)
     {
         $rules = [
 
@@ -90,23 +100,15 @@ class DataInformasicontroller extends Controller
             if ($request->oldFile) {
                 Storage::delete($request->oldFile);
             }
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $validatedData['file'] = $request->file('file')->store('keuangan');
         }
 
 
         Data::where('id', $data->id)->update($validatedData);
 
-        return redirect('/data-masuk');
+        return redirect('/keuangan/data-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
 
-    public function hapusDatainformasi(Data $data)
-    {
-
-        Data::destroy($data->id);
-
-        return redirect('/data-masuk');
-        // ->with('success', 'Data Berhasil di Hapus !')
-    }
 }

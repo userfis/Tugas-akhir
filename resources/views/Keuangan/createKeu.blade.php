@@ -3,8 +3,8 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Tambah Data</h4>
-                <form class="forms-sample" action="{{ route('tambah_data') }}" method="POST" enctype="multipart/form-data">
+                <h4 class="card-title">Tambah Data Keuangan</h4>
+                <form class="forms-sample" action="{{ route('create-keuangan') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="nomor_surat">Nomor Surat</label>

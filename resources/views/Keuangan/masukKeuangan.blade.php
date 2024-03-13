@@ -70,7 +70,7 @@
                                                     </tbody>
                                                 </table>
                                             @else
-                                                <a href="{{ route('tambah') }}"><button type="button"
+                                                <a href="{{ route('tambah-keuangan') }}"><button type="button"
                                                         class="btn btn-primary btn-fw">Tambah Data</button>
                                                 </a>
                                                 <table class="table table-striped">
@@ -101,12 +101,12 @@
                                                                             </a>
                                                                         </div>
                                                                         <div class="mr-1">
-                                                                            <a href="/{{ $data->id }}/edit-data" class="btn btn-primary btn-rounded">
+                                                                            <a href="/{{ $data->id }}/keuangan/edit-data" class="btn btn-primary btn-rounded">
                                                                                 <i class="mdi mdi-tooltip-edit" style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
                                                                         <div>
-                                                                            <form action="/{{ $data->id }}/hapus" method="POST">
+                                                                            <form action="/{{ $data->id }}/keuangan/hapus" method="POST">
                                                                                 @csrf
                                                                                 <button type="submit" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
                                                                                     <i class="mdi mdi-delete" style="font-size: 15px;"></i>

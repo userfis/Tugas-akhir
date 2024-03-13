@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Datacontroller;
 use App\Http\Controllers\DataInformasicontroller;
 use App\Http\Controllers\DatakeluarController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\LoginController;
 
 /*
@@ -30,4 +31,17 @@ Route::get('/data-keluar',[DatakeluarController::class, 'dataKeluar'])->middlewa
 Route::get('/tambah-data',[DataInformasicontroller::class, 'viewTambah'])->middleware('auth')->name('tambah');
 Route::post('/create-data',[DataInformasicontroller::class, 'createDataInformasi'])->middleware('auth')->name('tambah_data');
 Route::post('/{data:id}/hapus',[DataInformasicontroller::class,'hapusDatainformasi'])->middleware('auth');
+Route::get('/{data:id}/edit-data',[DataInformasicontroller::class, 'viewEdit'])->middleware('auth');
+Route::post('/{data:id}/update-data',[DataInformasicontroller::class, 'editDataInformasi'])->middleware('auth');
+
+Route::get('/keuangan/master-data',[KeuanganController::class, 'master'])->middleware('auth')->name('master-keuangan');
+Route::get('/keuangan/data-masuk',[KeuanganController::class, 'masuk'])->middleware('auth')->name('masuk-keuangan');
+Route::get('/keuangan/tambah-data',[KeuanganController::class, 'viewTambah'])->middleware('auth')->name('tambah-keuangan');
+Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeuangan'])->middleware('auth')->name('create-keuangan');
+Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware('auth');
+Route::get('/{data:id}/keuangan/edit-data',[KeuanganController::class, 'viewEdit'])->middleware('auth');
+Route::post('/{data:id}/keuangan/update-data',[KeuanganController::class, 'editKeuangan'])->middleware('auth');
+
+
+
 
