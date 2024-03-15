@@ -6,7 +6,8 @@ use App\Http\Controllers\DataInformasicontroller;
 use App\Http\Controllers\DatakeluarController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\TeknisController;
+use App\Http\Controllers\HukumController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,22 @@ Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeuangan'
 Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware('auth');
 Route::get('/{data:id}/keuangan/edit-data',[KeuanganController::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/keuangan/update-data',[KeuanganController::class, 'editKeuangan'])->middleware('auth');
+
+Route::get('/teknis/master-data',[TeknisController::class, 'master'])->middleware('auth')->name('master-teknis');
+Route::get('/teknis/data-masuk',[TeknisController::class, 'masuk'])->middleware('auth')->name('masuk-teknis');
+Route::get('/teknis/tambah-data',[TeknisController::class, 'viewTambah'])->middleware('auth')->name('tambah-teknis');
+Route::post('/teknis/create-data',[TeknisController::class, 'createTeknis'])->middleware('auth')->name('create-teknis');
+Route::get('/{data:id}/teknis/edit-data',[TeknisController::class, 'viewEdit'])->middleware('auth');
+Route::post('/{data:id}/teknis/update-data',[TeknisController::class, 'editTeknis'])->middleware('auth');
+Route::post('/{data:id}/teknis/hapus',[TeknisController::class, 'hapusDatateknis'])->middleware('auth');
+
+Route::get('/hukum/master-data',[HukumController::class, 'master'])->middleware('auth')->name('master-hukum');
+Route::get('/hukum/data-masuk',[HukumController::class, 'masuk'])->middleware('auth')->name('masuk-hukum');
+Route::get('/hukum/tambah-data',[HukumController::class, 'viewTambah'])->middleware('auth')->name('tambah-hukum');
+Route::post('/hukum/create-data',[HukumController::class, 'createHukum'])->middleware('auth')->name('create-hukum');
+Route::get('/{data:id}/hukum/edit-data',[HukumController::class, 'viewEdit'])->middleware('auth');
+Route::post('/{data:id}/hukum/update-data',[HukumController::class, 'editHukum'])->middleware('auth');
+Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
 
 
 

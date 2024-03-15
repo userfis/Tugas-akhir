@@ -2,48 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Data;
 use App\Models\Divisi;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class DataInformasicontroller extends Controller
+
+class TeknisController extends Controller
 {
     public function master(){
 
-        return view('dataInformasi.master',[
+        return view('Teknis.masterTeknis',[
 
-            'Halaman' => 'Data & Informasi'
+            'Halaman' => 'Teknis'
         ]);
     }
+
     public function masuk(){
         
-        // $title = 'Delete User!';
-        // $text = "Are you sure you want to delete?";
-        // confirmDelete($title, $text);
-
-        $data = Data::where('divisi_id', '=', '1')
+        $data = Data::where('divisi_id', '=', '3')
         ->latest()->get();
-        // $data = Data::all();
-        return view('dataInformasi.masuk',[
 
-            'Halaman' => 'Data & Informasi',
-            'data' => $data
+
+        return view('Teknis.masukTeknis',[
+
+            'data' => $data,
+            'Halaman' => 'Teknis'
         ]);
     }
 
     public function viewTambah(){
 
         $data = Divisi::all();
-        return view('dataInformasi.tambahdata',[
+        return view('Teknis.createTek',[
             'data' => $data
         ]);
     }
 
     public function viewEdit(Data $data){
 
-        return view('dataInformasi.editData',[
+        return view('Teknis.editTek',[
             'data' => $data,
             'divisi' => Divisi::all()
             // 'divisi' => Divisi::all()
@@ -51,7 +50,7 @@ class DataInformasicontroller extends Controller
 
     }
 
-    public function createDataInformasi(Request $request)
+    public function createTeknis(Request $request)
     {
         $validatedData = $request->validate([
             'divisi_id' => 'required',
@@ -67,15 +66,15 @@ class DataInformasicontroller extends Controller
         // dd($validatedData);
 
         if ($request->file('file')) {
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $validatedData['file'] = $request->file('file')->store('data-teknis');
         }
         
         Data::create($validatedData);
         Alert::success('Success Title', 'Tambah data berhasil !');
-        return redirect('/data-masuk');
+        return redirect('/teknis/data-masuk');
     }
 
-    public function editDataInformasi(Data $data, Request $request)
+    public function editTeknis(Data $data, Request $request)
     {
         $rules = [
 
@@ -95,23 +94,26 @@ class DataInformasicontroller extends Controller
             if ($request->oldFile) {
                 Storage::delete($request->oldFile);
             }
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $validatedData['file'] = $request->file('file')->store('data-teknis');
         }
 
 
         Data::where('id', $data->id)->update($validatedData);
         Alert::success('Success', 'Update data berhasil !');
-        return redirect('/data-masuk');
+        return redirect('/teknis/data-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
 
-    public function hapusDatainformasi(Data $data)
+    public function hapusDatateknis(Data $data)
     {
 
         Data::destroy($data->id);
         Alert::success('Success', 'data berhasil di hapus !');
-        return redirect('/data-masuk');
+        return redirect('/teknis/data-masuk');
         // ->with('success', 'Data Berhasil di Hapus !')
     }
+
+
+
 }

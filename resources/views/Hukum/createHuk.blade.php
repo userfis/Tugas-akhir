@@ -3,8 +3,8 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Tambah Data</h4>
-                <form class="forms-sample" action="{{ route('tambah_data') }}" method="POST" enctype="multipart/form-data">
+                <h4 class="card-title">Tambah Data Hukum</h4>
+                <form class="forms-sample" action="{{ route('create-hukum') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="nomor_surat">Nomor Surat</label>
@@ -24,6 +24,7 @@
                     <div class="form-group">
                         <label for="divisi_id">Divisi</label>
                         <select class="form-control" name="divisi_id" id="divisi_id" fdprocessedid="677jv">
+                            {{-- <option value="">pilih</option> --}}
                             @foreach ($data as $data)
                                 <option value="{{ $data->id }}">{{ $data->divisi }}</option>
                             @endforeach
@@ -36,9 +37,8 @@
                     <br>
                     <input type="text" name="data_id" id="data_id" value="1" hidden>
                     <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-                    <a href="{{ route('masuk') }}" class="btn btn-light" fdprocessedid="p0f3cn">Cancel</a>
+                    <button class="btn btn-light" fdprocessedid="p0f3cn">Cancel</button>
                 </form>
-                    {{-- <button class="btn btn-light" fdprocessedid="p0f3cn">Cancel</button> --}}
             </div>
         </div>
     </div>

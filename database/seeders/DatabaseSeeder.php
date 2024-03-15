@@ -57,7 +57,5 @@ class DatabaseSeeder extends Seeder
                 'jenis_data' => 'data keluar'
             ]);
 
-
-
     }
 }
