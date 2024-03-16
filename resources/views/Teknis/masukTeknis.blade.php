@@ -33,40 +33,43 @@
                                                             <th> Nomor Surat </th>
                                                             <th> Nama Data </th>
                                                             <th> konfirmasi </th>
+                                                            <th> Pesan </th>
                                                             <th> Waktu </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
+                                                            @foreach ($data as $data)
                                                             <td>{{ $loop->iteration }}</td>
                                                             <td>{{ $data->nomor_surat }}</td>
                                                             <td>{{ $data->judul }}</td>
                                                             <td>{{ $data->status }}</td>
+                                                            <td>{{ $data->pesan }}</td>               
                                                             <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
                                                             </td>
-                                                            <td> <button type="button"
-                                                                    class="btn btn-info btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                                </button>
-                                                            </td>
+                        
                                                             <td>
-                                                                <button type="button"
-                                                                    class="btn btn-info btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                    class="btn btn-primary btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                        style="font-size: 15px;"></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-rounded btn-icon"
-                                                                    fdprocessedid="91w77s">
-                                                                    <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                                </button>
+                                                                <div class="d-flex">
+                                                                    <div class="mr-1">
+                                                                        <a href="/storage/{{ $data->file }}"
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
+                                                                            <i class="mdi mdi-eye"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="mr-1">
+                                                                        <a href="/{{ $data->id }}/teknis/edit-data"
+                                                                            class="btn btn-primary btn-rounded">
+                                                                            <i class="mdi mdi-tooltip-edit"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                         </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             @else

@@ -34,6 +34,7 @@ Route::post('/create-data',[DataInformasicontroller::class, 'createDataInformasi
 Route::post('/{data:id}/hapus',[DataInformasicontroller::class,'hapusDatainformasi'])->middleware('auth');
 Route::get('/{data:id}/edit-data',[DataInformasicontroller::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/update-data',[DataInformasicontroller::class, 'editDataInformasi'])->middleware('auth');
+Route::post('/{data:id}/admin/update-data',[DataInformasicontroller::class, 'adminEditDataInformasi'])->middleware('auth');
 
 Route::get('/keuangan/master-data',[KeuanganController::class, 'master'])->middleware('auth')->name('master-keuangan');
 Route::get('/keuangan/data-masuk',[KeuanganController::class, 'masuk'])->middleware('auth')->name('masuk-keuangan');
@@ -42,6 +43,7 @@ Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeuangan'
 Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware('auth');
 Route::get('/{data:id}/keuangan/edit-data',[KeuanganController::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/keuangan/update-data',[KeuanganController::class, 'editKeuangan'])->middleware('auth');
+Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 'adminEditKeuangan'])->middleware('auth');
 
 Route::get('/teknis/master-data',[TeknisController::class, 'master'])->middleware('auth')->name('master-teknis');
 Route::get('/teknis/data-masuk',[TeknisController::class, 'masuk'])->middleware('auth')->name('masuk-teknis');
@@ -49,6 +51,7 @@ Route::get('/teknis/tambah-data',[TeknisController::class, 'viewTambah'])->middl
 Route::post('/teknis/create-data',[TeknisController::class, 'createTeknis'])->middleware('auth')->name('create-teknis');
 Route::get('/{data:id}/teknis/edit-data',[TeknisController::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/teknis/update-data',[TeknisController::class, 'editTeknis'])->middleware('auth');
+Route::post('/{data:id}/teknis/admin/update-data',[TeknisController::class, 'adminEditteknis'])->middleware('auth');
 Route::post('/{data:id}/teknis/hapus',[TeknisController::class, 'hapusDatateknis'])->middleware('auth');
 
 Route::get('/hukum/master-data',[HukumController::class, 'master'])->middleware('auth')->name('master-hukum');
@@ -57,6 +60,7 @@ Route::get('/hukum/tambah-data',[HukumController::class, 'viewTambah'])->middlew
 Route::post('/hukum/create-data',[HukumController::class, 'createHukum'])->middleware('auth')->name('create-hukum');
 Route::get('/{data:id}/hukum/edit-data',[HukumController::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/hukum/update-data',[HukumController::class, 'editHukum'])->middleware('auth');
+Route::post('/{data:id}/hukum/admin/update-data',[HukumController::class, 'adminEdithukum'])->middleware('auth');
 Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
 
 

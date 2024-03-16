@@ -111,4 +111,28 @@ class KeuanganController extends Controller
 
     }
 
+    public function adminEditKeuangan(Data $data, Request $request)
+    {
+        $rules = [
+
+            'nomor_surat' => 'required|max:255',
+            'judul' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'divisi_id' => 'required',
+            'data_id' => 'required',
+            'status' => 'required',
+            'pesan' => 'nullable'
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+
+        return redirect('/keuangan/data-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+
 }

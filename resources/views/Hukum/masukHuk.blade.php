@@ -32,41 +32,57 @@
                                                             <th> ID </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Nama Data </th>
-                                                            <th> konfirmasi </th>
+                                                            {{-- <th> konfirmasi </th> --}}
                                                             <th> Waktu </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $data->nomor_surat }}</td>
-                                                            <td>{{ $data->judul }}</td>
-                                                            <td>{{ $data->status }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
-                                                            </td>
-                                                            <td> <button type="button"
-                                                                    class="btn btn-info btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                                </button>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button"
-                                                                    class="btn btn-info btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                    class="btn btn-primary btn-rounded btn-icon">
-                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                        style="font-size: 15px;"></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-rounded btn-icon"
-                                                                    fdprocessedid="91w77s">
-                                                                    <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
+                                                        @foreach ($data as $data)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $data->nomor_surat }}</td>
+                                                                <td>{{ $data->judul }}</td>
+                                                                {{-- <td>{{ $data->status }}</td> --}}
+                                                                <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
+                                                                </td>
+                                                                <td>
+                                                                <div class="d-flex">
+                                                                    <div class="mr-1">
+                                                                        <a href="/storage/{{ $data->file }}"
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
+                                                                            <i class="mdi mdi-eye"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="mr-1">
+                                                                        <a href="/{{ $data->id }}/hukum/edit-data"
+                                                                            class="btn btn-primary btn-rounded">
+                                                                            <i class="mdi mdi-tooltip-edit"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                </td>
+                                                                <td>
+                                                                    {{-- <button type="button"
+                                                                        class="btn btn-info btn-rounded btn-icon">
+                                                                        <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="btn btn-primary btn-rounded btn-icon">
+                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                            style="font-size: 15px;"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="btn btn-danger btn-rounded btn-icon"
+                                                                        fdprocessedid="91w77s">
+                                                                        <i class="mdi mdi-delete" style="font-size: 15px;"></i>
+                                                                    </button> --}}
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             @else
@@ -96,26 +112,35 @@
                                                                 <td>
                                                                     <div class="d-flex">
                                                                         <div class="mr-1">
-                                                                            <a href="/storage/{{ $data->file }}" class="btn btn-primary btn-rounded" target="blank">
-                                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                                            <a href="/storage/{{ $data->file }}"
+                                                                                class="btn btn-primary btn-rounded"
+                                                                                target="blank">
+                                                                                <i class="mdi mdi-eye"
+                                                                                    style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
                                                                         <div class="mr-1">
-                                                                            <a href="/{{ $data->id }}/hukum/edit-data" class="btn btn-primary btn-rounded">
-                                                                                <i class="mdi mdi-tooltip-edit" style="font-size: 15px;"></i>
+                                                                            <a href="/{{ $data->id }}/hukum/edit-data"
+                                                                                class="btn btn-primary btn-rounded">
+                                                                                <i class="mdi mdi-tooltip-edit"
+                                                                                    style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
                                                                         <div>
-                                                                            <form action="/{{ $data->id }}/hukum/hapus" method="POST">
+                                                                            <form action="/{{ $data->id }}/hukum/hapus"
+                                                                                method="POST">
                                                                                 @csrf
-                                                                                <button type="submit" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
-                                                                                    <i class="mdi mdi-delete" style="font-size: 15px;"></i>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger btn-rounded btn-icon"
+                                                                                    fdprocessedid="91w77s">
+                                                                                    <i class="mdi mdi-delete"
+                                                                                        style="font-size: 15px;"></i>
                                                                                 </button>
                                                                             </form>
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                
+
                                                                 {{-- <td>
                                                                     <a href="/storage/{{ $data->file }}" class="btn btn-primary btn-rounded " target="blank">
                                                                         <i class="mdi mdi-eye" style="font-size: 15px;"></i></a>

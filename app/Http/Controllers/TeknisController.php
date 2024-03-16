@@ -115,5 +115,31 @@ class TeknisController extends Controller
     }
 
 
+    public function adminEditteknis(Data $data, Request $request)
+    {
+        // dd($request->all());
+        $rules = [
+
+            'nomor_surat' => 'required|max:255',
+            'judul' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'divisi_id' => 'required',
+            'data_id' => 'required',
+            'status' => 'required',
+            'pesan' => 'nullable'
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+       
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Konfirmasi data berhasil !');
+        return redirect('/teknis/data-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+
 
 }

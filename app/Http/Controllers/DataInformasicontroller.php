@@ -106,6 +106,32 @@ class DataInformasicontroller extends Controller
 
     }
 
+    public function adminEditDataInformasi(Data $data, Request $request)
+    {
+        $rules = [
+
+            'divisi_id' => 'required',
+            'data_id' => 'required',
+            'nomor_surat' => 'required|max:255',
+            'judul' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'status' => 'required',
+            'pesan' => 'nullable'
+           
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+
+
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', ' data berhasil !');
+        return redirect('/data-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
     public function hapusDatainformasi(Data $data)
     {
 
