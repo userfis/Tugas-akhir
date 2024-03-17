@@ -24,40 +24,119 @@
                                 <div class="col-lg-12 grid-margin stretch-card">
                                     <div class="card">
                                         <div class="card-body">
+                                            @can('superadmin')
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th> ID </th>
                                                         <th> Nomor Surat </th>
                                                         <th> Nama Data </th>
-                                                        <th> Pesan </th>
+                                                        <th> status </th>
                                                         <th> Waktu </th>
                                                         <th> Action </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>20002-1999</td>
-                                                        <td>Lorem ipsum dolor sit amet.</td>
-                                                        <td>proses</td>
-                                                        <td>5 menit</td>
-                                                        <td>
-                                                            <button type="button"
-                                                                class="btn btn-info btn-rounded btn-icon">
-                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button"
-                                                                class="btn btn-primary btn-rounded btn-icon">
-                                                                <i class="mdi mdi-send" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            {{-- <button type="button" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
-                                                            <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                          </button> --}}
-                                                        </td>
-                                                    </tr>
+                                                    @foreach ($data as $item)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $item->nomor_surat }}</td>
+                                                            <td>{{ $item->judul }}</td>
+                                                            <td>{{ $item->status }}</td>
+                                                            <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <div class="mr-1">
+                                                                        <a href="/storage/{{ $item->file }}"
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
+                                                                            <i class="mdi mdi-eye"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="mr-1">
+                                                                        <a href="/{{ $item->id }}/edit-data"
+                                                                            class="btn btn-primary btn-rounded">
+                                                                            <i class="mdi mdi-tooltip-edit"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class='mr-1'>
+                                                                        <form action="/{{ $item->id }}/hapus"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger btn-rounded btn-icon"
+                                                                                fdprocessedid="91w77s">
+                                                                                <i class="mdi mdi-delete"
+                                                                                    style="font-size: 15px;"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    @else
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th> ID </th>
+                                                    <th> Nomor Surat </th>
+                                                    <th> Nama Data </th>
+                                                    <th> status </th>
+                                                    <th> Waktu </th>
+                                                    <th> Action </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data as $item)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->nomor_surat }}</td>
+                                                        <td>{{ $item->judul }}</td>
+                                                        <td>{{ $item->status }}</td>
+                                                        <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                @if ($item->status == 'kirim data')
+                                                                    <div class="mr-1">
+                                                                        <a href="/storage/{{ $item->file }}"
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
+                                                                            <i class="mdi mdi-eye"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="mr-1">
+                                                                        <a href="#"
+                                                                            class="btn btn-primary btn-rounded">
+                                                                            <i class="mdi mdi-send"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="mr-1">
+                                                                        <a href="/storage/{{ $item->file }}"
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
+                                                                            <i class="mdi mdi-eye"
+                                                                                style="font-size: 15px;"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endcan
                                         </div>
                                     </div>
                                 </div>

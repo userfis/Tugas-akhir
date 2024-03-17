@@ -12,19 +12,28 @@ class DataInformasicontroller extends Controller
 {
     public function master(){
 
+        $data = Data::where('divisi_id', '=', '1')
+        ->whereNotIn('status', ['ditolak'])
+        ->latest()
+        ->get();
+
         return view('dataInformasi.master',[
 
-            'Halaman' => 'Data & Informasi'
+            'Halaman' => 'Data & Informasi',
+            'data' => $data
         ]);
     }
     public function masuk(){
         
-        // $title = 'Delete User!';
-        // $text = "Are you sure you want to delete?";
-        // confirmDelete($title, $text);
-
         $data = Data::where('divisi_id', '=', '1')
-        ->latest()->get();
+        ->where(function($query) {
+            $query->where('status', '=', 'ditolak')
+                  ->orWhereNull('status');
+        })
+        ->latest()
+        ->get();
+        // $data = Data::where('divisi_id', '=', '1')
+        // ->latest()->get();
         // $data = Data::all();
         return view('dataInformasi.masuk',[
 

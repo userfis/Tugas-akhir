@@ -12,17 +12,27 @@ class HukumController extends Controller
 {
     public function master(){
 
+        $data = Data::where('divisi_id', '=', '4')
+        ->whereNotIn('status', ['ditolak'])
+        ->latest()
+        ->get();
+
         return view('Hukum.masterHuk',[
 
-            'Halaman' => 'Hukum'
+            'Halaman' => 'Hukum',
+            'data' => $data
         ]);
     }
 
     public function masuk(){
         
         $data = Data::where('divisi_id', '=', '4')
-        ->latest()->get();
-
+        ->where(function($query) {
+            $query->where('status', '=', 'ditolak')
+                  ->orWhereNull('status');
+        })
+        ->latest()
+        ->get();
 
         return view('Hukum.masukHuk',[
 

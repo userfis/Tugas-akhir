@@ -11,17 +11,28 @@ class KeuanganController extends Controller
 {
     public function master(){
 
+        $data = Data::where('divisi_id', '=', '2')
+        ->whereNotIn('status', ['ditolak'])
+        ->latest()
+        ->get();
+
         return view('Keuangan.masterKeuangan',[
 
-            'Halaman' => 'Keuangan'
+            'Halaman' => 'Keuangan',
+            'data' => $data
         ]);
     }
 
     public function masuk(){
         
         $data = Data::where('divisi_id', '=', '2')
-        ->latest()->get();
-        // $data = Data::all();
+        ->where(function($query) {
+            $query->where('status', '=', 'ditolak')
+                  ->orWhereNull('status');
+        })
+        ->latest()
+        ->get();
+    
         return view('Keuangan.masukKeuangan',[
 
             'data' => $data,

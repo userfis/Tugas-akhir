@@ -82,7 +82,8 @@
                                                             <th> ID </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Nama Data </th>
-                                                            <th> Pesan </th>
+                                                            <th> status </th>
+                                                            <th> pesan </th>
                                                             <th> Waktu </th>
                                                             <th> Action </th>
                                                         </tr>
@@ -94,6 +95,7 @@
                                                                 <td>{{ $data->nomor_surat }}</td>
                                                                 <td>{{ $data->judul }}</td>
                                                                 <td>{{ $data->status }}</td>
+                                                                <td>{{ $data->pesan }}</td>
                                                                 <td>{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}
                                                                 </td>
                                                                 <td>
@@ -118,25 +120,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                
-                                                                {{-- <td>
-                                                                    <a href="/storage/{{ $data->file }}" class="btn btn-primary btn-rounded " target="blank">
-                                                                        <i class="mdi mdi-eye" style="font-size: 15px;"></i></a>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary btn-rounded btn-icon">
-                                                                        <i class="mdi mdi-tooltip-edit"
-                                                                            style="font-size: 15px;"></i>
-                                                                    </button>
-                                                                    <form action="/{{ $data->id }}/hapus" method="POST">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                            fdprocessedid="91w77s">
-                                                                            <i class="mdi mdi-delete" style="font-size: 15px;"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </td> --}}
-                                                            </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>

@@ -13,17 +13,27 @@ class TeknisController extends Controller
 {
     public function master(){
 
+        $data = Data::where('divisi_id', '=', '3')
+        ->whereNotIn('status', ['ditolak'])
+        ->latest()
+        ->get();
+
         return view('Teknis.masterTeknis',[
 
-            'Halaman' => 'Teknis'
+            'Halaman' => 'Teknis',
+            'data' => $data
         ]);
     }
 
     public function masuk(){
         
         $data = Data::where('divisi_id', '=', '3')
-        ->latest()->get();
-
+        ->where(function($query) {
+            $query->where('status', '=', 'ditolak')
+                  ->orWhereNull('status');
+        })
+        ->latest()
+        ->get();
 
         return view('Teknis.masukTeknis',[
 
