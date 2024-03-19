@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Data;
+use App\Models\Email;
 use App\Models\Divisi;
+use App\Mail\Kirimemail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -149,4 +152,65 @@ class DataInformasicontroller extends Controller
         return redirect('/data-masuk');
         // ->with('success', 'Data Berhasil di Hapus !')
     }
+
+    public function kirimData(Data $data){
+
+        return view('dataInformasi.kirimData',[
+            'data' => $data,
+            'divisi' => Divisi::all()
+            // 'divisi' => Divisi::all()
+        ]);
+
+    }
+
+//     public function email(Request $request){
+
+//      $validatedData = $request->validate([
+//         'surat_id' => 'required',
+//         'email' => 'required|email|max:255',
+//         'deskripsi' => 'required|max:255'
+//     ]);
+
+//     // Kirim email
+//     Mail::to($validatedData['email'])->send(new Kirimemail($validatedData));
+
+//     // Simpan data baru pada model Email
+//     Email::create([
+//         'surat_id' => $validatedData['surat_id'],
+//         'email' => $validatedData['email'],
+//         'deskripsi' => $validatedData['deskripsi']
+//     ]);
+
+//     // Email::create($validatedData);
+
+    
+//     Alert::success('Success Title', 'Tambah data berhasil !');
+//     return redirect('/master-data');
+// }
+
+public function email(Request $request)
+{
+    $validatedData = $request->validate([
+        'surat_id' => 'required',
+        'email' => 'required|email|max:255',
+        'deskripsi' => 'required|max:255'
+    ]);
+
+    $email = Email::create([
+        'surat_id' => $validatedData['surat_id'],
+        'email' => $validatedData['email'],
+        'deskripsi' => $validatedData['deskripsi']
+    ]);
+
+    // Kirim email
+    Mail::to($validatedData['email'])->send(new Kirimemail($email));
+
+    // Tambahkan relasi jika diperlukan
+    // $email->surat()->associate($suratId); // Misalnya jika $suratId adalah ID dari Surat
+
+    Alert::success('Success Title', 'Tambah data berhasil !');
+    return redirect('/master-data');
+}
+
+
 }

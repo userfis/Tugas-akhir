@@ -35,26 +35,28 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @foreach ($data as $item)    
                                                     <tr>
-                                                        <td>1</td>
-                                                        <td>20002-1999</td>
-                                                        <td>Lorem ipsum dolor sit amet.</td>
-                                                        <td>proses</td>
-                                                        <td>5 menit</td>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->data->nomor_surat }}</td>
+                                                        <td>{{ $item->data->judul }}</td>
+                                                        <td>{{ $item->data->tahun }}</td>
+                                                        <td>{{ $item->created_at }}</td>
                                                         <td>
                                                             <button type="button"
-                                                                class="btn btn-info btn-rounded btn-icon">
-                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
-                                                            </button>
-                                                            <button type="button"
+                                                            class="btn btn-info btn-rounded btn-icon">
+                                                            <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                        </button>
+                                                        <button type="button"
                                                                 class="btn btn-primary btn-rounded btn-icon">
                                                                 <i class="mdi mdi-send" style="font-size: 15px;"></i>
                                                             </button>
                                                             {{-- <button type="button" class="btn btn-danger btn-rounded btn-icon" fdprocessedid="91w77s">
                                                 <i class="mdi mdi-delete" style="font-size: 15px;"></i>
                                               </button> --}}
-                                                        </td>
-                                                    </tr>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                                 </tbody>
                                             </table>
                                         </div>

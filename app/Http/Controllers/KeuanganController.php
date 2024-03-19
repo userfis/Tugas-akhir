@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Data;
 use App\Models\Divisi;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KeuanganController extends Controller
 {
@@ -68,6 +69,7 @@ class KeuanganController extends Controller
         }
         
         Data::create($validatedData);
+        Alert::success('Success', 'Tambah data berhasil !');
         return redirect('/keuangan/data-masuk');
         // ->with('success', 'Data berhasil di upload')
     }
@@ -76,7 +78,7 @@ class KeuanganController extends Controller
     {
 
         Data::destroy($data->id);
-
+        Alert::success('Success', 'Hapus data berhasil !');
         return redirect('/keuangan/data-masuk');
         // ->with('success', 'Data Berhasil di Hapus !')
     }
@@ -116,7 +118,7 @@ class KeuanganController extends Controller
 
 
         Data::where('id', $data->id)->update($validatedData);
-
+        Alert::success('Success', 'Update data berhasil !');
         return redirect('/keuangan/data-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
@@ -139,7 +141,7 @@ class KeuanganController extends Controller
         $validatedData = $request->validate($rules);
         
         Data::where('id', $data->id)->update($validatedData);
-
+        Alert::success('Success', 'Update data berhasil !');
         return redirect('/keuangan/data-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 

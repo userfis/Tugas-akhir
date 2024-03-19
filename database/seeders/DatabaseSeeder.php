@@ -22,32 +22,32 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // User::create([
-        //          'nama' => 'ravi',
-        //          'email' => 'ravioctiannafis@gmail.com',
-        //          'username' => 'admin',
-        //          'password' => bcrypt('111111')
-        //      ]);
+        User::create([
+                 'nama' => 'ravi',
+                 'email' => 'ravioctiannafis@gmail.com',
+                 'username' => 'admin',
+                 'password' => bcrypt('111111')
+             ]);
 
-        //      User::create([
-        //         'nama' => 'Ketua KPU',
-        //         'email' => 'robert990@gmail.com',
-        //         'username' => 'ketuakpu',
-        //         'password' => bcrypt('password')
-        //     ]);
+             User::create([
+                'nama' => 'Ketua KPU',
+                'email' => 'robert990@gmail.com',
+                'username' => 'ketuakpu',
+                'password' => bcrypt('password')
+            ]);
 
-            // Divisi::create([
-            //     'divisi' => 'Data & Informasi'
-            // ]);
-            // Divisi::create([
-            //     'divisi' => 'Keuangan'
-            // ]);
-            // Divisi::create([
-            //     'divisi' => 'Teknis'
-            // ]);
-            // Divisi::create([
-            //     'divisi' => 'Hukum'
-            // ]);
+            Divisi::create([
+                'divisi' => 'Data & Informasi'
+            ]);
+            Divisi::create([
+                'divisi' => 'Keuangan'
+            ]);
+            Divisi::create([
+                'divisi' => 'Teknis'
+            ]);
+            Divisi::create([
+                'divisi' => 'Hukum'
+            ]);
 
             jenisData::create([
                 'jenis_data' => 'data masuk'

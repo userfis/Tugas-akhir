@@ -107,7 +107,7 @@
                                                                 @if ($item->status == 'kirim data')
                                                                     <div class="mr-1">
                                                                         <a href="/storage/{{ $item->file }}"
-                                                                            class="btn btn-primary btn-rounded"
+                                                                            class="btn btn-secondary btn-rounded"
                                                                             target="blank">
                                                                             <i class="mdi mdi-eye"
                                                                                 style="font-size: 15px;"></i>
@@ -123,7 +123,7 @@
                                                                 @else
                                                                     <div class="mr-1">
                                                                         <a href="/storage/{{ $item->file }}"
-                                                                            class="btn btn-primary btn-rounded"
+                                                                            class="btn btn-secondary btn-rounded"
                                                                             target="blank">
                                                                             <i class="mdi mdi-eye"
                                                                                 style="font-size: 15px;"></i>

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Email;
 use App\Models\Divisi;
 use App\Models\jenisData;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Data extends Model
 {
@@ -19,5 +20,9 @@ class Data extends Model
 
     public function jenis_data(){
         return $this->belongsTo(jenisData::class);
+    }
+
+    public function email(){
+        return $this->hasMany(Email::class);
     }
 }
