@@ -5,12 +5,12 @@
         <h2 class="text-dark font-weight-bold mb-2"> Master Data {{ $Halaman }} </h2>
     </div>
     <div class="search-field d-none d-xl-block">
-        <form class="d-flex align-items-center h-100" action="#">
+        <form class="d-flex align-items-center h-100" action="{{ route('master') }}" method="GET">
             <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                     <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
-                <input type="text" class="form-control bg-white border-0" placeholder="Search products">
+                <input type="text" class="form-control bg-white border-0" name="search" placeholder="Search ..."  value="{{ request('search') }}">
             </div>
         </form>
     </div>
@@ -23,8 +23,66 @@
                             <div class="row">
                                 <div class="col-lg-12 grid-margin stretch-card">
                                     <div class="card">
-                                        <div class="card-body">
-                                            @can('superadmin')
+                                        @if (count($data)>0)
+                                            <div class="card-body">
+                                                @can('superadmin')
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> ID </th>
+                                                                <th> Nomor Surat </th>
+                                                                <th> Nama Data </th>
+                                                                <th> status </th>
+                                                                <th> Waktu </th>
+                                                                <th> Action </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($data as $item)
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $item->nomor_surat }}</td>
+                                                                    <td>{{ $item->judul }}</td>
+                                                                    <td>{{ $item->status }}</td>
+                                                                    <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex">
+                                                                            <div class="mr-1">
+                                                                                <a href="/storage/{{ $item->file }}"
+                                                                                    class="btn btn-secondary btn-rounded"
+                                                                                    target="blank">
+                                                                                    <i class="mdi mdi-eye"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="mr-1">
+                                                                                <a href="/{{ $item->id }}/edit-data"
+                                                                                    class="btn btn-primary btn-rounded">
+                                                                                    <i class="mdi mdi-tooltip-edit"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class='mr-1'>
+                                                                                <form action="/{{ $item->id }}/hapus"
+                                                                                    method="POST">
+                                                                                    @csrf
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger btn-rounded btn-icon"
+                                                                                        fdprocessedid="91w77s">
+                                                                                        <i class="mdi mdi-delete"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -47,96 +105,61 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex">
-                                                                        <div class="mr-1">
-                                                                            <a href="/storage/{{ $item->file }}"
-                                                                                class="btn btn-secondary btn-rounded"
-                                                                                target="blank">
-                                                                                <i class="mdi mdi-eye"
-                                                                                    style="font-size: 15px;"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="mr-1">
-                                                                            <a href="/{{ $item->id }}/edit-data"
-                                                                                class="btn btn-primary btn-rounded">
-                                                                                <i class="mdi mdi-tooltip-edit"
-                                                                                    style="font-size: 15px;"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class='mr-1'>
-                                                                            <form action="/{{ $item->id }}/hapus"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                <button type="submit"
-                                                                                    class="btn btn-danger btn-rounded btn-icon"
-                                                                                    fdprocessedid="91w77s">
-                                                                                    <i class="mdi mdi-delete"
+                                                                        @if ($item->status == 'kirim data')
+                                                                            <div class="mr-1">
+                                                                                <a href="/storage/{{ $item->file }}"
+                                                                                    class="btn btn-secondary btn-rounded"
+                                                                                    target="blank">
+                                                                                    <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="mr-1">
+                                                                                <a href="/{{ $item->id }}/kirim-data"
+                                                                                    class="btn btn-primary btn-rounded">
+                                                                                    <i class="mdi mdi-send"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="mr-1">
+                                                                                <a href="/storage/{{ $item->file }}"
+                                                                                    class="btn btn-secondary btn-rounded"
+                                                                                    target="blank">
+                                                                                    <i class="mdi mdi-eye"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                            @endcan
                                         @else
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th> ID </th>
-                                                        <th> Nomor Surat </th>
-                                                        <th> Nama Data </th>
-                                                        <th> status </th>
-                                                        <th> Waktu </th>
-                                                        <th> Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($data as $item)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $item->nomor_surat }}</td>
-                                                            <td>{{ $item->judul }}</td>
-                                                            <td>{{ $item->status }}</td>
-                                                            <td>{{ \Carbon\Carbon::parse($item->updated_at)->diffForHumans() }}
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex">
-                                                                    @if ($item->status == 'kirim data')
-                                                                        <div class="mr-1">
-                                                                            <a href="/storage/{{ $item->file }}"
-                                                                                class="btn btn-secondary btn-rounded"
-                                                                                target="blank">
-                                                                                <i class="mdi mdi-eye"
-                                                                                    style="font-size: 15px;"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="mr-1">
-                                                                            <a href="/{{ $item->id }}/kirim-data"
-                                                                                class="btn btn-primary btn-rounded">
-                                                                                <i class="mdi mdi-send"
-                                                                                    style="font-size: 15px;"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    @else
-                                                                        <div class="mr-1">
-                                                                            <a href="/storage/{{ $item->file }}"
-                                                                                class="btn btn-secondary btn-rounded"
-                                                                                target="blank">
-                                                                                <i class="mdi mdi-eye"
-                                                                                    style="font-size: 15px;"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        @endcan
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th> ID </th>
+                                                    <th> Nomor Surat </th>
+                                                    <th> Nama Data </th>
+                                                    <th> status </th>
+                                                    <th> Waktu </th>
+                                                    <th> Action </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="6">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="6" style="text-align: center;"><h4>Data Kosong</h4></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            @endif
                                     </div>
                                 </div>
                             </div>

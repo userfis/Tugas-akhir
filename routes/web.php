@@ -27,6 +27,7 @@ Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::get('/home',[Datacontroller::class, 'dashboard'])->middleware('auth')->name('home');
 Route::get('/master-data',[DataInformasicontroller::class, 'master'])->middleware('auth')->name('master');
+
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
 Route::get('/data-keluar',[DatakeluarController::class, 'dataKeluar'])->middleware('auth')->name('keluar');
 // Route::get('/kirim-email',[DataInformasiController::class, 'email'])->middleware('auth');
@@ -34,10 +35,10 @@ Route::get('/tambah-data',[DataInformasicontroller::class, 'viewTambah'])->middl
 Route::post('/create-data',[DataInformasicontroller::class, 'createDataInformasi'])->middleware('auth')->name('tambah_data');
 Route::post('/{data:id}/hapus',[DataInformasicontroller::class,'hapusDatainformasi'])->middleware('auth');
 Route::get('/{data:id}/edit-data',[DataInformasicontroller::class, 'viewEdit'])->middleware('auth');
-Route::get('/{data:id}/kirim-data',[DataInformasicontroller::class, 'kirimData'])->middleware('auth');
-Route::post('/{data:id}/kirim-email',[DataInformasiController::class, 'email'])->middleware('auth');
+// Route::post('/{data:id}/kirim-email',[DataInformasiController::class, 'email'])->middleware('auth');
 Route::post('/{data:id}/update-data',[DataInformasicontroller::class, 'editDataInformasi'])->middleware('auth');
 Route::post('/{data:id}/admin/update-data',[DataInformasicontroller::class, 'adminEditDataInformasi'])->middleware('auth');
+//Route::get('/download/{data}',[DataInformasicontroller::class,'download'])->middleware('auth')->name('download');
 
 Route::get('/keuangan/master-data',[KeuanganController::class, 'master'])->middleware('auth')->name('master-keuangan');
 Route::get('/keuangan/data-masuk',[KeuanganController::class, 'masuk'])->middleware('auth')->name('masuk-keuangan');
@@ -66,6 +67,8 @@ Route::post('/{data:id}/hukum/update-data',[HukumController::class, 'editHukum']
 Route::post('/{data:id}/hukum/admin/update-data',[HukumController::class, 'adminEdithukum'])->middleware('auth');
 Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
 
+Route::get('/{data:id}/kirim-data',[DatakeluarController::class, 'kirimData'])->middleware('auth');
+Route::post('/{data:id}/kirim-email',[DatakeluarController::class, 'email'])->middleware('auth');
 
 
 

@@ -104,6 +104,9 @@
                                                                             <a href="/storage/{{ $data->file }}" class="btn btn-primary btn-rounded" target="blank">
                                                                                 <i class="mdi mdi-eye" style="font-size: 15px;"></i>
                                                                             </a>
+                                                                            {{-- <a href="{{ route('download',$data)}}" class="btn btn-primary btn-rounded" target="blank">
+                                                                                <i class="mdi mdi-eye" style="font-size: 15px;"></i>
+                                                                            </a> --}}
                                                                         </div>
                                                                         <div class="mr-1">
                                                                             <a href="/{{ $data->id }}/edit-data" class="btn btn-primary btn-rounded">

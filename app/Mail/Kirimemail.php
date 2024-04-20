@@ -27,7 +27,7 @@ class Kirimemail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Kirimemail',
+            subject: 'KPU SIDOARJO',
         );
     }
 
@@ -48,6 +48,8 @@ class Kirimemail extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            public_path('storage/' . $this->data->surat->file),
+        ];
     }
 }

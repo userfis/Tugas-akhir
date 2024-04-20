@@ -14,7 +14,12 @@ class HukumController extends Controller
 
         $data = Data::where('divisi_id', '=', '4')
         ->whereNotIn('status', ['ditolak'])
-        ->latest()
+        ->where(function ($query) {
+            $search = request('search');
+            $query->where('judul', 'like', "%" . $search . "%")
+                ->orWhere('nomor_surat', 'like', "%" . $search . "%");
+        })
+        ->orderBy('updated_at', 'DESC')
         ->get();
 
         return view('Hukum.masterHuk',[

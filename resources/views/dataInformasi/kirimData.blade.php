@@ -28,6 +28,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="email">Email tujuan</label>
+                        <input type="text" name="status" id="status" value="data sudah dikirim" hidden>
                         <input type="text" name="surat_id" id="surat_id" value="{{ $data->id }}" hidden>
                         <input type="text" name="email" class="form-control" id="email" placeholder=""
                             fdprocessedid="zukfe7">

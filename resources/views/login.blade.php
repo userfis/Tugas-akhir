@@ -26,8 +26,8 @@
           <div class="row flex-grow">
             <div class="col-lg-4 mx-auto">
               <div class="auth-form-light text-left p-5">
-                <div class="brand-logo">
-                  <img src="../../assets/images/logo-dark.svg">
+                <div class="brand-logo" style="text-align: center;">
+                  <img src="/assets/images/logo_login.png" style="display: inline-block; width:180px;">
                 </div>
                 @if (session()->has('alert'))
                 <div class="alert alert-danger" role="alert">
