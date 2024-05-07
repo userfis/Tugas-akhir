@@ -1,7 +1,7 @@
 @extends('homepage.index')
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Overview dashboard </h2>
+        <h2 class="text-dark font-weight-bold mb-2">Dashboard</h2>
     </div>
     <div class="search-field d-none d-xl-block">
         <form class="d-flex align-items-center h-100" action="{{ route('master') }}" method="GET">

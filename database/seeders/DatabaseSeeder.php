@@ -6,6 +6,8 @@ namespace Database\Seeders;
 
 use App\Models\Divisi;
 use App\Models\jenisData;
+use App\Models\Ketegori;
+use App\Models\Rak;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
@@ -55,6 +57,34 @@ class DatabaseSeeder extends Seeder
 
             jenisData::create([
                 'jenis_data' => 'data keluar'
+            ]);
+
+            Rak::create([
+                'nama_rak' => 'A'
+            ]);
+            Rak::create([
+                'nama_rak' => 'B'
+            ]);
+            Rak::create([
+                'nama_rak' => 'C'
+            ]);
+            Rak::create([
+                'nama_rak' => 'D'
+            ]);
+            Rak::create([
+                'nama_rak' => 'E'
+            ]);
+
+            Ketegori::create([
+                'kategori_surat' => 'surat undangan'
+            ]);
+
+            Ketegori::create([
+                'kategori_surat' => 'surat resmi'
+            ]);
+
+            Ketegori::create([
+                'kategori_surat' => 'surat pemberitahuan'
             ]);
 
     }

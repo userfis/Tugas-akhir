@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data', function (Blueprint $table) {
+        Schema::create('berkas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id');
-            $table->foreignId('data_id');
-            $table->date('tanggal');
-            $table->string('nomor_agenda');
-            $table->string('nomor_surat');
-            $table->string('asal_surat');
+            $table->string('kode_data');
+            $table->string('nomor_data');
+            $table->date('tanggal_arsip');
+            $table->string('nama_data');
             $table->string('perihal');
-            $table->string('lampiran');
             $table->string('file');
             $table->string('tindakan')->nullable();
-            $table->string('disposisi')->nullable();
             $table->string('status')->nullable();
             $table->string('pesan')->nullable();
             $table->string('rak_id')->nullable();
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data');
+        Schema::dropIfExists('berkas');
     }
 };

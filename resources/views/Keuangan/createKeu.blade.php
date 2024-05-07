@@ -29,7 +29,8 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="input-group col-xs-12">
+                    <div class="form-group">
+                        <label for="file">Upload PDF</label>
                         <input type="file" class="form-control file-upload-info" name="file" id="file"
                            placeholder="Upload PDF" fdprocessedid="w1iqnm">
                     </div>

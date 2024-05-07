@@ -25,4 +25,12 @@ class Data extends Model
     public function email(){
         return $this->hasMany(Email::class);
     }
+
+    public function kategori(){
+        return $this->belongsTo(Ketegori::class);
+    }
+
+    public function rak(){
+        return $this->belongsTo(Rak::class);
+    }
 }

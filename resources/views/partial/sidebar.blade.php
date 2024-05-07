@@ -36,18 +36,39 @@
         </li> --}}
 
         <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Master</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="master"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="#">Arsip Surat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">Disposisi</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">Kategori Surat</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
-                <span class="menu-title">Data & Informasi</span>
+                <span class="menu-title">Surat</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic"> <!-- pastikan id unik -->
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk') }}">Data Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk') }}">surat masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('keluar') }}">surat keluar</a></li>
                 </ul>
             </div>
         </li>
+        {{-- </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#keuangan" aria-expanded="false" aria-controls="keuangan">
                 <span class="icon-bg"><i class="mdi mdi-bank menu-icon"></i></span>
@@ -86,12 +107,12 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('masuk-hukum') }}">Data Masuk</a></li>
                 </ul>
             </div>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('keluar') }}">
+            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Surat Keluar</span>
+                <span class="menu-title">Data</span>
             </a>
         </li>
         {{-- <li class="nav-item">
@@ -124,7 +145,7 @@
             </div>
         </li> --}}
 
-        <li class="nav-item sidebar-user-actions">
+        {{-- <li class="nav-item sidebar-user-actions">
             <div class="sidebar-user-menu">
                 <a href="#" class="nav-link"><i class="mdi mdi-settings menu-icon"></i>
                     <span class="menu-title">Settings</span>
@@ -136,7 +157,7 @@
                 <a href="#" class="nav-link"><i class="mdi mdi-speedometer menu-icon"></i>
                     <span class="menu-title">Take Tour</span></a>
             </div>
-        </li>
+        </li> --}}
         {{-- <li class="nav-item sidebar-user-actions">
         <div class="sidebar-user-menu">
           <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>

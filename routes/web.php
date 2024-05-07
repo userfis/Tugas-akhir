@@ -28,12 +28,14 @@ Route::post('/logout',[LoginController::class, 'logout']);
 Route::get('/home',[Datacontroller::class, 'dashboard'])->middleware('auth')->name('home');
 Route::get('/master-data',[DataInformasicontroller::class, 'master'])->middleware('auth')->name('master');
 
+Route::get('/decrypt-file/{data:id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
 Route::get('/data-keluar',[DatakeluarController::class, 'dataKeluar'])->middleware('auth')->name('keluar');
 // Route::get('/kirim-email',[DataInformasiController::class, 'email'])->middleware('auth');
 Route::get('/tambah-data',[DataInformasicontroller::class, 'viewTambah'])->middleware('auth')->name('tambah');
 Route::post('/create-data',[DataInformasicontroller::class, 'createDataInformasi'])->middleware('auth')->name('tambah_data');
 Route::post('/{data:id}/hapus',[DataInformasicontroller::class,'hapusDatainformasi'])->middleware('auth');
+Route::get('/{data:id}/detail-surat',[DataInformasicontroller::class, 'viewDetail'])->middleware('auth');
 Route::get('/{data:id}/edit-data',[DataInformasicontroller::class, 'viewEdit'])->middleware('auth');
 // Route::post('/{data:id}/kirim-email',[DataInformasiController::class, 'email'])->middleware('auth');
 Route::post('/{data:id}/update-data',[DataInformasicontroller::class, 'editDataInformasi'])->middleware('auth');
