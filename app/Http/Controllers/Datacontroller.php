@@ -12,8 +12,7 @@ class Datacontroller extends Controller
         $data = Data::whereNotIn('status', ['ditolak'])
             ->where(function ($query) {
                 $search = request('search');
-                $query->where('judul', 'like', "%" . $search . "%")
-                    ->orWhere('nomor_surat', 'like', "%" . $search . "%");
+                $query->Where('nomor_surat', 'like', "%" . $search . "%");
             })
             ->orderBy('updated_at', 'DESC')
             ->get();

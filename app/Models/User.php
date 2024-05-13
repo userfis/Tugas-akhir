@@ -13,4 +13,9 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     protected $table = 'users';
     protected $guarded = ['id'];
+
+    public function hasRole($roleValue)
+    {
+        return $this->is_admin == $roleValue; // Misalkan is_admin merupakan atribut yang menunjukkan peran sebagai admin
+    }
 }

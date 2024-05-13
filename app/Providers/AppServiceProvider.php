@@ -24,8 +24,35 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('superadmin', function(User $user){
 
-            return $user ->is_admin;
+            return $user->is_admin == 0;
         });
+        Gate::define('ketuaKpu', function(User $user){
+
+            return $user->is_admin == 1;
+        });
+        Gate::define('sekretaris', function(User $user){
+
+            return $user->is_admin == 2;
+        });
+        Gate::define('staffDat', function(User $user){
+
+            return $user->is_admin == 3;
+        });
+        Gate::define('staffHuk', function(User $user){
+
+            return $user->is_admin == 4;
+        });
+        Gate::define('staffKeu', function(User $user){
+
+            return $user->is_admin == 5;
+        });
+        Gate::define('staffTek', function(User $user){
+
+            return $user->is_admin == 6;
+        });
+        
+        
+        
         
     }
 }

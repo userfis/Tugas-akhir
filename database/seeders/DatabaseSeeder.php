@@ -24,19 +24,63 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        User::create([
+                 'nama' => 'sekretaris',
+                 'email' => 'ravioctiannafis@gmail.com',
+                 'username' => 'sekre',
+                 'password' => bcrypt('111111'),
+                 'is_admin' => '2'
+             ]);
         User::create([
                  'nama' => 'ravi',
                  'email' => 'ravioctiannafis@gmail.com',
                  'username' => 'admin',
-                 'password' => bcrypt('111111')
+                 'password' => bcrypt('111111'),
+                 'is_admin' => '0'
              ]);
 
              User::create([
                 'nama' => 'Ketua KPU',
                 'email' => 'robert990@gmail.com',
                 'username' => 'ketuakpu',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'is_admin' => '1'
             ]);
+
+            User::create([
+                'nama' => 'staff data',
+                'email' => 'ravioctiannafis@gmail.com',
+                'username' => 'data',
+                'password' => bcrypt('111111'),
+                'is_admin' => '3'
+            ]);
+
+            User::create([
+                'nama' => 'staff hukum',
+                'email' => 'ravioctiannafis@gmail.com',
+                'username' => 'hukum',
+                'password' => bcrypt('111111'),
+                'is_admin' => '4'
+            ]);
+
+            User::create([
+                'nama' => 'staff keuangan',
+                'email' => 'ravioctiannafis@gmail.com',
+                'username' => 'keuangan',
+                'password' => bcrypt('111111'),
+                'is_admin' => '5'
+            ]);
+    
+
+            User::create([
+                'nama' => 'staff teknis',
+                'email' => 'ravioctiannafis@gmail.com',
+                'username' => 'teknis',
+                'password' => bcrypt('111111'),
+                'is_admin' => '6'
+            ]);
+
 
             Divisi::create([
                 'divisi' => 'Data & Informasi'

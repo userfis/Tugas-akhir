@@ -82,6 +82,7 @@
                                                                 <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
+                                                                <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
                                                                 <th> Lampiran </th>
@@ -97,6 +98,7 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $data->nomor_agenda }}</td>
                                                                     <td>{{ $data->nomor_surat }}</td>
+                                                                    <td>{{ $data->perihal }}</td>
                                                                     <td>{{ $data->kategori->kategori_surat }}</td>
                                                                     <td>{{ $data->asal_surat }}</td>
                                                                     <td>{{ $data->lampiran }}</td>

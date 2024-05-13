@@ -89,6 +89,7 @@ class DataInformasicontroller extends Controller
             'perihal' => 'required|max:255',
             'lampiran' => 'required|max:255',
             'nomor_agenda' => 'required|max:255',
+            'status' => '',
             'file' => 'required|file|max:2400|mimes:pdf',
         ]);
 

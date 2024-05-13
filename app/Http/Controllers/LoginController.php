@@ -19,7 +19,36 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/home');
+
+            if (Auth::user()->is_admin == '0') {
+                // echo "superadmin"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '1') {
+                // echo "sekretaris"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '2') {
+                // echo "Ketua KPU"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '3') {
+                // echo "Staff data"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '4') {
+                // echo "staff hukum"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '5') {
+                // echo "staff keuangan"; die();
+                return redirect()->intended('/home');
+            }
+            elseif (Auth::user()->is_admin == '6') {
+                // echo "staff teknis"; die();
+                return redirect()->intended('/home');
+            }
+            // return redirect()->intended('/home');
         }
         else{
             return redirect('login')->with('alert','Username atau Password, Salah !');

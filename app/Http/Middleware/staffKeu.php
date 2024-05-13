@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class supAdmin
+class staffKeu
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class supAdmin
     {
         if(Auth::check()){
 
-            if(Auth::user()->is_admin == 0){
+            if(Auth::user()->is_admin == 5){
                 return $next($request);
     
             }
@@ -31,9 +31,5 @@ class supAdmin
                 Auth::logout();
                 return redirect(url('login'));
             }
-        }
     }
-    // if (!auth()->check() || !auth()->user()->is_admin) {
-    //     abort(430);
-    // }
-    // return $next($request);
+}

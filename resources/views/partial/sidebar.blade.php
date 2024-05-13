@@ -1,40 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <ul class="nav">
         <li class="nav-item nav-category">Main</li>
-        {{-- <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-          <span class="menu-title">Dashboard</span>
-        </a>
-      </li> --}}
-        {{-- <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Data & Informasi</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk') }}">Data Masuk</a></li>
-
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#keuangan" aria-expanded="false" aria-controls="keuangan">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">Keuangan</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="keuangan">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master-keuangan') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk-keuangan') }}">Data Masuk</a></li>
-                </ul>
-            </div>
-        </li> --}}
-
+        @can('superadmin')
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
@@ -68,54 +35,128 @@
                 </ul>
             </div>
         </li>
-        {{-- </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#keuangan" aria-expanded="false" aria-controls="keuangan">
-                <span class="icon-bg"><i class="mdi mdi-bank menu-icon"></i></span>
-                <span class="menu-title">Keuangan</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="keuangan"> <!-- pastikan id unik -->
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master-keuangan') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk-keuangan') }}">Data Masuk</a></li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#teknis" aria-expanded="false" aria-controls="teknis">
-                <span class="icon-bg"><i class="mdi mdi-clipboard-text menu-icon"></i></span>
-                <span class="menu-title">Teknis</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="teknis"> <!-- pastikan id unik -->
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master-teknis') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk-teknis') }}">Data Masuk</a></li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#hukum" aria-expanded="false" aria-controls="hukum">
-                <span class="icon-bg"><i class="mdi mdi-scale-balance menu-icon"></i></span>
-                <span class="menu-title">Hukum</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="hukum"> <!-- pastikan id unik -->
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('master-hukum') }}">Master Data</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('masuk-hukum') }}">Data Masuk</a></li>
-                </ul>
-            </div>
-        </li> --}}
-
         <li class="nav-item">
             <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Data</span>
             </a>
         </li>
-        {{-- <li class="nav-item">
+        @endcan
+        @can('staffKeu')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Unggah Data</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Arsip Data</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('staffHuk')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Unggah Data</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Arsip Data</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('staffDat')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Unggah Data</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Arsip Data</span>
+            </a>
+        </li>
+        @endcan
+
+        @can('staffTek')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Periksa Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Unggah Data</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Arsip Data</span>
+            </a>
+        </li>
+        @endcan
+        
+    </ul>
+</nav>
+
+
+
+
+{{-- <li class="nav-item">
             <a class="nav-link" href="pages/charts/chartjs.html">
                 <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
                 <span class="menu-title">Charts</span>
@@ -174,5 +215,3 @@
           </form>
         </div>
       </li> --}}
-    </ul>
-</nav>
