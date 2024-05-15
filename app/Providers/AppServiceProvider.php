@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
             return $user->is_admin == 0;
         });
-        Gate::define('ketuaKpu', function(User $user){
+        Gate::define('ketua', function(User $user){
 
             return $user->is_admin == 1;
         });

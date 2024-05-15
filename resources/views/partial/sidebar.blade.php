@@ -41,18 +41,18 @@
                 <span class="menu-title">Data</span>
             </a>
         </li>
-        @endcan
-        @can('staffKeu')
+        
+        @elsecan('staffKeu')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Masuk</span>
+                <span class="menu-title">Surat Masuk</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Keluar</span>
+                <span class="menu-title">Surat Keluar</span>
             </a>
         </li>
         <li class="nav-item">
@@ -67,19 +67,19 @@
                 <span class="menu-title">Arsip Data</span>
             </a>
         </li>
-        @endcan
+        
 
-        @can('staffHuk')
+        @elsecan('staffHuk')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Masuk</span>
+                <span class="menu-title">Surat Masuk</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Keluar</span>
+                <span class="menu-title">Surat Keluar</span>
             </a>
         </li>
         <li class="nav-item">
@@ -94,19 +94,19 @@
                 <span class="menu-title">Arsip Data</span>
             </a>
         </li>
-        @endcan
+        
 
-        @can('staffDat')
+        @elsecan('staffDat')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Masuk</span>
+                <span class="menu-title">Surat Masuk</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Keluar</span>
+                <span class="menu-title">Surat Keluar</span>
             </a>
         </li>
         <li class="nav-item">
@@ -121,19 +121,19 @@
                 <span class="menu-title">Arsip Data</span>
             </a>
         </li>
-        @endcan
+        
 
-        @can('staffTek')
+        @elsecan('staffTek')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Masuk</span>
+                <span class="menu-title">Surat Masuk</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Periksa Surat Keluar</span>
+                <span class="menu-title">Surat Keluar</span>
             </a>
         </li>
         <li class="nav-item">
@@ -146,6 +146,72 @@
             <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Arsip Data</span>
+            </a>
+        </li>
+        
+
+        @elsecan('sekretaris')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('masuk-hukum') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Data Masuk</span>
+            </a>
+        </li>
+    
+
+        @elsecan('ketua')
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('masuk-hukum') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Surat Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Surat Keluar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Cek Data Masuk</span>
             </a>
         </li>
         @endcan

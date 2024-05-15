@@ -31,17 +31,28 @@ class KeuanganController extends Controller
 
     public function masuk(){
         
-        $data = Data::where('divisi_id', '=', '2')
-        ->where(function($query) {
-            $query->where('status', '=', 'ditolak')
-                  ->orWhereNull('status');
-        })
+        $keu = Data::where('disposisi', '=', 'Staff Keuangan')
+        ->latest()
+        ->get();
+
+        $huk = Data::where('disposisi', '=', 'Staff Hukum')
+        ->latest()
+        ->get();
+
+        $data = Data::where('disposisi', '=', 'Staff Data & Informasi')
+        ->latest()
+        ->get();
+
+        $tek = Data::where('disposisi', '=', 'Staff Teknis')
         ->latest()
         ->get();
     
-        return view('Keuangan.masukKeuangan',[
+        return view('Keuangan.masukStaff',[
 
             'data' => $data,
+            'keu' => $keu,
+            'huk' => $huk,
+            'tek' => $tek,
             'Halaman' => 'Keuangan'
         ]);
     }

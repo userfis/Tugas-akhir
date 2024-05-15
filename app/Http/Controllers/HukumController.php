@@ -31,17 +31,18 @@ class HukumController extends Controller
 
     public function masuk(){
         
-        $data = Data::where('divisi_id', '=', '4')
-        ->where(function($query) {
-            $query->where('status', '=', 'ditolak')
-                  ->orWhereNull('status');
-        })
+        $sek = Data::where('disposisi', '=', 'Sekretaris')
         ->latest()
         ->get();
 
-        return view('Hukum.masukHuk',[
+        $ket = Data::where('disposisi', '=', 'Ketua Kpu')
+        ->latest()
+        ->get();
 
-            'data' => $data,
+        return view('Hukum.masukPim',[
+
+            'sek' => $sek,
+            'ket' => $ket,
             'Halaman' => 'Hukum'
         ]);
     }
