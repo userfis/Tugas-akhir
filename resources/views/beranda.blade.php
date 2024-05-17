@@ -4,14 +4,14 @@
         <h2 class="text-dark font-weight-bold mb-2">Dashboard</h2>
     </div>
     <div class="search-field d-none d-xl-block">
-        <form class="d-flex align-items-center h-100" action="{{ route('master') }}" method="GET">
+        {{-- <form class="d-flex align-items-center h-100" action="{{ route('master') }}" method="GET">
             <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                     <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
                 <input type="text" class="form-control bg-white border-0" name="search" placeholder="Search ..."  value="{{ request('search') }}">
             </div>
-        </form>
+        </form> --}}
     </div>
     <div class="row">
         <div class="col-md-12">

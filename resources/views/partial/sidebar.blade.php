@@ -31,7 +31,7 @@
             <div class="collapse" id="ui-basic"> <!-- pastikan id unik -->
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ route('masuk') }}">surat masuk</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('keluar') }}">surat keluar</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('surat-keluar') }}">surat keluar</a></li>
                 </ul>
             </div>
         </li>

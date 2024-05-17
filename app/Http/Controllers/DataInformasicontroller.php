@@ -18,21 +18,15 @@ use Illuminate\Support\Facades\Validator;
 
 class DataInformasicontroller extends Controller
 {
-    public function master()
+    public function keluar()
     {
 
-        $data = Data::where('divisi_id', '=', '1')
-            ->whereNotIn('status', ['ditolak'])
-            ->where(function ($query) {
-                $search = request('search');
-                $query->where('judul', 'like', "%" . $search . "%")
-                    ->orWhere('nomor_surat', 'like', "%" . $search . "%");
-            })
-            ->orderBy('updated_at', 'DESC')
-            ->get();
+        $data = Data::where('data_id', '=', '2')
+        ->latest()
+        ->get();
 
 
-        return view('dataInformasi.master', [
+        return view('dataInformasi.keluar', [
 
             'Halaman' => 'Data & Informasi',
             'data' => $data
@@ -59,6 +53,16 @@ class DataInformasicontroller extends Controller
         ]);
     }
 
+    public function viewTambahSK()
+    {
+        $kategori = Ketegori::all();
+        $rak = Rak::all();
+        return view('dataInformasi.createKeluarAdmin', [
+            'kategori' => $kategori,
+            'rak' => $rak
+        ]);
+    }
+
     public function viewDetail(Data $data)
     {
         return view('dataInformasi.detailSurat', [
@@ -75,6 +79,32 @@ class DataInformasicontroller extends Controller
             'kategori' => Ketegori::all()
             // 'divisi' => Divisi::all()
         ]);
+    }
+
+    public function createSK(Request $request)
+    {
+        //dd($request);
+        $validatedData = $request->validate([
+            'kategori_id' => 'required',
+            'data_id' => 'required',
+            'nomor_surat' => 'required|max:255',
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
+            'status' => '',
+            'disposisi' => 'required',
+            'file' => 'required|file|max:2400|mimes:pdf',
+        ]);
+
+        if ($request->file('file')) {
+            $validatedData['file'] = $request->file('file')->store('data-informasi');
+        }
+
+        Data::create($validatedData);
+        Alert::success('Success Title', 'Tambah data berhasil !');
+        return redirect('/master-data');
     }
 
     public function createDataInformasi(Request $request)
