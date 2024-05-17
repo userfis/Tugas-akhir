@@ -5,37 +5,42 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Data;
 use App\Models\Divisi;
+use App\Models\Ketegori;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class HukumController extends Controller
 {
-    public function master(){
+    public function keluar(){
 
-        $data = Data::where('divisi_id', '=', '4')
-        ->whereNotIn('status', ['ditolak'])
-        ->where(function ($query) {
-            $search = request('search');
-            $query->where('judul', 'like', "%" . $search . "%")
-                ->orWhere('nomor_surat', 'like', "%" . $search . "%");
-        })
-        ->orderBy('updated_at', 'DESC')
+        $sek = Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Sekretaris')
+        ->latest()
         ->get();
 
-        return view('Hukum.masterHuk',[
+        $ket =Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Ketua KPU')
+        ->latest()
+        ->get();
+
+        return view('Hukum.suratKeluarPim',[
 
             'Halaman' => 'Hukum',
-            'data' => $data
+            'sek' => $sek,
+            'ket' => $ket,
+            
         ]);
     }
 
     public function masuk(){
         
-        $sek = Data::where('disposisi', '=', 'Sekretaris')
+        $sek = Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Sekretaris')
         ->latest()
         ->get();
 
-        $ket = Data::where('disposisi', '=', 'Ketua Kpu')
+        $ket =Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Ketua KPU')
         ->latest()
         ->get();
 
@@ -50,8 +55,11 @@ class HukumController extends Controller
     public function viewTambah(){
 
         $data = Divisi::all();
-        return view('Hukum.createHuk',[
-            'data' => $data
+        $kategori = Ketegori::all();
+
+        return view('Hukum.createKeluar',[
+            'data' => $data,
+            'kategori' => $kategori
         ]);
     }
 
@@ -65,17 +73,20 @@ class HukumController extends Controller
 
     }
 
-    public function createHukum(Request $request)
+    public function createKeluar(Request $request)
     {
         $validatedData = $request->validate([
-            'divisi_id' => 'required',
+            'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'file' => 'required|file|max:2400|mimes:pdf',
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
             'status' => '',
-            'pesan' => '',
+            'disposisi' => 'required',            
+            'file' => 'required|file|max:2400|mimes:pdf',
 
         ]);
         // dd($validatedData);
@@ -86,7 +97,7 @@ class HukumController extends Controller
         
         Data::create($validatedData);
         Alert::success('Success Title', 'Tambah data berhasil !');
-        return redirect('/hukum/data-masuk');
+        return redirect('/hukum/master-data');
     }
 
     public function editHukum(Data $data, Request $request)

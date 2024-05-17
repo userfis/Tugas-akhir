@@ -5,45 +5,64 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Data;
 use App\Models\Divisi;
+use App\Models\Ketegori;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class KeuanganController extends Controller
 {
-    public function master(){
+    public function Keluar(){
 
-        $data = Data::where('divisi_id', '=', '2')
-        ->whereNotIn('status', ['ditolak'])
-        ->where(function ($query) {
-            $search = request('search');
-            $query->where('judul', 'like', "%" . $search . "%")
-                ->orWhere('nomor_surat', 'like', "%" . $search . "%");
-        })
-        ->orderBy('updated_at', 'DESC')
+        $keu = Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Staff Keuangan')
+        ->latest()
         ->get();
 
-        return view('Keuangan.masterKeuangan',[
+        $huk = Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Staff Hukum')
+        ->latest()
+        ->get();
+
+        $data = Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Staff Data & Informasi')
+        ->latest()
+        ->get();
+
+        $tek = Data::where('data_id', '=', '2')
+        ->where('disposisi', '=', 'Staff Teknis')
+        ->latest()
+        ->get();
+        
+
+        return view('Keuangan.suratKeluarStaff',[
 
             'Halaman' => 'Keuangan',
-            'data' => $data
+            'data' => $data,
+            'keu' => $keu,
+            'huk' => $huk,
+            'tek' => $tek
         ]);
     }
 
     public function masuk(){
         
-        $keu = Data::where('disposisi', '=', 'Staff Keuangan')
+        $keu = Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Staff Keuangan')
         ->latest()
         ->get();
 
-        $huk = Data::where('disposisi', '=', 'Staff Hukum')
+        $huk = Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Staff Hukum')
         ->latest()
         ->get();
 
-        $data = Data::where('disposisi', '=', 'Staff Data & Informasi')
+        $data = Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Staff Data & Informasi')
         ->latest()
         ->get();
 
-        $tek = Data::where('disposisi', '=', 'Staff Teknis')
+        $tek = Data::where('data_id', '=', '1')
+        ->where('disposisi', '=', 'Staff Teknis')
         ->latest()
         ->get();
     
@@ -60,25 +79,30 @@ class KeuanganController extends Controller
     public function viewTambah(){
 
         $data = Divisi::all();
-        return view('Keuangan.createKeu',[
-            'data' => $data
+        $kategori = Ketegori::all();
+        return view('Keuangan.createKeluarStaff',[
+            'data' => $data,
+            'kategori' => $kategori
         ]);
     }
 
-    public function createKeuangan(Request $request)
+    public function createKeluar(Request $request)
     {
         $validatedData = $request->validate([
-            'divisi_id' => 'required',
+            'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'file' => 'required|file|max:2400|mimes:pdf',
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
             'status' => '',
-            'pesan' => '',
+            'disposisi' => 'required',            
+            'file' => 'required|file|max:2400|mimes:pdf',
 
         ]);
-        // dd($validatedData);
+         dd($validatedData);
 
         if ($request->file('file')) {
             $validatedData['file'] = $request->file('file')->store('keuangan');
@@ -86,7 +110,7 @@ class KeuanganController extends Controller
         
         Data::create($validatedData);
         Alert::success('Success', 'Tambah data berhasil !');
-        return redirect('/keuangan/data-masuk');
+        return redirect('/keuangan/master-data');
         // ->with('success', 'Data berhasil di upload')
     }
 
