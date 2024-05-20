@@ -63,11 +63,12 @@ Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 
 // Route::post('/{data:id}/teknis/hapus',[TeknisController::class, 'hapusDatateknis'])->middleware('auth');
 
 Route::get('/hukum/master-data',[HukumController::class, 'keluar'])->middleware('auth')->name('keluar-hukum');
+Route::get('/cek-surat-masuk',[HukumController::class, 'cekSM'])->middleware('auth')->name('cek-sm');
 Route::get('/hukum/data-masuk',[HukumController::class, 'masuk'])->middleware('auth')->name('masuk-hukum');
 Route::get('/hukum/tambah-data',[HukumController::class, 'viewTambah'])->middleware('auth')->name('tambah-keluar');
 Route::post('/hukum/create-data',[HukumController::class, 'createKeluar'])->middleware('auth')->name('create-keluar');
-Route::get('/{data:id}/hukum/edit-data',[HukumController::class, 'viewEdit'])->middleware('auth');
-Route::post('/{data:id}/hukum/update-data',[HukumController::class, 'editHukum'])->middleware('auth');
+Route::get('/{data:id}/confirm-sm',[HukumController::class, 'viewKonfirm'])->middleware('auth');
+Route::post('/{data:id}/update-sm',[HukumController::class, 'konfirmData'])->middleware('auth');
 Route::post('/{data:id}/hukum/admin/update-data',[HukumController::class, 'adminEdithukum'])->middleware('auth');
 Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
 

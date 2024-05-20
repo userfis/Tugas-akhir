@@ -52,6 +52,26 @@ class HukumController extends Controller
         ]);
     }
 
+    public function cekSM(){
+        
+        $sek = Data::where('data_id', '=', '1')
+        ->where('status', '=', 'Proses Pengecekan')
+        ->latest()
+        ->get();
+
+        $ket =Data::where('data_id', '=', '1')
+        ->where('status', '=', 'Ajukan Ke Ketua KPU')
+        ->latest()
+        ->get();
+
+        return view('Hukum.cekSM',[
+
+            'sek' => $sek,
+            'ket' => $ket,
+            'Halaman' => 'Hukum'
+        ]);
+    }
+
     public function viewTambah(){
 
         $data = Divisi::all();
@@ -63,13 +83,33 @@ class HukumController extends Controller
         ]);
     }
 
-    public function viewEdit(Data $data){
+    public function viewKonfirm(Data $data){
 
-        return view('Hukum.editHuk',[
+        return view('Hukum.editSM',[
             'data' => $data,
             'divisi' => Divisi::all()
             // 'divisi' => Divisi::all()
         ]);
+
+    }
+
+    public function konfirmData(Data $data, Request $request)
+    {
+        // dd($request);
+        $rules = [
+
+            'status' => 'required|max:255',
+            'tindakan' => 'required|max:255',
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Surat Berhasil Diajukan !');
+        return redirect('/cek-surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
 
@@ -100,36 +140,7 @@ class HukumController extends Controller
         return redirect('/hukum/master-data');
     }
 
-    public function editHukum(Data $data, Request $request)
-    {
-        $rules = [
-
-            'divisi_id' => 'required',
-            'data_id' => 'required',
-            'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'file' => 'file|max:2400|mimes:pdf',
-
-        ];
-
-        
-        $validatedData = $request->validate($rules);
-        
-        if ($request->file('file')) {
-            if ($request->oldFile) {
-                Storage::delete($request->oldFile);
-            }
-            $validatedData['file'] = $request->file('file')->store('data-hukum');
-        }
-
-
-        Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Update data berhasil !');
-        return redirect('/hukum/data-masuk');
-        // ->with('success', 'Artikel Berhasil Di Update!')
-
-    }
+   
 
     public function hapusDatahukum(Data $data)
     {
