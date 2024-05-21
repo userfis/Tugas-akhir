@@ -11,7 +11,7 @@ class Rak extends Model
     protected $table = 'raks';
     protected $guarded = ['id'];
 
-    public function data(){
+    public function arsip(){
         return $this->hasMany(Data::class);
     }
 }

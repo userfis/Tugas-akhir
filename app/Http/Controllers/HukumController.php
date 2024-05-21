@@ -60,7 +60,7 @@ class HukumController extends Controller
         ->get();
 
         $ket =Data::where('data_id', '=', '1')
-        ->where('status', '=', 'Ajukan Ke Ketua KPU')
+        ->where('status', '=', 'Diajukan')
         ->latest()
         ->get();
 
@@ -93,7 +93,7 @@ class HukumController extends Controller
 
     }
 
-    public function konfirmData(Data $data, Request $request)
+    public function konfirmSM(Data $data, Request $request)
     {
         // dd($request);
         $rules = [
@@ -108,6 +108,27 @@ class HukumController extends Controller
         
         Data::where('id', $data->id)->update($validatedData);
         Alert::success('Success', 'Surat Berhasil Diajukan !');
+        return redirect('/cek-surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+    public function konfirmSMP(Data $data, Request $request)
+    {
+        // dd($request);
+        $rules = [
+
+            'status' => 'required|max:255',
+            'disposisi' => 'required|max:255',
+            'pesan' => 'required|max:255',
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Surat Berhasil Didisposisi !');
         return redirect('/cek-surat-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 

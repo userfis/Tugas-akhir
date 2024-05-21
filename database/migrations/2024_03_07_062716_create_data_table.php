@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('disposisi')->nullable();
             $table->string('status')->nullable();
             $table->string('pesan')->nullable();
-            $table->string('rak_id')->nullable();
+            // $table->string('rak_id')->nullable();
             $table->timestamps();
         });
     }

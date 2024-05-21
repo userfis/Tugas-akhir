@@ -55,7 +55,33 @@
                                                                 <td>{{ $data->asal_surat }}</td>
                                                                 <td>{{ $data->lampiran }}</td>
                                                                 <td>{{ $data->tanggal }}</td>
-                                                                <td>{{ $data->status }}</td>
+                                                                <td>
+                                                                    @if ($data->status == 'Selesai Disposisi')
+                                                                        <span class="badge badge-success"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif ($data->status == 'Proses Pengecekan')
+                                                                        <span class="badge badge-info"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fas fa-spinner"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif($data->status == 'Diajukan')
+                                                                        <span class="badge badge-warning"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-regular fa-paper-plane"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif($data->status == 'Disposisi')
+                                                                        <span class="badge badge-danger"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-solid fa-share"></i></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
                                                                 <td>
                                                                     <a href="/storage/{{ $data->file }}"
                                                                         class="btn btn-primary btn-rounded" target="blank">

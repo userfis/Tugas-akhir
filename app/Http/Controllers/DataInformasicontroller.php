@@ -6,12 +6,14 @@ use App\Models\Data;
 use App\Models\Email;
 use App\Models\Divisi;
 use App\Mail\Kirimemail;
+use App\Models\Arsip;
 use App\Models\Ketegori;
 use App\Models\Rak;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
@@ -32,14 +34,39 @@ class DataInformasicontroller extends Controller
             'data' => $data
         ]);
     }
+
     public function masuk()
     {
 
-       $data = Data::all();
+       $data = Data::where('data_id', '=', '1')
+       ->latest()
+       ->get();
         return view('dataInformasi.masuk', [
 
             'Halaman' => 'Data & Informasi',
             'data' => $data
+        ]);
+    }
+
+    public function arsip()
+    {
+
+        // $arsip = Arsip::where('data_id', '=', '1')->leftJoin('arsips' , 'arsips.surat_id', 'data.id')
+        // ->get();
+        // $arsip = Arsip::with('data')
+        // // ->where('data_id', '=', '1')
+        // ->get();
+
+        $arsip = DB::table('data')->where('data_id', '1')
+            ->leftJoin('arsips', 'arsips.surat_id', 'data.data_id')
+            ->leftJoin('raks', 'raks.id', 'arsips.rak_id')
+            ->get();
+        // dd($arsip);
+
+        return view('dataInformasi.arsip', [
+
+            'Halaman' => 'Data & Informasi',
+            'arsip' => $arsip
         ]);
     }
 

@@ -22,7 +22,6 @@
                                                                 <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
-                                                                <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
                                                                 <th> Disposisi </th>
@@ -38,12 +37,25 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $keu->nomor_agenda }}</td>
                                                                     <td>{{ $keu->nomor_surat }}</td>
-                                                                    <td>{{ $keu->perihal }}</td>
                                                                     <td>{{ $keu->kategori->kategori_surat }}</td>
                                                                     <td>{{ $keu->asal_surat }}</td>
                                                                     <td>{{ $keu->disposisi }}</td>
                                                                     <td>{{ $keu->tanggal }}</td>
-                                                                    <td>{{ $keu->status }}</td>
+                                                                    <td>
+                                                                        @if ($keu->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $keu->status }}
+                                                                            </span>
+                                                                        @elseif($keu->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $keu->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $keu->file }}"
                                                                             class="btn btn-primary btn-rounded" target="blank">
@@ -52,46 +64,57 @@
                                                                     </td>
                                                                     <td>
                                                                     <td>
-                                                                        <div class="d-flex">
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $keu->id }}/detail-surat"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $keu->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div>
-                                                                                <form action="/{{ $keu->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
+                                                                        @if ($keu->status == 'Disposisi')
+                                                                            <form id="submitForm"
+                                                                                action="/{{ $keu->id }}/terima-sm"
+                                                                                method="POST" class="forms-sample"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status"
+                                                                                    value="Selesai Disposisi">
+                                                                                <button type="button" class="btn btn-info"
+                                                                                    onclick="submitStatusForm()">Terima
+                                                                                    Surat</button>
+                                                                            </form>
+                                                                            <script>
+                                                                                function submitStatusForm() {
+                                                                                    document.getElementById('submitForm').submit();
+                                                                                }
+                                                                            </script>
+                                                                        @elseif ($keu->status == 'Selesai Disposisi')
+                                                                            <div class="d-flex">
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $keu->id }}/staff/konfirm-sm"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $keu->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-                                                    @elsecan('staffHuk')
+                                                @elsecan('staffHuk')
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
-                                                                <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
                                                                 <th> Disposisi </th>
@@ -107,12 +130,25 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $huk->nomor_agenda }}</td>
                                                                     <td>{{ $huk->nomor_surat }}</td>
-                                                                    <td>{{ $huk->perihal }}</td>
                                                                     <td>{{ $huk->kategori->kategori_surat }}</td>
                                                                     <td>{{ $huk->asal_surat }}</td>
                                                                     <td>{{ $huk->disposisi }}</td>
                                                                     <td>{{ $huk->tanggal }}</td>
-                                                                    <td>{{ $huk->status }}</td>
+                                                                    <td>
+                                                                        @if ($huk->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $huk->status }}
+                                                                            </span>
+                                                                        @elseif($huk->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $huk->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $huk->file }}"
                                                                             class="btn btn-primary btn-rounded" target="blank">
@@ -121,46 +157,57 @@
                                                                     </td>
                                                                     <td>
                                                                     <td>
-                                                                        <div class="d-flex">
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $huk->id }}/detail-surat"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $huk->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div>
-                                                                                <form action="/{{ $huk->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
+                                                                        @if ($huk->status == 'Disposisi')
+                                                                            <form id="submitForm"
+                                                                                action="/{{ $huk->id }}/terima-sm"
+                                                                                method="POST" class="forms-sample"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status"
+                                                                                    value="Selesai Disposisi">
+                                                                                <button type="button" class="btn btn-info"
+                                                                                    onclick="submitStatusForm()">Terima
+                                                                                    Surat</button>
+                                                                            </form>
+                                                                            <script>
+                                                                                function submitStatusForm() {
+                                                                                    document.getElementById('submitForm').submit();
+                                                                                }
+                                                                            </script>
+                                                                        @elseif ($huk->status == 'Selesai Disposisi')
+                                                                            <div class="d-flex">
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $huk->id }}/staff/konfirm-sm"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $huk->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-                                                    @elsecan('staffDat')
+                                                @elsecan('staffDat')
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
-                                                                <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
                                                                 <th> Disposisi </th>
@@ -176,12 +223,25 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $data->nomor_agenda }}</td>
                                                                     <td>{{ $data->nomor_surat }}</td>
-                                                                    <td>{{ $data->perihal }}</td>
                                                                     <td>{{ $data->kategori->kategori_surat }}</td>
                                                                     <td>{{ $data->asal_surat }}</td>
                                                                     <td>{{ $data->disposisi }}</td>
                                                                     <td>{{ $data->tanggal }}</td>
-                                                                    <td>{{ $data->status }}</td>
+                                                                    <td>
+                                                                        @if ($data->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $data->status }}
+                                                                            </span>
+                                                                        @elseif($data->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $data->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $data->file }}"
                                                                             class="btn btn-primary btn-rounded" target="blank">
@@ -190,46 +250,57 @@
                                                                     </td>
                                                                     <td>
                                                                     <td>
-                                                                        <div class="d-flex">
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $data->id }}/detail-surat"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $data->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div>
-                                                                                <form action="/{{ $data->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
+                                                                        @if ($data->status == 'Disposisi')
+                                                                            <form id="submitForm"
+                                                                                action="/{{ $data->id }}/terima-sm"
+                                                                                method="POST" class="forms-sample"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status"
+                                                                                    value="Selesai Disposisi">
+                                                                                <button type="button" class="btn btn-info"
+                                                                                    onclick="submitStatusForm()">Terima
+                                                                                    Surat</button>
+                                                                            </form>
+                                                                            <script>
+                                                                                function submitStatusForm() {
+                                                                                    document.getElementById('submitForm').submit();
+                                                                                }
+                                                                            </script>
+                                                                        @elseif ($data->status == 'Selesai Disposisi')
+                                                                            <div class="d-flex">
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $data->id }}/staff/konfirm-sm"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $data->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-                                                    @elsecan('staffTek')
+                                                @elsecan('staffTek')
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
                                                                 <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
-                                                                <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
                                                                 <th> Disposisi </th>
@@ -245,48 +316,74 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $tek->nomor_agenda }}</td>
                                                                     <td>{{ $tek->nomor_surat }}</td>
-                                                                    <td>{{ $tek->perihal }}</td>
                                                                     <td>{{ $tek->kategori->kategori_surat }}</td>
                                                                     <td>{{ $tek->asal_surat }}</td>
                                                                     <td>{{ $tek->disposisi }}</td>
                                                                     <td>{{ $tek->tanggal }}</td>
-                                                                    <td>{{ $tek->status }}</td>
+                                                                    <td>
+                                                                        @if ($tek->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $tek->status }}
+                                                                            </span>
+                                                                        @elseif($tek->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $tek->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $tek->file }}"
-                                                                            class="btn btn-primary btn-rounded" target="blank">
+                                                                            class="btn btn-primary btn-rounded"
+                                                                            target="blank">
                                                                             Lihat File
                                                                         </a>
                                                                     </td>
                                                                     <td>
                                                                     <td>
-                                                                        <div class="d-flex">
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $tek->id }}/detail-surat"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $tek->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div>
-                                                                                <form action="/{{ $tek->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
+                                                                        @if ($tek->status == 'Disposisi')
+                                                                            <form id="submitForm"
+                                                                                action="/{{ $tek->id }}/terima-sm"
+                                                                                method="POST" class="forms-sample"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status"
+                                                                                    value="Selesai Disposisi">
+                                                                                <button type="button" class="btn btn-info"
+                                                                                    onclick="submitStatusForm()">Terima
+                                                                                    Surat</button>
+                                                                            </form>
+                                                                            <script>
+                                                                                function submitStatusForm() {
+                                                                                    document.getElementById('submitForm').submit();
+                                                                                }
+                                                                            </script>
+                                                                        @elseif ($tek->status == 'Selesai Disposisi')
+                                                                            <div class="d-flex">
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $tek->id }}/staff/konfirm-sm"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $tek->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>

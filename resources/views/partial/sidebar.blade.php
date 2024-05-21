@@ -16,7 +16,7 @@
             </a>
             <div class="collapse" id="master"> <!-- pastikan id unik -->
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="#">Arsip Surat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip') }}">Arsip Surat</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Disposisi</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Kategori Surat</a></li>
                 </ul>
@@ -36,7 +36,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
+            <a class="nav-link" href="#">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Data</span>
             </a>
@@ -44,7 +44,7 @@
         
         @elsecan('staffKeu')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
             </a>
@@ -71,7 +71,7 @@
 
         @elsecan('staffHuk')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
             </a>
@@ -98,7 +98,7 @@
 
         @elsecan('staffDat')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
             </a>
@@ -125,7 +125,7 @@
 
         @elsecan('staffTek')
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('masuk-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
             </a>
@@ -185,7 +185,7 @@
 
         @elsecan('ketua')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('cek-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Cek Surat Masuk</span>
             </a>

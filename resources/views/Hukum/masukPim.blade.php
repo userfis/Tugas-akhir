@@ -53,7 +53,33 @@
                                                                     <td>{{ $ket->asal_surat }}</td>
                                                                     <td>{{ $ket->disposisi }}</td>
                                                                     <td>{{ $ket->tanggal }}</td>
-                                                                    <td>{{ $ket->status }}</td>
+                                                                    <td>
+                                                                        @if ($ket->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $data->status }}
+                                                                            </span>
+                                                                        @elseif ($ket->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $ket->status }}
+                                                                            </span>
+                                                                        @elseif($ket->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $ket->status }}
+                                                                            </span>
+                                                                        @elseif($ket->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $ket->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $ket->file }}"
                                                                             class="btn btn-primary btn-rounded" target="blank">
@@ -122,7 +148,33 @@
                                                                     <td>{{ $sek->asal_surat }}</td>
                                                                     <td>{{ $sek->disposisi }}</td>
                                                                     <td>{{ $sek->tanggal }}</td>
-                                                                    <td>{{ $sek->status }}</td>
+                                                                    <td>
+                                                                        @if ($sek->status == 'Selesai Disposisi')
+                                                                            <span class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $data->status }}
+                                                                            </span>
+                                                                        @elseif ($sek->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $sek->status }}
+                                                                            </span>
+                                                                        @elseif($sek->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $sek->status }}
+                                                                            </span>
+                                                                        @elseif($sek->status == 'Disposisi')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $sek->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $sek->file }}"
                                                                             class="btn btn-primary btn-rounded" target="blank">

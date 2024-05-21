@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Rak;
+use App\Models\Arsip;
 use App\Models\Email;
 use App\Models\Divisi;
+use App\Models\Ketegori;
 use App\Models\jenisData;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +33,9 @@ class Data extends Model
         return $this->belongsTo(Ketegori::class);
     }
 
-    public function rak(){
-        return $this->belongsTo(Rak::class);
+    
+    public function arsip(){
+        return $this->hasMany(Arsip::class,'surat_id', 'id');
     }
+
 }

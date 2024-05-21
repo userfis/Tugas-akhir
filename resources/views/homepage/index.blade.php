@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <!-- End plugin css for this page -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
@@ -37,6 +38,8 @@
     <!-- Custom js for this page -->
     <script src="/assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+    <!-- font awesome -->
+    <script src="https://use.fontawesome.com/your-embed-code.js"></script>
 </head>
 
 <body>

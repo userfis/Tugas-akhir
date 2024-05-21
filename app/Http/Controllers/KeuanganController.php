@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Rak;
 use App\Models\Data;
+use App\Models\Arsip;
 use App\Models\Divisi;
 use App\Models\Ketegori;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -125,41 +127,47 @@ class KeuanganController extends Controller
 
     public function viewEdit(Data $data){
 
-        return view('Keuangan.editKeu',[
+        $arsip = Arsip::where('surat_id', $data->id)->first();
+        return view('Keuangan.konfirmSM',[
             'data' => $data,
-            'divisi' => Divisi::all()
-            // 'divisi' => Divisi::all()
+            'rak' =>Rak::all(),
+            'arsip' =>$arsip
         ]);
 
     }
 
-    public function editKeuangan(Data $data, Request $request)
+    public function konfirmSM(Data $data, Request $request)
     {
         $rules = [
+            'surat_id' => 'required|max:255',
+            'tanggal_arsip' => 'required',
+            'rak_id' => 'required|max:255'
+        ];
+       
+        $validatedData = $request->validate($rules);
+        
+        Arsip::create($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/staff/surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
 
-            'divisi_id' => 'required',
-            'data_id' => 'required',
-            'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'file' => 'file|max:2400|mimes:pdf',
+    }
+
+    public function terimaSM(Data $data, Request $request)
+    {
+        // dd($request);
+        $rules = [
+
+            'status' => 'required|max:255',
 
         ];
 
         
         $validatedData = $request->validate($rules);
         
-        if ($request->file('file')) {
-            if ($request->oldFile) {
-                Storage::delete($request->oldFile);
-            }
-            $validatedData['file'] = $request->file('file')->store('keuangan');
-        }
-
-
         Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Update data berhasil !');
-        return redirect('/keuangan/data-masuk');
+        Alert::success('Success', 'Surat Telah Diterima !');
+        return redirect('/staff/surat-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
