@@ -64,9 +64,10 @@ Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 
 // Route::post('/{data:id}/teknis/admin/update-data',[TeknisController::class, 'adminEditteknis'])->middleware('auth');
 // Route::post('/{data:id}/teknis/hapus',[TeknisController::class, 'hapusDatateknis'])->middleware('auth');
 
-Route::get('/hukum/master-data',[HukumController::class, 'keluar'])->middleware('auth')->name('keluar-hukum');
+Route::get('/pimpinan/surat-keluar',[HukumController::class, 'keluar'])->middleware('auth')->name('pimpinan-sk');
 Route::get('/cek-surat-masuk',[HukumController::class, 'cekSM'])->middleware('auth')->name('cek-sm');
-Route::get('/hukum/data-masuk',[HukumController::class, 'masuk'])->middleware('auth')->name('masuk-hukum');
+Route::get('/pimpinan/surat-masuk',[HukumController::class, 'masuk'])->middleware('auth')->name('masuk-hukum');
+Route::post('/{data:id}/terima-smp',[HukumController::class, 'terimaSMP'])->middleware('auth');
 Route::get('/hukum/tambah-data',[HukumController::class, 'viewTambah'])->middleware('auth')->name('tambah-keluar');
 Route::post('/hukum/create-data',[HukumController::class, 'createKeluar'])->middleware('auth')->name('create-keluar');
 Route::get('/{data:id}/confirm-sm',[HukumController::class, 'viewKonfirm'])->middleware('auth');
@@ -74,6 +75,9 @@ Route::post('/{data:id}/update-sm',[HukumController::class, 'konfirmSM'])->middl
 Route::post('/{data:id}/update-smp',[HukumController::class, 'konfirmSMP'])->middleware('auth');
 Route::post('/{data:id}/hukum/admin/update-data',[HukumController::class, 'adminEdithukum'])->middleware('auth');
 Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
+Route::get('/{data:id}/pimpinan/konfirm-smp',[HukumController::class, 'viewEdit'])->middleware('auth');
+Route::post('/{data:id}/pimpinan/update-smp',[HukumController::class, 'arsipSM'])->middleware('auth');
+
 
 Route::get('/{data:id}/kirim-data',[DatakeluarController::class, 'kirimData'])->middleware('auth');
 Route::post('/{data:id}/kirim-email',[DatakeluarController::class, 'email'])->middleware('auth');

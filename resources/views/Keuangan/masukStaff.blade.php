@@ -249,7 +249,6 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                    <td>
                                                                         @if ($data->status == 'Disposisi')
                                                                             <form id="submitForm"
                                                                                 action="/{{ $data->id }}/terima-sm"
@@ -342,7 +341,6 @@
                                                                             Lihat File
                                                                         </a>
                                                                     </td>
-                                                                    <td>
                                                                     <td>
                                                                         @if ($tek->status == 'Disposisi')
                                                                             <form id="submitForm"

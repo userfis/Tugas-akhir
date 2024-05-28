@@ -58,7 +58,7 @@
                                                                             <span class="badge badge-success"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="mdi mdi-check"></i>
-                                                                                {{ $data->status }}
+                                                                                {{ $ket->status }}
                                                                             </span>
                                                                         @elseif ($ket->status == 'Proses Pengecekan')
                                                                             <span class="badge badge-info"
@@ -87,19 +87,29 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                    <td>
+                                                                        @if ($ket->status == 'Disposisi')
+                                                                        <form id="submitForm"
+                                                                            action="/{{ $ket->id }}/terima-smp"
+                                                                            method="POST" class="forms-sample"
+                                                                            enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <input type="hidden" name="status"
+                                                                                value="Selesai Disposisi">
+                                                                            <button type="button" class="btn btn-info"
+                                                                                onclick="submitStatusForm()">Terima
+                                                                                Surat</button>
+                                                                        </form>
+                                                                        <script>
+                                                                            function submitStatusForm() {
+                                                                                document.getElementById('submitForm').submit();
+                                                                            }
+                                                                        </script>
+                                                                    @elseif ($ket->status == 'Selesai Disposisi')
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $ket->id }}/detail-surat"
+                                                                                <a href="/{{ $ket->id }}/pimpinan/konfirm-smp"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $ket->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
@@ -116,6 +126,7 @@
                                                                                 </form>
                                                                             </div>
                                                                         </div>
+                                                                    @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>
@@ -150,30 +161,30 @@
                                                                     <td>{{ $sek->tanggal }}</td>
                                                                     <td>
                                                                         @if ($sek->status == 'Selesai Disposisi')
-                                                                            <span class="badge badge-success"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="mdi mdi-check"></i>
-                                                                                {{ $data->status }}
-                                                                            </span>
-                                                                        @elseif ($sek->status == 'Proses Pengecekan')
-                                                                            <span class="badge badge-info"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="fas fa-spinner"></i>
-                                                                                {{ $sek->status }}
-                                                                            </span>
-                                                                        @elseif($sek->status == 'Diajukan')
-                                                                            <span class="badge badge-warning"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="fa-regular fa-paper-plane"></i>
-                                                                                {{ $sek->status }}
-                                                                            </span>
-                                                                        @elseif($sek->status == 'Disposisi')
-                                                                            <span class="badge badge-danger"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="fa-solid fa-share"></i></i>
-                                                                                {{ $sek->status }}
-                                                                            </span>
-                                                                        @endif
+                                                                        <span class="badge badge-success"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $sek->status }}
+                                                                        </span>
+                                                                    @elseif ($sek->status == 'Proses Pengecekan')
+                                                                        <span class="badge badge-info"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fas fa-spinner"></i>
+                                                                            {{ $sek->status }}
+                                                                        </span>
+                                                                    @elseif($sek->status == 'Diajukan')
+                                                                        <span class="badge badge-warning"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-regular fa-paper-plane"></i>
+                                                                            {{ $sek->status }}
+                                                                        </span>
+                                                                    @elseif($sek->status == 'Disposisi')
+                                                                        <span class="badge badge-danger"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-solid fa-share"></i></i>
+                                                                            {{ $sek->status }}
+                                                                        </span>
+                                                                    @endif
                                                                     </td>
                                                                     <td>
                                                                         <a href="/storage/{{ $sek->file }}"
@@ -182,35 +193,46 @@
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                    <td>
-                                                                        <div class="d-flex">
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $sek->id }}/detail-surat"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-eye"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $sek->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <div>
-                                                                                <form action="/{{ $sek->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
+                                                                        @if ($sek->status == 'Disposisi')
+                                                                            <form id="submitForm"
+                                                                                action="/{{ $sek->id }}/terima-smp"
+                                                                                method="POST" class="forms-sample"
+                                                                                enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <input type="hidden" name="status"
+                                                                                    value="Selesai Disposisi">
+                                                                                <button type="button" class="btn btn-info"
+                                                                                    onclick="submitStatusForm()">Terima
+                                                                                    Surat</button>
+                                                                            </form>
+                                                                            <script>
+                                                                                function submitStatusForm() {
+                                                                                    document.getElementById('submitForm').submit();
+                                                                                }
+                                                                            </script>
+                                                                        @elseif ($sek->status == 'Selesai Disposisi')
+                                                                            <div class="d-flex">
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $sek->id }}/pimpinan/konfirm-smp"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $sek->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
+                                                                        @endif
                                                                     </td>
                                                             @endforeach
                                                         </tbody>

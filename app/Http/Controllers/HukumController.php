@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Rak;
 use App\Models\Data;
+use App\Models\Arsip;
 use App\Models\Divisi;
 use App\Models\Ketegori;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -109,6 +111,53 @@ class HukumController extends Controller
         Data::where('id', $data->id)->update($validatedData);
         Alert::success('Success', 'Surat Berhasil Diajukan !');
         return redirect('/cek-surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+    public function terimaSMP(Data $data, Request $request)
+    {
+        // dd($request);
+        $rules = [
+
+            'status' => 'required|max:255',
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Surat Telah Diterima !');
+        return redirect('/pimpinan/surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+    public function viewEdit(Data $data){
+
+        $arsip = Arsip::where('surat_id', $data->id)->first();
+        return view('Hukum.konfirmSMP',[
+            'data' => $data,
+            'rak' =>Rak::all(),
+            'arsip' =>$arsip
+        ]);
+
+    }
+
+    public function arsipSM(Data $data, Request $request)
+    {
+        $rules = [
+            'surat_id' => 'required|max:255',
+            'tanggal_arsip' => 'required',
+            'rak_id' => 'required|max:255'
+        ];
+       
+        $validatedData = $request->validate($rules);
+        
+        Arsip::create($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/pimpinan/surat-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
