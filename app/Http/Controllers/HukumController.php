@@ -74,6 +74,26 @@ class HukumController extends Controller
         ]);
     }
 
+    public function cekSK(){
+        
+        $sek = Data::where('data_id', '=', '2')
+        ->where('status', '=', 'Proses Pengecekan')
+        ->latest()
+        ->get();
+
+        $ket =Data::where('data_id', '=', '2')
+        ->where('status', '=', 'Diajukan')
+        ->latest()
+        ->get();
+
+        return view('Hukum.cekSK',[
+
+            'sek' => $sek,
+            'ket' => $ket,
+            'Halaman' => 'Hukum'
+        ]);
+    }
+
     public function viewTambah(){
 
         $data = Divisi::all();
@@ -92,6 +112,35 @@ class HukumController extends Controller
             'divisi' => Divisi::all()
             // 'divisi' => Divisi::all()
         ]);
+
+    }
+
+    public function viewKonfirmSK(Data $data){
+
+        return view('Hukum.editSK',[
+            'data' => $data,
+            'divisi' => Divisi::all()
+            // 'divisi' => Divisi::all()
+        ]);
+
+    }
+
+    public function konfirmSK(Data $data, Request $request)
+    {
+        $rules = [
+
+            'status' => 'required|max:255',
+            'tindakan' => 'required|max:255',
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Surat Berhasil Diajukan !');
+        return redirect('/cek-surat-keluar');
+        // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
 
@@ -158,6 +207,27 @@ class HukumController extends Controller
         Arsip::create($validatedData);
         Alert::success('Success', 'Update data berhasil !');
         return redirect('/pimpinan/surat-masuk');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
+    }
+
+    public function konfirmSKP(Data $data, Request $request)
+    {
+        dd($request);
+        $rules = [
+
+            'status' => 'required|max:255',
+            'tindakan' => 'required|max:255',
+            'pesan' => 'required|max:255',
+
+        ];
+
+        
+        $validatedData = $request->validate($rules);
+        
+        Data::where('id', $data->id)->update($validatedData);
+        Alert::success('Success', 'Surat Berhasil Didisposisi !');
+        return redirect('/cek-surat-keluar');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
     }

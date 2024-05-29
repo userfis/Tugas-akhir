@@ -50,7 +50,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('keluar-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Keluar</span>
             </a>
@@ -77,7 +77,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('keluar-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Keluar</span>
             </a>
@@ -104,7 +104,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('keluar-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Keluar</span>
             </a>
@@ -131,7 +131,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('keluar-keuangan') }}">
+            <a class="nav-link" href="{{ route('staff-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Keluar</span>
             </a>
@@ -158,7 +158,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('cek-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Cek Surat Keluar</span>
             </a>
@@ -191,7 +191,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('cek-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Cek Surat Keluar</span>
             </a>

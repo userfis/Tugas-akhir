@@ -58,6 +58,10 @@
                                                             <td>{{ $sek->tanggal }}</td>
                                                             <td>{{ $sek->status }}</td>
                                                             <td>
+                                                                {{-- <a href="/dekripsi/{{ $sek->id }}"
+                                                                    class="btn btn-primary btn-rounded" target="blank">
+                                                                    Lihat File
+                                                                </a> --}}
                                                                 <a href="/storage/{{ $sek->file }}"
                                                                     class="btn btn-primary btn-rounded" target="blank">
                                                                     Lihat File
@@ -67,11 +71,11 @@
                                                             <td>
                                                                 <div class="d-flex">
                                                                     <div class="mr-1">
-                                                                        <a href="/{{ $sek->id }}/detail-surat"
+                                                                        {{-- <a href="/{{ $sek->id }}/detail-surat"
                                                                             class="btn btn-primary btn-rounded">
                                                                             <i class="mdi mdi-eye"
                                                                                 style="font-size: 15px;"></i>
-                                                                        </a>
+                                                                        </a> --}}
                                                                     </div>
                                                                     <div class="mr-1">
                                                                         <a href="/{{ $sek->id }}/edit-data"

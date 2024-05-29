@@ -9,7 +9,7 @@
              @csrf
             <h3 class="card-title">Detail Surat</h3>
             <div class="form-group border-bottom">
-                <label for="tanggal" class="text-black"><strong>Tanggal</strong></label>
+                <label for="tanggal" class="text-black"><strong>Tanggal Surat Keluar</strong></label>
                 <p class="text-black">{{ $data->tanggal }}</p>
             </div>
 
