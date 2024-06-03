@@ -70,6 +70,7 @@
                     </div>
                     <br>
                     <input type="text" name="data_id" id="data_id" value="2" hidden>
+                    <input type="text" name="data_id" id="pass_id" value="2" hidden>
                     <input type="text" name="status" id="status" value="Proses Pengecekan" hidden>
                     <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
                     <a href="{{ route('masuk') }}" class="btn btn-light" fdprocessedid="p0f3cn">Cancel</a>

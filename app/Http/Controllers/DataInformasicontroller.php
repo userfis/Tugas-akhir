@@ -136,6 +136,7 @@ class DataInformasicontroller extends Controller
 
     public function createDataInformasi(Request $request)
     {
+        $request->merge(['pass_id' => (string) 1]);
         // dd($request);
         $validatedData = $request->validate([
             'kategori_id' => 'required',
@@ -148,14 +149,31 @@ class DataInformasicontroller extends Controller
             'nomor_agenda' => 'required|max:255',
             'status' => '',
             'file' => 'required|file|max:2400|mimes:pdf',
+            'pass_id' => 'required|string'
         ]);
 
         if ($request->file('file')) {
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+
+            // Encrypt the file content using AES encryption
+            $encryptedContent = Crypt::encrypt($fileContent);
+
+            // Define a storage path and filename
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = 'data-informasi/' . $originalFileName . '.txt';
+
+            Storage::put($fileName, $encryptedContent);
+
+            // Save the path to the database
+            $validatedData['file'] = $fileName;
         }
 
+        // dd($validatedData);
+
         Data::create($validatedData);
-        Alert::success('Success Title', 'Tambah data berhasil !');
+        Alert::success('Success', 'Tambah data berhasil !');
         return redirect('/data-masuk');
     }
 

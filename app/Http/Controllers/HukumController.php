@@ -8,6 +8,7 @@ use App\Models\Arsip;
 use App\Models\Divisi;
 use App\Models\Ketegori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -255,6 +256,8 @@ class HukumController extends Controller
 
     public function createKeluar(Request $request)
     {
+        $request->merge(['pass_id' => (string) 1]);
+        // dd($request);
         $validatedData = $request->validate([
             'kategori_id' => 'required',
             'data_id' => 'required',
@@ -265,19 +268,32 @@ class HukumController extends Controller
             'lampiran' => 'required|max:255',
             'nomor_agenda' => 'required|max:255',
             'status' => '',
-            'disposisi' => 'required',            
+            'disposisi' => 'required',
             'file' => 'required|file|max:2400|mimes:pdf',
-
+            'pass_id' => 'required|string'
         ]);
-        // dd($validatedData);
 
         if ($request->file('file')) {
-            $validatedData['file'] = $request->file('file')->store('data-hukum');
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+
+            // Encrypt the file content using AES encryption
+            $encryptedContent = Crypt::encrypt($fileContent);
+
+            // Define a storage path and filename
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = 'data-hukum/' . $originalFileName . '.txt';
+
+            Storage::put($fileName, $encryptedContent);
+
+            // Save the path to the database
+            $validatedData['file'] = $fileName;
         }
-        
+
         Data::create($validatedData);
-        Alert::success('Success Title', 'Tambah data berhasil !');
-        return redirect('/hukum/master-data');
+        Alert::success('Success', 'Tambah data berhasil !');
+        return redirect('/staff/surat-keluar');
     }
 
    
