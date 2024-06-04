@@ -31,6 +31,13 @@ Route::get('/master-data',[DataInformasicontroller::class, 'keluar'])->middlewar
 Route::get('/decrypt-file/{data:id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
 Route::get('/master/arsip',[DataInformasicontroller::class, 'arsip'])->middleware('auth')->name('arsip');
+Route::get('/master/kategori',[DataInformasicontroller::class, 'kategori'])->middleware('auth')->name('kategori');
+Route::get('/master/daftar-rak',[DataInformasicontroller::class, 'rak'])->middleware('auth')->name('rak');
+Route::post('/create/rak',[DataInformasicontroller::class, 'createRak'])->middleware('auth')->name('tambah-rak');
+Route::post('/{rak:id}/hapus/rak',[DataInformasicontroller::class, 'hapusRak'])->middleware('auth');
+Route::get('/rak/{id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
+Route::post('/create/kategori',[DataInformasicontroller::class, 'createKategori'])->middleware('auth')->name('tambah-kategori');
+Route::post('/{kategori:id}/hapus/kategori',[DataInformasicontroller::class, 'hapusKategori'])->middleware('auth');
 Route::get('/data-keluar',[DatakeluarController::class, 'dataKeluar'])->middleware('auth')->name('keluar');
 Route::get('/tambah/surat-keluar',[DataInformasiController::class, 'viewTambahSK'])->middleware('auth')->name('tambah-SK');
 Route::post('/create-sk',[DataInformasicontroller::class, 'createSK'])->middleware('auth')->name('create-SK');
@@ -45,15 +52,15 @@ Route::post('/{data:id}/update-data',[DataInformasicontroller::class, 'editDataI
 Route::post('/{data:id}/admin/update-data',[DataInformasicontroller::class, 'adminEditDataInformasi'])->middleware('auth');
 //Route::get('/download/{data}',[DataInformasicontroller::class,'download'])->middleware('auth')->name('download');
 
-Route::get('/staff/surat-keluar',[KeuanganController::class, 'keluar'])->middleware('auth')->name('staff-sk');
-Route::get('/staff/surat-masuk',[KeuanganController::class, 'masuk'])->middleware('auth')->name('staff-sm');
-Route::get('/keuangan/tambah-data',[KeuanganController::class, 'viewTambah'])->middleware('auth')->name('tambah-keluar-staff');
-Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeluar'])->middleware('auth')->name('create-keluar-staff');
-Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware('auth');
-Route::get('/{data:id}/staff/konfirm-sm',[KeuanganController::class, 'viewEdit'])->middleware('auth');
-Route::post('/{data:id}/staff/update-sm',[KeuanganController::class, 'konfirmSM'])->middleware('auth');
-Route::post('/{data:id}/terima-sm',[KeuanganController::class, 'terimaSM'])->middleware('auth');
-Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 'adminEditKeuangan'])->middleware('auth');
+Route::get('/staff/surat-keluar',[KeuanganController::class, 'keluar'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('staff-sk');
+Route::get('/staff/surat-masuk',[KeuanganController::class, 'masuk'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('staff-sm');
+Route::get('/keuangan/tambah-data',[KeuanganController::class, 'viewTambah'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('tambah-keluar-staff');
+Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeluar'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('create-keluar-staff');
+Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::get('/{data:id}/staff/konfirm-sm',[KeuanganController::class, 'viewEdit'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::post('/{data:id}/staff/update-sm',[KeuanganController::class, 'konfirmSM'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::post('/{data:id}/terima-sm',[KeuanganController::class, 'terimaSM'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 'adminEditKeuangan'])->middleware(['auth','multiple.roles:3,4,5,6']);
 Route::post('/dekripsi/{data:id}',[KeuanganController::class, 'dekripsi'])->middleware('auth');
 
 // Route::get('/teknis/master-data',[TeknisController::class, 'master'])->middleware('auth')->name('master-teknis');

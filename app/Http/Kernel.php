@@ -3,12 +3,13 @@
 namespace App\Http;
 
 use App\Http\Middleware\ketuaKpu;
-use App\Http\Middleware\Sekretaris;
 use App\Http\Middleware\staffDat;
 use App\Http\Middleware\staffHuk;
 use App\Http\Middleware\staffKeu;
 use App\Http\Middleware\staffTek;
 use App\Http\Middleware\supAdmin;
+use App\Http\Middleware\Sekretaris;
+use App\Http\Middleware\MultipleRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -78,5 +79,6 @@ class Kernel extends HttpKernel
         'staffHuk' => staffHuk::class,
         'staffDat' => staffDat::class,
         'staffTek' => staffTek::class,
+        'multiple.roles' => MultipleRole::class,
     ];
 }

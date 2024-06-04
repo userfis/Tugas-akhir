@@ -70,6 +70,76 @@ class DataInformasicontroller extends Controller
         ]);
     }
 
+    public function kategori(){
+
+        return view('dataInformasi.kategori', [
+            'kategori' => Ketegori::all(),
+            'Halaman' => 'Kategori Surat'
+        ]);
+
+    }
+
+    public function createKategori(Request $request)
+    {
+        // dd($request);
+        $validatedData = $request->validate([
+            'kategori_surat' => 'required',
+        ]);
+
+        Ketegori::create($validatedData);
+        Alert::success('Success Title', 'Tambah data berhasil !');
+        return redirect('/master/kategori');
+    }
+
+    public function hapusKategori(Ketegori $kategori)
+    {
+        // dd($request);
+        Ketegori::destroy($kategori->id);
+        Alert::success('Success', 'data berhasil di hapus !');
+        return redirect('/master/kategori');
+    }
+
+    public function rak(){
+
+        return view('dataInformasi.rak', [
+            'rak' => Rak::all(),
+            'halaman' => 'Daftar Rak'
+        ]);
+    }
+
+    public function show($id){
+        $rak = Rak::find($id);
+        return response()->json($rak);
+    }
+
+    public function createRak(Request $request)
+    {
+        // dd($request);
+        $validatedData = $request->validate([
+            'pemilik_rak' => 'required',
+            'nama_rak' => 'required',
+        ]);
+
+        Rak::create($validatedData);
+        Alert::success('Success Title', 'Tambah data berhasil !');
+        return redirect('/master/daftar-rak');
+    }
+
+    public function hapusRak(Rak $rak)
+    {
+        // dd($request);
+        Rak::destroy($rak->id);
+        Alert::success('Success', 'Jenis Rak Berhasil di Hapus !');
+        return redirect('/master/daftar-rak');
+    }
+
+    public function editRak(Rak $rak){
+        return view('dataInformasi.rak', [
+            'rak' => $rak,
+        ]);
+    }
+
+
     public function viewTambah()
     {
         $kategori = Ketegori::all();
@@ -110,7 +180,8 @@ class DataInformasicontroller extends Controller
 
     public function createSK(Request $request)
     {
-        //dd($request);
+        // dd($request);
+        $request->merge(['pass_id' => (string) 2]);
         $validatedData = $request->validate([
             'kategori_id' => 'required',
             'data_id' => 'required',
@@ -123,15 +194,31 @@ class DataInformasicontroller extends Controller
             'status' => '',
             'disposisi' => 'required',
             'file' => 'required|file|max:2400|mimes:pdf',
+            'pass_id' => 'required|string'
+
         ]);
 
         if ($request->file('file')) {
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+
+            // Encrypt the file content using AES encryption
+            $encryptedContent = Crypt::encrypt($fileContent);
+
+            // Define a storage path and filename
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $fileName = 'keuangan/' . $originalFileName . '.txt';
+
+            Storage::put($fileName, $encryptedContent);
+
+            // Save the path to the database
+            $validatedData['file'] = $fileName;
         }
 
         Data::create($validatedData);
-        Alert::success('Success Title', 'Tambah data berhasil !');
-        return redirect('/master-data');
+        Alert::success('Success', 'Tambah data berhasil !');
+        return redirect('/data-keluar');
     }
 
     public function createDataInformasi(Request $request)

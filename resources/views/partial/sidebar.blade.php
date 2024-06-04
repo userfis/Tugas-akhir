@@ -18,7 +18,8 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ route('arsip') }}">Arsip Surat</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Disposisi</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Kategori Surat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('kategori') }}">Kategori Surat</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('rak') }}">Rak</a></li>
                 </ul>
             </div>
         </li>

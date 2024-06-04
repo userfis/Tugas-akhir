@@ -150,12 +150,53 @@
                                                                         @endif
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/storage/{{ $huk->file }}"
-                                                                            class="btn btn-primary btn-rounded" target="blank">
+                                                                        <a href="#" class="btn btn-primary btn-rounded"
+                                                                            data-toggle="modal" data-target="#myModal">
                                                                             Lihat File
                                                                         </a>
+
+                                                                        <!-- Modal -->
+                                                                        <div class="modal fade" id="myModal" tabindex="-1"
+                                                                            role="dialog" aria-labelledby="myModalLabel"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel">Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $huk->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                    <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id" value="{{ $huk->pass_id }}" hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </td>
-                                                                    <td>
                                                                     <td>
                                                                         @if ($huk->status == 'Disposisi')
                                                                             <form id="submitForm"

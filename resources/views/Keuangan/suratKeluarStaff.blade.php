@@ -82,7 +82,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $data->id }}"
+                                                                                            action="/dekripsi/{{ $huk->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -91,7 +91,7 @@
                                                                                                     <input type="text"
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
-                                                                                                    name="pass_id" value="{{ $data->pass_id }}" hidden>
+                                                                                                    name="pass_id" value="{{ $huk->pass_id }}" hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
                                                                                                     id="password"
@@ -314,7 +314,7 @@
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $data->id }}"
+                                                                                        action="/dekripsi/{{ $keu->id }}"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <div class="form-group">
@@ -323,7 +323,7 @@
                                                                                                 <input type="text"
                                                                                                 class="form-control"
                                                                                                 id="pass_id"
-                                                                                                name="pass_id" value="{{ $data->pass_id }}" hidden>
+                                                                                                name="pass_id" value="{{ $keu->pass_id }}" hidden>
                                                                                             <input type="password"
                                                                                                 class="form-control"
                                                                                                 id="password"
@@ -427,7 +427,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $data->id }}"
+                                                                                            action="/dekripsi/{{ $tek->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -436,7 +436,7 @@
                                                                                                     <input type="text"
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
-                                                                                                    name="pass_id" value="{{ $data->pass_id }}" hidden>
+                                                                                                    name="pass_id" value="{{ $tek->pass_id }}" hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
                                                                                                     id="password"

@@ -22,10 +22,10 @@
                                                             <th> Nomor Agenda </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
-                                                            <th> Kategori Surat </th>
-                                                            <th> Pengirim </th>
+                                                            <th> Asal Surat </th>
                                                             <th> Lampiran </th>
-                                                            <th> Tgl Surat </th>
+                                                            <th> Tanggal Arsip </th>
+                                                            <th> Kode Rak </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

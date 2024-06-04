@@ -96,6 +96,7 @@ class KeuanganController extends Controller
     public function createKeluar(Request $request)
     {
         // dd($request);
+        $request->merge(['pass_id' => (string) 2]);
         $validatedData = $request->validate([
             'kategori_id' => 'required',
             'data_id' => 'required',
@@ -108,6 +109,7 @@ class KeuanganController extends Controller
             'status' => '',
             'disposisi' => 'required',
             'file' => 'required|file|max:2400|mimes:pdf',
+            'pass_id' => 'required'
         ]);
 
         if ($request->file('file')) {
