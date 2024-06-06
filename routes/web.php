@@ -26,14 +26,17 @@ Route::post('/login',[LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::get('/home',[Datacontroller::class, 'dashboard'])->middleware('auth')->name('home');
-Route::get('/master-data',[DataInformasicontroller::class, 'keluar'])->middleware('auth')->name('surat-keluar');
-
+Route::get('/surat-keluar',[DataInformasicontroller::class, 'keluar'])->middleware('auth')->name('surat-keluar');
+Route::get('/data-user',[DataInformasicontroller::class, 'user'])->middleware('auth')->name('data-user');
+Route::get('/tambah/data-user',[DataInformasicontroller::class, 'tambahUser'])->middleware('auth')->name('tambah-user');
+Route::post('/create/data-user', [DataInformasicontroller::class, 'createUser'])->name('create-user');
 Route::get('/decrypt-file/{data:id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
 Route::get('/master/arsip',[DataInformasicontroller::class, 'arsip'])->middleware('auth')->name('arsip');
 Route::get('/master/kategori',[DataInformasicontroller::class, 'kategori'])->middleware('auth')->name('kategori');
 Route::get('/master/daftar-rak',[DataInformasicontroller::class, 'rak'])->middleware('auth')->name('rak');
 Route::post('/create/rak',[DataInformasicontroller::class, 'createRak'])->middleware('auth')->name('tambah-rak');
+Route::post('/rak/update/{id}', [DataInformasicontroller::class, 'updateRak'])->name('rak.update');
 Route::post('/{rak:id}/hapus/rak',[DataInformasicontroller::class, 'hapusRak'])->middleware('auth');
 Route::get('/rak/{id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::post('/create/kategori',[DataInformasicontroller::class, 'createKategori'])->middleware('auth')->name('tambah-kategori');

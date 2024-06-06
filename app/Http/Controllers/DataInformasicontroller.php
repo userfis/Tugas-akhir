@@ -2,24 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rak;
 use App\Models\Data;
+use App\Models\User;
+use App\Models\Arsip;
 use App\Models\Email;
 use App\Models\Divisi;
 use App\Mail\Kirimemail;
-use App\Models\Arsip;
 use App\Models\Ketegori;
-use App\Models\Rak;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
 class DataInformasicontroller extends Controller
 {
+
+    public function createUser(Request $request)
+    {
+        // dd($request);
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email',
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6|confirmed',
+            'is_admin' => 'required',
+
+        ],[
+            'password.required' => 'Kolom password harus diisi.',
+            'password.min' => 'Password harus terdiri dari minimal :min karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai.',
+        ]);
+
+        $validatedData['password'] = Hash::make($request->password);
+
+        User::create($validatedData);
+        Alert::success('Success Title', 'Tambah User Berhasil !');
+        return redirect('/data-user');
+    }
+    
+    public function tambahUser(){
+        return view('dataInformasi.tambahUser', [
+
+            'Halaman' => 'Daftar Data User',
+            'data' => User::all()
+        ]); 
+    }
+
+    public function user(){
+
+        return view('dataInformasi.dataUser', [
+
+            'Halaman' => 'Daftar Data User',
+            'data' => User::all()
+        ]); 
+    }
     public function keluar()
     {
 
@@ -107,10 +149,10 @@ class DataInformasicontroller extends Controller
         ]);
     }
 
-    public function show($id){
-        $rak = Rak::find($id);
-        return response()->json($rak);
-    }
+    // public function show($id){
+    //     $rak = Rak::find($id);
+    //     return response()->json($rak);
+    // }
 
     public function createRak(Request $request)
     {
@@ -133,11 +175,24 @@ class DataInformasicontroller extends Controller
         return redirect('/master/daftar-rak');
     }
 
-    public function editRak(Rak $rak){
-        return view('dataInformasi.rak', [
-            'rak' => $rak,
+    public function updateRak(Request $request, $id)
+    {
+        // dd($request);
+        $request->validate([
+            'nama_rak' => 'required|string|max:255',
+            'pemilik_rak' => 'required|string|max:255',
         ]);
+
+        // Update data ke database
+        $rak = Rak::find($id);
+        $rak->nama_rak = $request->input('nama_rak');
+        $rak->pemilik_rak = $request->input('pemilik_rak');
+        $rak->save();
+
+        Alert::success('Success', 'Data Berhasil di Update !');
+        return redirect('/master/daftar-rak');
     }
+    
 
 
     public function viewTambah()
@@ -218,7 +273,7 @@ class DataInformasicontroller extends Controller
 
         Data::create($validatedData);
         Alert::success('Success', 'Tambah data berhasil !');
-        return redirect('/data-keluar');
+        return redirect('/surat-keluar');
     }
 
     public function createDataInformasi(Request $request)

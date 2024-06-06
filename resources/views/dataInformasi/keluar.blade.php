@@ -83,10 +83,54 @@
                                                                 @endif
                                                             </td>
                                                             <td>
-                                                                <a href="/storage/{{ $data->file }}"
-                                                                    class="btn btn-primary btn-rounded" target="blank">
-                                                                    Lihat File
-                                                                </a>
+                                                                <a href="#" class="btn btn-primary btn-rounded"
+                                                                        data-toggle="modal" data-target="#myModal"
+                                                                        target="blank">
+                                                                        Lihat File
+                                                                    </a>
+                                                                    {{-- modal --}}
+                                                                    <div class="modal fade" id="myModal" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="myModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title"
+                                                                                        id="myModalLabel">Masukkan Password
+                                                                                        Dekripsi</h5>
+                                                                                    <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form id="decryptForm"
+                                                                                        action="/dekripsi/{{ $data->id }}"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <div class="form-group">
+                                                                                            <label
+                                                                                                for="password">Password</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                id="pass_id"
+                                                                                                name="pass_id"
+                                                                                                value="{{ $data->pass_id }}"
+                                                                                                hidden>
+                                                                                            <input type="password"
+                                                                                                class="form-control"
+                                                                                                id="password"
+                                                                                                name="password" required>
+                                                                                        </div>
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-primary">Submit</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                             </td>
                                                             <td>
                                                             <td>
