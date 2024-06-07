@@ -45,7 +45,7 @@ class DataInformasicontroller extends Controller
         Alert::success('Success Title', 'Tambah User Berhasil !');
         return redirect('/data-user');
     }
-    
+
     public function tambahUser(){
         return view('dataInformasi.tambahUser', [
 
@@ -53,6 +53,47 @@ class DataInformasicontroller extends Controller
             'data' => User::all()
         ]); 
     }
+
+    public function editUser(User $user){
+        return view('dataInformasi.editUser', [
+
+            'Halaman' => 'Daftar Data User',
+            'user' => $user
+        ]); 
+    }
+
+
+    public function updateUser(Request $request, User $user)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email',
+            'username' => 'required|string|max:255',
+            'is_admin' => 'required',
+            'current_password' => 'required_with:password|string',
+            'password' => 'nullable|string|min:6|confirmed',
+        ], [
+            'current_password.required_with' => 'Kolom password lama harus diisi jika ingin mengubah password.',
+            'password.min' => 'Password baru harus terdiri dari minimal :min karakter.',
+            'password.confirmed' => 'Konfirmasi password baru tidak sesuai.',
+        ]);
+    
+        if ($request->filled('password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+            }
+            $validatedData['password'] = Hash::make($request->password);
+        } else {
+            unset($validatedData['password']);
+        }
+    
+        $user->update($validatedData);
+    
+        Alert::success('Success Title', 'Update User Berhasil !');
+        return redirect('/data-user');
+    }
+    
+
 
     public function user(){
 
@@ -119,6 +160,19 @@ class DataInformasicontroller extends Controller
             'Halaman' => 'Kategori Surat'
         ]);
 
+    }
+
+    public function updateKategori(Request $request, Ketegori $kategori)
+    {
+        // dd($request);
+        $validatedData = $request->validate([
+            'kategori_surat' => 'required|string|max:255',
+        ]);
+
+        $kategori->update($validatedData);
+
+        Alert::success('Success Title', 'Update data berhasil!');
+        return redirect('/master/kategori');
     }
 
     public function createKategori(Request $request)
@@ -442,138 +496,3 @@ class DataInformasicontroller extends Controller
     }
 }
 
-
-// private function encryptData($data)
-// {
-
-//     $key = config('app.key'); 
-//     $cipher = 'aes-256-cbc';
-//     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher)); 
-//     $encryptedData = openssl_encrypt($data, $cipher, $key, 0, $iv);
-
-//     return $encryptedData . '::' . base64_encode($iv);
-// }
-
-// public function show(Data $data)
-// {
-    
-//    // Ambil konten file terenkripsi dari direktori
-//    $encryptedContent = Storage::get($data->file);
-
-//    // Dekripsi konten file
-//    $decryptedContent = Crypt::decrypt($encryptedContent);
-
-//    // Simpan konten terdekripsi ke dalam file sementara
-//    $tempFilePath = tempnam(sys_get_temp_dir(), 'decrypted_file_');
-//    file_put_contents($tempFilePath, $decryptedContent);
-
-//    // Return response berupa file PDF yang telah didekripsi
-//    return response()->file($tempFilePath); // Mengatur nama file // Mengatur nama file
-// }
-
-    // public function createDataInformasi(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'divisi_id' => 'required',
-    //         'data_id' => 'required',
-    //         'nomor_surat' => 'required|max:255',
-    //         'judul' => 'required|max:255',
-    //         'tahun' => 'required|max:255',
-    //         'file' => 'required|file|max:2400|mimes:pdf',
-    //         'status' => '',
-    //         'pesan' => '',
-
-    //     ]);
-    //     if ($request->file('file')) {
-    //         // Baca file ke dalam variabel
-    //         $file = $request->file('file');
-
-    //         // Baca konten file
-    //         $fileContent = file_get_contents($file->path());
-
-    //         // Enkripsi konten file menggunakan AES-128
-    //         $encryptionKey = 'enkripsifile1234'; // Ganti dengan kunci enkripsi Anda
-    //         $encryptedFileContent = openssl_encrypt($fileContent, 'aes-128-cbc', $encryptionKey, 0, $encryptionKey);
-
-    //         // Konversi konten file terenkripsi ke format Base64
-    //         $base64EncryptedFileContent = base64_encode($encryptedFileContent);
-
-    //         // Simpan konten file terenkripsi dalam format Base64 ke penyimpanan
-    //         $encryptedFileName = $file->getClientOriginalName() . '.enc';
-    //         Storage::put('enkripsi-file/' . $encryptedFileName, $base64EncryptedFileContent);
-
-    //         // Simpan nama file terenkripsi ke dalam array validatedData
-    //         $validatedData['file'] = $encryptedFileName;
-    //     }
-    //     Data::create($validatedData);
-    //     Alert::success('Success Title', 'Tambah data berhasil !');
-    //     return redirect('/data-masuk');
-    // }
-
-    // public function decryptFile($id)
-    // {
-    //     // Temukan data file berdasarkan ID
-    //     $fileData = Data::findOrFail($id); // Ganti FileModel dengan model Anda
-    
-    //     // Dapatkan nama file terenkripsi dari data file
-    //     $encryptedFileName = $fileData->encrypted_file_name;
-    
-    //     // Baca file terenkripsi dari penyimpanan
-    //     $encryptedFileContent = Storage::get('enkripsi-file/' . $encryptedFileName);
-    
-    //     // Dekode konten file dari Base64
-    //     $encryptedFileContent = base64_decode($encryptedFileContent);
-    
-    //     // Dekripsi konten file menggunakan AES-128
-    //     $encryptionKey = 'enkripsifile1234'; // Pastikan ini sesuai dengan kunci enkripsi Anda
-    //     $decryptedFileContent = openssl_decrypt($encryptedFileContent, 'aes-128-cbc', $encryptionKey, 0, $encryptionKey);
-    
-    //     // Simpan file terdekripsi dalam penyimpanan atau kembalikan sebagai respons
-    //     // Misalnya, simpan ke direktori yang diinginkan
-    //     Storage::put('dekripsi-file/' . $encryptedFileName, $decryptedFileContent);
-    
-    //     // Atau kembalikan file terdekripsi sebagai respons
-    //     return response()->streamDownload(function () use ($decryptedFileContent) {
-    //         echo $decryptedFileContent;
-    //     }, $encryptedFileName, ['Content-Type' => 'application/pdf']);
-    // }
-    
-
-    //enkripsi file
-
-    // public function editDataInformasi(Data $data, Request $request)
-    // {
-    //     $rules = [
-    //         'file' => 'file|max:2400|mimes:pdf',
-    //     ];
-
-    //     $validatedData = $request->validate($rules);
-
-    //     if ($request->file('file')) {
-    //         // Baca file ke dalam variabel
-    //         $file = $request->file('file');
-
-    //         // Baca konten file
-    //         $fileContent = file_get_contents($file->path());
-
-    //         // Enkripsi konten file menggunakan AES-128
-    //         $encryptionKey = 'enkripsifile1234'; // Ganti dengan kunci enkripsi Anda
-    //         $encryptedFileContent = openssl_encrypt($fileContent, 'aes-128-cbc', $encryptionKey, 0, $encryptionKey);
-
-    //         // Konversi konten file terenkripsi ke format Base64
-    //         $base64EncryptedFileContent = base64_encode($encryptedFileContent);
-
-    //         // Simpan konten file terenkripsi dalam format Base64 ke penyimpanan
-    //         $encryptedFileName = $file->getClientOriginalName() . '.enc';
-    //         Storage::put('enkripsi-file/' . $encryptedFileName, $base64EncryptedFileContent);
-
-    //         // Simpan nama file terenkripsi ke dalam array validatedData
-    //         $validatedData['file'] = $encryptedFileName;
-    //     }
-
-    //     // Update data dengan data terenkripsi
-    //     $data->update($validatedData);
-
-    //     Alert::success('Success', 'File berhasil dienkripsi dan disimpan!');
-    //     return redirect('/data-masuk');
-    // }

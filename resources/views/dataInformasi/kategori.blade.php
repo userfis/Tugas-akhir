@@ -66,7 +66,13 @@
                                                                 <td>{{ $kat->kategori_surat}}</td>
                                                                 <td>
                                                                     <div class="d-flex">
-                                                                        <div>
+                                                                        <div class="mr-1">
+                                                                            <button type="button" class="btn btn-primary btn-rounded" data-toggle="modal" data-target="#modal-form" data-id="{{ $kat->id }}" data-kategori_surat="{{ $kat->kategori_surat }}">
+                                                                                <i class="mdi mdi-tooltip-edit"
+                                                                                style="font-size: 15px;"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        {{-- <div>
                                                                             <form action="/{{ $kat->id }}/hapus/kategori"
                                                                                 method="POST">
                                                                                 @csrf
@@ -77,7 +83,7 @@
                                                                                         style="font-size: 15px;"></i>
                                                                                 </button>
                                                                             </form>
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -95,4 +101,46 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="editKategoriLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editKategoriLabel">Edit Kategori</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="POST" enctype="multipart/form-data" id="edit-form">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="hidden" id="kat-id" name="id">
+                        <div class="form-group">
+                            <label for="kategori_surat">Kategori Surat</label>
+                            <input type="text" class="form-control" id="kategori_surat" name="kategori_surat" required>
+                        </div>
+                        <!-- Tambahkan input lain sesuai kebutuhan -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('button[data-toggle="modal"]').click(function() {
+                var id = $(this).data('id');
+                var kategoriSurat = $(this).data('kategori_surat');
+
+                $('#modal-form #kat-id').val(id);
+                $('#modal-form #kategori_surat').val(kategoriSurat);
+
+                // Update form action to include the correct route
+                $('#edit-form').attr('action', '/update/kategori/' + id);
+            });
+        });
+    </script>
 @endsection

@@ -26,7 +26,7 @@
                                                             <th> Email </th>
                                                             <th> Username </th>
                                                             <th> Role </th>
-                                                            <th> Ganti Password </th>
+                                                            <th> Reset Password </th>
                                                             <th> Action </th>
                                                         </tr>
                                                     </thead>
@@ -37,7 +37,8 @@
                                                                 <td>{{ $data->nama}}</td>
                                                                 <td>{{ $data->email}}</td>
                                                                 <td>{{ $data->username}}</td>
-                                                                <td>@if ($data->is_admin == '0')
+                                                                <td>
+                                                                @if ($data->is_admin == '0')
                                                                     Admin TU
                                                                 @elseif ($data->is_admin == '1')
                                                                     Ketua
@@ -57,22 +58,22 @@
                                                                                 <button type="submit"
                                                                                     class="btn btn-info"
                                                                                     fdprocessedid="91w77s">
-                                                                                    Ganti Password
+                                                                                    Reset Password
                                                                                 </button>
                                                                 </td>
 
                                                                 <td>
                                                                     <div class="d-flex">
                                                                         <div class="mr-1">
-                                                                            <button type="button"
+                                                                            <a href="/{{ $data->id }}/edit-user"
                                                                                 class="btn btn-primary btn-rounded">
-                                                                                <i class="mdi mdi-tooltip-edit"></i>
-                                                                            </button>
+                                                                                <i class="mdi mdi-tooltip-edit"
+                                                                                    style="font-size: 15px;"></i>
+                                                                            </a>
                                                                         </div>
                                                                         {{-- @foreach ($rak as $item)                                                                                                                                                   --}}
 
                                                                         {{-- @endforeach --}}
-
 
                                                                         <div>
                                                                             <form action=""

@@ -29,6 +29,8 @@ Route::get('/home',[Datacontroller::class, 'dashboard'])->middleware('auth')->na
 Route::get('/surat-keluar',[DataInformasicontroller::class, 'keluar'])->middleware('auth')->name('surat-keluar');
 Route::get('/data-user',[DataInformasicontroller::class, 'user'])->middleware('auth')->name('data-user');
 Route::get('/tambah/data-user',[DataInformasicontroller::class, 'tambahUser'])->middleware('auth')->name('tambah-user');
+Route::get('/{user:id}/edit-user',[DataInformasicontroller::class, 'editUser'])->middleware('auth');
+Route::post('/{user:id}/update-user',[DataInformasicontroller::class, 'updateUser'])->middleware('auth');
 Route::post('/create/data-user', [DataInformasicontroller::class, 'createUser'])->name('create-user');
 Route::get('/decrypt-file/{data:id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
@@ -41,6 +43,7 @@ Route::post('/{rak:id}/hapus/rak',[DataInformasicontroller::class, 'hapusRak'])-
 Route::get('/rak/{id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::post('/create/kategori',[DataInformasicontroller::class, 'createKategori'])->middleware('auth')->name('tambah-kategori');
 Route::post('/{kategori:id}/hapus/kategori',[DataInformasicontroller::class, 'hapusKategori'])->middleware('auth');
+Route::post('/update/kategori/{kategori:id}',[DataInformasicontroller::class, 'updateKategori'])->middleware('auth');
 Route::get('/data-keluar',[DatakeluarController::class, 'dataKeluar'])->middleware('auth')->name('keluar');
 Route::get('/tambah/surat-keluar',[DataInformasiController::class, 'viewTambahSK'])->middleware('auth')->name('tambah-SK');
 Route::post('/create-sk',[DataInformasicontroller::class, 'createSK'])->middleware('auth')->name('create-SK');
