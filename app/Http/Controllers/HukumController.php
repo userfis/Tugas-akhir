@@ -11,20 +11,52 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class HukumController extends Controller
 {
+
+    public function searchSKPim(Request $request)
+    {
+        $searchQuery = $request->input('query');
+    
+        $ket = Data::where('data_id', '2')
+            ->where('disposisi', 'Ketua KPU')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        $sek = Data::where('data_id', '2')
+            ->where('disposisi', 'Sekretaris')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        return view('Hukum.suratKeluarPim', [
+            'ket' => $ket,
+            'sek' => $sek,
+            'Halaman' => 'Keuangan'
+        ]);
+    }
+
+
     public function keluar(){
 
         $sek = Data::where('data_id', '=', '2')
         ->where('disposisi', '=', 'Sekretaris')
         ->latest()
-        ->get();
+        ->paginate(10);
 
         $ket =Data::where('data_id', '=', '2')
         ->where('disposisi', '=', 'Ketua KPU')
         ->latest()
-        ->get();
+        ->paginate(10);
 
         return view('Hukum.suratKeluarPim',[
 
@@ -35,17 +67,46 @@ class HukumController extends Controller
         ]);
     }
 
+    public function searchSMPim(Request $request)
+    {
+        $searchQuery = $request->input('query');
+    
+        $ket = Data::where('data_id', '1')
+            ->where('disposisi', 'Ketua KPU')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        $sek = Data::where('data_id', '1')
+            ->where('disposisi', 'Sekretaris')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        return view('Hukum.masukPim', [
+            'ket' => $ket,
+            'sek' => $sek,
+            'Halaman' => 'Keuangan'
+        ]);
+    }
+
     public function masuk(){
         
         $sek = Data::where('data_id', '=', '1')
         ->where('disposisi', '=', 'Sekretaris')
         ->latest()
-        ->get();
+        ->paginate(5);
 
         $ket =Data::where('data_id', '=', '1')
         ->where('disposisi', '=', 'Ketua KPU')
         ->latest()
-        ->get();
+        ->paginate(5);
 
         return view('Hukum.masukPim',[
 
@@ -60,12 +121,12 @@ class HukumController extends Controller
         $sek = Data::where('data_id', '=', '1')
         ->where('status', '=', 'Proses Pengecekan')
         ->latest()
-        ->get();
+        ->paginate(10);
 
         $ket =Data::where('data_id', '=', '1')
         ->where('status', '=', 'Diajukan')
         ->latest()
-        ->get();
+        ->paginate(10);
 
         return view('Hukum.cekSM',[
 
@@ -75,20 +136,18 @@ class HukumController extends Controller
         ]);
     }
 
-    public function cekSK(){
-        
+    public function cekSK() {
         $sek = Data::where('data_id', '=', '2')
-        ->where('status', '=', 'Proses Pengecekan')
-        ->latest()
-        ->get();
-
-        $ket =Data::where('data_id', '=', '2')
-        ->where('status', '=', 'Diajukan')
-        ->latest()
-        ->get();
-
-        return view('Hukum.cekSK',[
-
+            ->where('status', '=', 'Proses Pengecekan')
+            ->latest()
+            ->paginate(10);
+    
+        $ket = Data::where('data_id', '=', '2')
+            ->where('status', '=', 'Diajukan')
+            ->latest()
+            ->paginate(10);
+    
+        return view('Hukum.cekSK', [
             'sek' => $sek,
             'ket' => $ket,
             'Halaman' => 'Hukum'

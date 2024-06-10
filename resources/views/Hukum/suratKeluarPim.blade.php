@@ -2,7 +2,21 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Data Masuk {{ $Halaman }} </h2>
+        <h2 class="text-dark font-weight-bold mb-2"> Data Surat Keluar </h2>
+    </div>
+    <div class="search-field d-xl-block mb-0">
+        <form class="d-flex align-items-center h-100" action="{{ route('keluar-pim-search') }}" method="GET">
+            <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                    {{-- <i class="input-group-text border-0 mdi mdi-magnify"></i> --}}
+                </div>
+                <input type="text" class="form-control bg-white border-0" name="query"
+                    placeholder="Cari berdasarkan nomor surat atau perihal">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </div>
+        </form>
     </div>
     {{-- <div class="search-field d-none d-xl-block">
         <form class="d-flex align-items-center h-100" action="#">
@@ -46,31 +60,55 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($sek as $sek)
+                                                    @foreach ($sek as $s)
                                                         <tr>
                                                             <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $sek->nomor_agenda }}</td>
-                                                            <td>{{ $sek->nomor_surat }}</td>
-                                                            <td>{{ $sek->perihal }}</td>
-                                                            <td>{{ $sek->kategori->kategori_surat }}</td>
-                                                            <td>{{ $sek->asal_surat }}</td>
-                                                            <td>{{ $sek->lampiran }}</td>
-                                                            <td>{{ $sek->tanggal }}</td>
-                                                            <td>{{ $sek->status }}</td>
+                                                            <td>{{ $s->nomor_agenda }}</td>
+                                                            <td>{{ $s->nomor_surat }}</td>
+                                                            <td>{{ $s->perihal }}</td>
+                                                            <td>{{ $s->kategori->kategori_surat }}</td>
+                                                            <td>{{ $s->asal_surat }}</td>
+                                                            <td>{{ $s->lampiran }}</td>
+                                                            <td>{{ $s->tanggal }}</td>
+                                                            <td>@if ($s->status == 'Berkas Siap Dikirim')
+                                                                <span class="badge badge-success"
+                                                                    style="font-size: 0.8rem;">
+                                                                    <i class="mdi mdi-check"></i>
+                                                                    {{ $s->status }}
+                                                                </span>
+                                                            @elseif ($s->status == 'Proses Pengecekan')
+                                                                <span class="badge badge-info"
+                                                                    style="font-size: 0.8rem;">
+                                                                    <i class="fas fa-spinner"></i>
+                                                                    {{ $s->status }}
+                                                                </span>
+                                                            @elseif($s->status == 'Diajukan')
+                                                                <span class="badge badge-warning"
+                                                                    style="font-size: 0.8rem;">
+                                                                    <i class="fa-regular fa-paper-plane"></i>
+                                                                    {{ $s->status }}
+                                                                </span>
+                                                            @elseif($s->status == 'Perbaiki')
+                                                                <span class="badge badge-danger"
+                                                                    style="font-size: 0.8rem;">
+                                                                    <i class="fa-solid fa-share"></i></i>
+                                                                    {{ $s->status }}
+                                                                </span>
+                                                            @endif</td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-rounded"
-                                                                data-toggle="modal" data-target="#myModal{{ $sek->id }}" target="blank">
+                                                                data-toggle="modal" data-target="#myModal{{ $s->id }}" target="blank">
                                                                 Lihat File
                                                             </a>
                                                     
-                                                            <div class="modal fade" id="myModal{{ $sek->id }}" tabindex="-1"
-                                                                role="dialog" aria-labelledby="myModalLabel{{ $sek->id }}"
+                                                            <div class="modal fade" id="myModal{{ $s->id }}" tabindex="-1"
+                                                                role="dialog" aria-labelledby="myModalLabel{{ $s->id }}"
                                                                 aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title"
-                                                                                id="myModalLabel{{ $sek->id }}">Masukkan Password
+                                                                                id="myModalLabel{{ $s->id }}">Masukkan Password
                                                                                 Dekripsi</h5>
                                                                             <button type="button" class="close"
                                                                                 data-dismiss="modal"
@@ -81,7 +119,7 @@
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <form id="decryptForm"
-                                                                                action="/dekripsi/{{ $sek->id }}"
+                                                                                action="/dekripsi/{{ $s->id }}"
                                                                                 method="POST">
                                                                                 @csrf
                                                                                 <div class="form-group">
@@ -90,7 +128,7 @@
                                                                                     <input type="text"
                                                                                         class="form-control"
                                                                                         id="pass_id"
-                                                                                        name="pass_id" value="{{ $sek->pass_id }}" hidden>
+                                                                                        name="pass_id" value="{{ $s->pass_id }}" hidden>
                                                                                     <input type="password"
                                                                                         class="form-control"
                                                                                         id="password"
@@ -110,14 +148,14 @@
                                                                     <div class="mr-1">
                                                                     </div>
                                                                     <div class="mr-1">
-                                                                        <a href="/{{ $sek->id }}/edit-data"
+                                                                        <a href="/{{ $s->id }}/edit-data"
                                                                             class="btn btn-primary btn-rounded">
                                                                             <i class="mdi mdi-tooltip-edit"
                                                                                 style="font-size: 15px;"></i>
                                                                         </a>
                                                                     </div>
                                                                     <div>
-                                                                        <form action="/{{ $sek->id }}/hapus"
+                                                                        <form action="/{{ $s->id }}/hapus"
                                                                             method="POST">
                                                                             @csrf
                                                                             <button type="submit"
@@ -154,31 +192,55 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($ket as $ket)
+                                                @foreach ($ket as $k)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $ket->nomor_agenda }}</td>
-                                                        <td>{{ $ket->nomor_surat }}</td>
-                                                        <td>{{ $ket->perihal }}</td>
-                                                        <td>{{ $ket->kategori->kategori_surat }}</td>
-                                                        <td>{{ $ket->asal_surat }}</td>
-                                                        <td>{{ $ket->lampiran }}</td>
-                                                        <td>{{ $ket->tanggal }}</td>
-                                                        <td>{{ $ket->status }}</td>
+                                                        <td>{{ $k->nomor_agenda }}</td>
+                                                        <td>{{ $k->nomor_surat }}</td>
+                                                        <td>{{ $k->perihal }}</td>
+                                                        <td>{{ $k->kategori->kategori_surat }}</td>
+                                                        <td>{{ $k->asal_surat }}</td>
+                                                        <td>{{ $k->lampiran }}</td>
+                                                        <td>{{ $k->tanggal }}</td>
+                                                        <td>@if ($k->status == 'Berkas Siap Dikirim')
+                                                            <span class="badge badge-success"
+                                                                style="font-size: 0.8rem;">
+                                                                <i class="mdi mdi-check"></i>
+                                                                {{ $k->status }}
+                                                            </span>
+                                                        @elseif ($k->status == 'Proses Pengecekan')
+                                                            <span class="badge badge-info"
+                                                                style="font-size: 0.8rem;">
+                                                                <i class="fas fa-spinner"></i>
+                                                                {{ $k->status }}
+                                                            </span>
+                                                        @elseif($k->status == 'Diajukan')
+                                                            <span class="badge badge-warning"
+                                                                style="font-size: 0.8rem;">
+                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                {{ $k->status }}
+                                                            </span>
+                                                        @elseif($k->status == 'Perbaiki')
+                                                            <span class="badge badge-danger"
+                                                                style="font-size: 0.8rem;">
+                                                                <i class="fa-solid fa-share"></i></i>
+                                                                {{ $k->status }}
+                                                            </span>
+                                                        @endif</td>
                                                         <td>
                                                             <a href="#" class="btn btn-primary btn-rounded"
-                                                            data-toggle="modal" data-target="#myModal{{ $ket->id }}" target="blank">
+                                                            data-toggle="modal" data-target="#myModal{{ $k->id }}" target="blank">
                                                             Lihat File
                                                         </a>
                                                 
-                                                        <div class="modal fade" id="myModal{{ $ket->id }}" tabindex="-1"
-                                                            role="dialog" aria-labelledby="myModalLabel{{ $ket->id }}"
+                                                        <div class="modal fade" id="myModal{{ $k->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="myModalLabel{{ $k->id }}"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title"
-                                                                            id="myModalLabel{{ $ket->id }}">Masukkan Password
+                                                                            id="myModalLabel{{ $k->id }}">Masukkan Password
                                                                             Dekripsi</h5>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal"
@@ -189,7 +251,7 @@
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form id="decryptForm"
-                                                                            action="/dekripsi/{{ $ket->id }}"
+                                                                            action="/dekripsi/{{ $k->id }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             <div class="form-group">
@@ -198,7 +260,7 @@
                                                                                 <input type="text"
                                                                                     class="form-control"
                                                                                     id="pass_id"
-                                                                                    name="pass_id" value="{{ $ket->pass_id }}" hidden>
+                                                                                    name="pass_id" value="{{ $k->pass_id }}" hidden>
                                                                                 <input type="password"
                                                                                     class="form-control"
                                                                                     id="password"
@@ -216,21 +278,21 @@
                                                         <td>
                                                             <div class="d-flex">
                                                                 <div class="mr-1">
-                                                                    <a href="/{{ $ket->id }}/detail-surat"
+                                                                    <a href="/{{ $k->id }}/detail-surat"
                                                                         class="btn btn-primary btn-rounded">
                                                                         <i class="mdi mdi-eye"
                                                                             style="font-size: 15px;"></i>
                                                                     </a>
                                                                 </div>
                                                                 <div class="mr-1">
-                                                                    <a href="/{{ $ket->id }}/edit-data"
+                                                                    <a href="/{{ $k->id }}/edit-data"
                                                                         class="btn btn-primary btn-rounded">
                                                                         <i class="mdi mdi-tooltip-edit"
                                                                             style="font-size: 15px;"></i>
                                                                     </a>
                                                                 </div>
                                                                 <div>
-                                                                    <form action="/{{ $ket->id }}/hapus"
+                                                                    <form action="/{{ $k->id }}/hapus"
                                                                         method="POST">
                                                                         @csrf
                                                                         <button type="submit"
@@ -248,6 +310,21 @@
                                         </table>
                                                 @endcan
                                             </div>
+                                            <br>
+                                            @can('ketua')
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $ket->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('sekretaris')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $sek->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>

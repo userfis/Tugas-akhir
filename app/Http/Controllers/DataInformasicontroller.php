@@ -103,16 +103,53 @@ class DataInformasicontroller extends Controller
             'data' => User::all()
         ]); 
     }
+
+    public function searchSK(Request $request)
+    {
+        $query = $request->input('query');
+        
+        $data = Data::where('data_id', '=', '2')
+            ->where(function($q) use ($query) {
+                $q->where('nomor_surat', 'like', "%{$query}%")
+                  ->orWhere('perihal', 'like', "%{$query}%");
+            })
+            ->latest()
+            ->paginate(4);
+
+        return view('dataInformasi.keluar', [
+            'Halaman' => 'Data & Informasi',
+            'data' => $data
+        ]);
+    }
+
     public function keluar()
     {
 
         $data = Data::where('data_id', '=', '2')
         ->latest()
-        ->get();
+        ->paginate(4);
 
 
         return view('dataInformasi.keluar', [
 
+            'Halaman' => 'Data & Informasi',
+            'data' => $data
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        $data = Data::where('data_id', '=', '1')
+            ->where(function($q) use ($query) {
+                $q->where('nomor_surat', 'like', "%{$query}%")
+                  ->orWhere('perihal', 'like', "%{$query}%");
+            })
+            ->latest()
+            ->paginate(4);
+
+        return view('dataInformasi.masuk', [
             'Halaman' => 'Data & Informasi',
             'data' => $data
         ]);
@@ -123,7 +160,7 @@ class DataInformasicontroller extends Controller
 
        $data = Data::where('data_id', '=', '1')
        ->latest()
-       ->get();
+       ->paginate(4);
         return view('dataInformasi.masuk', [
 
             'Halaman' => 'Data & Informasi',

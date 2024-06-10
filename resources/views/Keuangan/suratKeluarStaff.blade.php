@@ -2,7 +2,21 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Data Masuk {{ $Halaman }} </h2>
+        <h2 class="text-dark font-weight-bold mb-3"> Data Surat Keluar </h2>
+    </div>
+    <div class="search-field d-xl-block mb-0">
+        <form class="d-flex align-items-center h-100" action="{{ route('keluar-search-staff') }}" method="GET">
+            <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                    {{-- <i class="input-group-text border-0 mdi mdi-magnify"></i> --}}
+                </div>
+                <input type="text" class="form-control bg-white border-0" name="query"
+                    placeholder="Cari berdasarkan nomor surat atau perihal">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </div>
+        </form>
     </div>
     {{-- <div class="search-field d-none d-xl-block">
         <form class="d-flex align-items-center h-100" action="#">
@@ -46,55 +60,55 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($huk as $huk)
+                                                            @foreach ($huk as $h)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $huk->nomor_agenda }}</td>
-                                                                    <td>{{ $huk->nomor_surat }}</td>
-                                                                    <td>{{ $huk->perihal }}</td>
-                                                                    <td>{{ $huk->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $huk->asal_surat }}</td>
-                                                                    <td>{{ $huk->lampiran }}</td>
-                                                                    <td>{{ $huk->tanggal }}</td>
-                                                                    <td>@if ($huk->status == 'Berkas Siap Dikirim')
+                                                                    <td>{{ $h->nomor_agenda }}</td>
+                                                                    <td>{{ $h->nomor_surat }}</td>
+                                                                    <td>{{ $h->perihal }}</td>
+                                                                    <td>{{ $h->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $h->asal_surat }}</td>
+                                                                    <td>{{ $h->lampiran }}</td>
+                                                                    <td>{{ $h->tanggal }}</td>
+                                                                    <td>@if ($h->status == 'Berkas Siap Dikirim')
                                                                         <span class="badge badge-success"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="mdi mdi-check"></i>
-                                                                            {{ $huk->status }}
+                                                                            {{ $h->status }}
                                                                         </span>
-                                                                    @elseif ($huk->status == 'Proses Pengecekan')
+                                                                    @elseif ($h->status == 'Proses Pengecekan')
                                                                         <span class="badge badge-info"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fas fa-spinner"></i>
-                                                                            {{ $huk->status }}
+                                                                            {{ $h->status }}
                                                                         </span>
-                                                                    @elseif($huk->status == 'Diajukan')
+                                                                    @elseif($h->status == 'Diajukan')
                                                                         <span class="badge badge-warning"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $huk->status }}
+                                                                            {{ $h->status }}
                                                                         </span>
-                                                                    @elseif($huk->status == 'Perbaiki')
+                                                                    @elseif($h->status == 'Perbaiki')
                                                                         <span class="badge badge-danger"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $huk->status }}
+                                                                            {{ $h->status }}
                                                                         </span>
                                                                     @endif</td>
                                                                     <td>
                                                                           <a href="#" class="btn btn-primary btn-rounded"
-                                                                    data-toggle="modal" data-target="#myModal{{ $huk->id }}" target="blank">
+                                                                    data-toggle="modal" data-target="#myModal{{ $h->id }}" target="blank">
                                                                     Lihat File
                                                                 </a>
                                                         
-                                                                <div class="modal fade" id="myModal{{ $huk->id }}" tabindex="-1"
-                                                                    role="dialog" aria-labelledby="myModalLabel{{ $huk->id }}"
+                                                                <div class="modal fade" id="myModal{{ $h->id }}" tabindex="-1"
+                                                                    role="dialog" aria-labelledby="myModalLabel{{ $h->id }}"
                                                                     aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title"
-                                                                                    id="myModalLabel{{ $huk->id }}">Masukkan Password
+                                                                                    id="myModalLabel{{ $h->id }}">Masukkan Password
                                                                                     Dekripsi</h5>
                                                                                 <button type="button" class="close"
                                                                                     data-dismiss="modal"
@@ -105,7 +119,7 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <form id="decryptForm"
-                                                                                    action="/dekripsi/{{ $huk->id }}"
+                                                                                    action="/dekripsi/{{ $h->id }}"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <div class="form-group">
@@ -114,7 +128,7 @@
                                                                                         <input type="text"
                                                                                             class="form-control"
                                                                                             id="pass_id"
-                                                                                            name="pass_id" value="{{ $huk->pass_id }}" hidden>
+                                                                                            name="pass_id" value="{{ $h->pass_id }}" hidden>
                                                                                         <input type="password"
                                                                                             class="form-control"
                                                                                             id="password"
@@ -131,21 +145,21 @@
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $huk->id }}/detail-surat"
+                                                                                <a href="/{{ $h->id }}/detail-surat"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $huk->id }}/edit-data"
+                                                                                <a href="/{{ $h->id }}/edit-data"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-tooltip-edit"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div>
-                                                                                <form action="/{{ $huk->id }}/hapus"
+                                                                                <form action="/{{ $h->id }}/hapus"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <button type="submit"
@@ -182,56 +196,56 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $data)
+                                                            @foreach ($data as $item)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $data->nomor_agenda }}</td>
-                                                                    <td>{{ $data->nomor_surat }}</td>
-                                                                    <td>{{ $data->perihal }}</td>
-                                                                    <td>{{ $data->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $data->asal_surat }}</td>
-                                                                    <td>{{ $data->lampiran }}</td>
-                                                                    <td>{{ $data->tanggal }}</td>
-                                                                    <td>@if ($data->status == 'Berkas Siap Dikirim')
+                                                                    <td>{{ $item->nomor_agenda }}</td>
+                                                                    <td>{{ $item->nomor_surat }}</td>
+                                                                    <td>{{ $item->perihal }}</td>
+                                                                    <td>{{ $item->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $item->asal_surat }}</td>
+                                                                    <td>{{ $item->lampiran }}</td>
+                                                                    <td>{{ $item->tanggal }}</td>
+                                                                    <td>@if ($item->status == 'Berkas Siap Dikirim')
                                                                         <span class="badge badge-success"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="mdi mdi-check"></i>
-                                                                            {{ $data->status }}
+                                                                            {{ $item->status }}
                                                                         </span>
-                                                                    @elseif ($data->status == 'Proses Pengecekan')
+                                                                    @elseif ($item->status == 'Proses Pengecekan')
                                                                         <span class="badge badge-info"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fas fa-spinner"></i>
-                                                                            {{ $data->status }}
+                                                                            {{ $item->status }}
                                                                         </span>
-                                                                    @elseif($data->status == 'Diajukan')
+                                                                    @elseif($item->status == 'Diajukan')
                                                                         <span class="badge badge-warning"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $data->status }}
+                                                                            {{ $item->status }}
                                                                         </span>
-                                                                    @elseif($data->status == 'Perbaiki')
+                                                                    @elseif($item->status == 'Perbaiki')
                                                                         <span class="badge badge-danger"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $data->status }}
+                                                                            {{ $item->status }}
                                                                         </span>
                                                                     @endif</td>
                                                                     <td>
                                                                         <!-- Tombol Lihat File -->
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal{{ $data->id }}" target="blank">
+                                                                        data-toggle="modal" data-target="#myModal{{ $item->id }}" target="blank">
                                                                         Lihat File
                                                                     </a>
                                                             
-                                                                    <div class="modal fade" id="myModal{{ $data->id }}" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel{{ $data->id }}"
+                                                                    <div class="modal fade" id="myModal{{ $item->id }}" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="myModalLabel{{ $item->id }}"
                                                                         aria-hidden="true">
                                                                         <div class="modal-dialog" role="document">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title"
-                                                                                        id="myModalLabel{{ $data->id }}">Masukkan Password
+                                                                                        id="myModalLabel{{ $item->id }}">Masukkan Password
                                                                                         Dekripsi</h5>
                                                                                     <button type="button" class="close"
                                                                                         data-dismiss="modal"
@@ -242,7 +256,7 @@
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $data->id }}"
+                                                                                        action="/dekripsi/{{ $item->id }}"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <div class="form-group">
@@ -251,7 +265,7 @@
                                                                                             <input type="text"
                                                                                                 class="form-control"
                                                                                                 id="pass_id"
-                                                                                                name="pass_id" value="{{ $data->pass_id }}" hidden>
+                                                                                                name="pass_id" value="{{ $item->pass_id }}" hidden>
                                                                                             <input type="password"
                                                                                                 class="form-control"
                                                                                                 id="password"
@@ -265,7 +279,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                        {{-- <a href="/storage/{{ $data->file }}"
+                                                                        {{-- <a href="/storage/{{ $item->file }}"
                                                                 class="btn btn-primary btn-rounded" target="blank">
                                                                 Lihat File
                                                             </a> --}}
@@ -273,21 +287,21 @@
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $data->id }}/detail-surat"
+                                                                                <a href="/{{ $item->id }}/detail-surat"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $data->id }}/edit-data"
+                                                                                <a href="/{{ $item->id }}/edit-data"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-tooltip-edit"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div>
-                                                                                <form action="/{{ $data->id }}/hapus"
+                                                                                <form action="/{{ $item->id }}/hapus"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <button type="submit"
@@ -324,55 +338,55 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($keu as $keu)
+                                                            @foreach ($keu as $k)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $keu->nomor_agenda }}</td>
-                                                                    <td>{{ $keu->nomor_surat }}</td>
-                                                                    <td>{{ $keu->perihal }}</td>
-                                                                    <td>{{ $keu->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $keu->asal_surat }}</td>
-                                                                    <td>{{ $keu->lampiran }}</td>
-                                                                    <td>{{ $keu->tanggal }}</td>
-                                                                    <td>@if ($keu->status == 'Berkas Siap Dikirim')
+                                                                    <td>{{ $k->nomor_agenda }}</td>
+                                                                    <td>{{ $k->nomor_surat }}</td>
+                                                                    <td>{{ $k->perihal }}</td>
+                                                                    <td>{{ $k->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $k->asal_surat }}</td>
+                                                                    <td>{{ $k->lampiran }}</td>
+                                                                    <td>{{ $k->tanggal }}</td>
+                                                                    <td>@if ($k->status == 'Berkas Siap Dikirim')
                                                                         <span class="badge badge-success"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="mdi mdi-check"></i>
-                                                                            {{ $keu->status }}
+                                                                            {{ $k->status }}
                                                                         </span>
-                                                                    @elseif ($keu->status == 'Proses Pengecekan')
+                                                                    @elseif ($k->status == 'Proses Pengecekan')
                                                                         <span class="badge badge-info"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fas fa-spinner"></i>
-                                                                            {{ $keu->status }}
+                                                                            {{ $k->status }}
                                                                         </span>
-                                                                    @elseif($keu->status == 'Diajukan')
+                                                                    @elseif($k->status == 'Diajukan')
                                                                         <span class="badge badge-warning"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $keu->status }}
+                                                                            {{ $k->status }}
                                                                         </span>
-                                                                    @elseif($keu->status == 'Perbaiki')
+                                                                    @elseif($k->status == 'Perbaiki')
                                                                         <span class="badge badge-danger"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $keu->status }}
+                                                                            {{ $k->status }}
                                                                         </span>
                                                                     @endif</td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                    data-toggle="modal" data-target="#myModal{{ $keu->id }}" target="blank">
+                                                                    data-toggle="modal" data-target="#myModal{{ $k->id }}" target="blank">
                                                                     Lihat File
                                                                 </a>
                                                         
-                                                                <div class="modal fade" id="myModal{{ $keu->id }}" tabindex="-1"
-                                                                    role="dialog" aria-labelledby="myModalLabel{{ $keu->id }}"
+                                                                <div class="modal fade" id="myModal{{ $k->id }}" tabindex="-1"
+                                                                    role="dialog" aria-labelledby="myModalLabel{{ $k->id }}"
                                                                     aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title"
-                                                                                    id="myModalLabel{{ $keu->id }}">Masukkan Password
+                                                                                    id="myModalLabel{{ $k->id }}">Masukkan Password
                                                                                     Dekripsi</h5>
                                                                                 <button type="button" class="close"
                                                                                     data-dismiss="modal"
@@ -383,7 +397,7 @@
                                                                             </div>
                                                                             <div class="modal-body">
                                                                                 <form id="decryptForm"
-                                                                                    action="/dekripsi/{{ $keu->id }}"
+                                                                                    action="/dekripsi/{{ $k->id }}"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <div class="form-group">
@@ -392,7 +406,7 @@
                                                                                         <input type="text"
                                                                                             class="form-control"
                                                                                             id="pass_id"
-                                                                                            name="pass_id" value="{{ $keu->pass_id }}" hidden>
+                                                                                            name="pass_id" value="{{ $k->pass_id }}" hidden>
                                                                                         <input type="password"
                                                                                             class="form-control"
                                                                                             id="password"
@@ -409,21 +423,21 @@
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $keu->id }}/detail-surat"
+                                                                                <a href="/{{ $k->id }}/detail-surat"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $keu->id }}/edit-data"
+                                                                                <a href="/{{ $k->id }}/edit-data"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-tooltip-edit"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div>
-                                                                                <form action="/{{ $keu->id }}/hapus"
+                                                                                <form action="/{{ $k->id }}/hapus"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <button type="submit"
@@ -460,55 +474,55 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($tek as $tek)
+                                                            @foreach ($tek as $t)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $tek->nomor_agenda }}</td>
-                                                                    <td>{{ $tek->nomor_surat }}</td>
-                                                                    <td>{{ $tek->perihal }}</td>
-                                                                    <td>{{ $tek->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $tek->asal_surat }}</td>
-                                                                    <td>{{ $tek->lampiran }}</td>
-                                                                    <td>{{ $tek->tanggal }}</td>
-                                                                    <td>@if ($tek->status == 'Berkas Siap Dikirim')
+                                                                    <td>{{ $t->nomor_agenda }}</td>
+                                                                    <td>{{ $t->nomor_surat }}</td>
+                                                                    <td>{{ $t->perihal }}</td>
+                                                                    <td>{{ $t->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $t->asal_surat }}</td>
+                                                                    <td>{{ $t->lampiran }}</td>
+                                                                    <td>{{ $t->tanggal }}</td>
+                                                                    <td>@if ($t->status == 'Berkas Siap Dikirim')
                                                                         <span class="badge badge-success"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="mdi mdi-check"></i>
-                                                                            {{ $tek->status }}
+                                                                            {{ $t->status }}
                                                                         </span>
-                                                                    @elseif ($tek->status == 'Proses Pengecekan')
+                                                                    @elseif ($t->status == 'Proses Pengecekan')
                                                                         <span class="badge badge-info"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fas fa-spinner"></i>
-                                                                            {{ $tek->status }}
+                                                                            {{ $t->status }}
                                                                         </span>
-                                                                    @elseif($tek->status == 'Diajukan')
+                                                                    @elseif($t->status == 'Diajukan')
                                                                         <span class="badge badge-warning"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $tek->status }}
+                                                                            {{ $t->status }}
                                                                         </span>
-                                                                    @elseif($tek->status == 'Perbaiki')
+                                                                    @elseif($t->status == 'Perbaiki')
                                                                         <span class="badge badge-danger"
                                                                             style="font-size: 0.8rem;">
                                                                             <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $tek->status }}
+                                                                            {{ $t->status }}
                                                                         </span>
                                                                     @endif</td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal{{ $tek->id }}" target="blank">
+                                                                        data-toggle="modal" data-target="#myModal{{ $t->id }}" target="blank">
                                                                         Lihat File
                                                                     </a>
                                                             
-                                                                    <div class="modal fade" id="myModal{{ $tek->id }}" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel{{ $tek->id }}"
+                                                                    <div class="modal fade" id="myModal{{ $t->id }}" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="myModalLabel{{ $t->id }}"
                                                                         aria-hidden="true">
                                                                         <div class="modal-dialog" role="document">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title"
-                                                                                        id="myModalLabel{{ $tek->id }}">Masukkan Password
+                                                                                        id="myModalLabel{{ $t->id }}">Masukkan Password
                                                                                         Dekripsi</h5>
                                                                                     <button type="button" class="close"
                                                                                         data-dismiss="modal"
@@ -519,7 +533,7 @@
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $tek->id }}"
+                                                                                        action="/dekripsi/{{ $t->id }}"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <div class="form-group">
@@ -528,7 +542,7 @@
                                                                                             <input type="text"
                                                                                                 class="form-control"
                                                                                                 id="pass_id"
-                                                                                                name="pass_id" value="{{ $tek->pass_id }}" hidden>
+                                                                                                name="pass_id" value="{{ $t->pass_id }}" hidden>
                                                                                             <input type="password"
                                                                                                 class="form-control"
                                                                                                 id="password"
@@ -545,21 +559,21 @@
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $tek->id }}/detail-surat"
+                                                                                <a href="/{{ $t->id }}/detail-surat"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $tek->id }}/edit-data"
+                                                                                <a href="/{{ $t->id }}/edit-data"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-tooltip-edit"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
                                                                             <div>
-                                                                                <form action="/{{ $tek->id }}/hapus"
+                                                                                <form action="/{{ $t->id }}/hapus"
                                                                                     method="POST">
                                                                                     @csrf
                                                                                     <button type="submit"
@@ -577,6 +591,35 @@
                                                     </table>
                                                 @endcan
                                             </div>
+                                            <br>
+                                            @can('staffKeu')
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $keu->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffHuk')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $huk->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffDat')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $data->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffTek')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $tek->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>

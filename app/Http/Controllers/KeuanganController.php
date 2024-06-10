@@ -21,22 +21,22 @@ class KeuanganController extends Controller
         $keu = Data::where('data_id', '=', '2')
             ->where('disposisi', '=', 'Staff Keuangan')
             ->latest()
-            ->get();
+            ->paginate(2);
 
         $huk = Data::where('data_id', '=', '2')
             ->where('disposisi', '=', 'Staff Hukum')
             ->latest()
-            ->get();
+            ->paginate(2);
 
         $data = Data::where('data_id', '=', '2')
             ->where('disposisi', '=', 'Staff Data & Informasi')
             ->latest()
-            ->get();
+            ->paginate(2);
 
         $tek = Data::where('data_id', '=', '2')
             ->where('disposisi', '=', 'Staff Teknis')
             ->latest()
-            ->get();
+            ->paginate(2);
 
 
         return view('Keuangan.suratKeluarStaff', [
@@ -49,28 +49,126 @@ class KeuanganController extends Controller
         ]);
     }
 
+    public function searchSKStaff(Request $request)
+    {
+        $searchQuery = $request->input('query');
+    
+        $keu = Data::where('data_id', '2')
+            ->where('disposisi', 'Staff Keuangan')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        $huk = Data::where('data_id', '2')
+            ->where('disposisi', 'Staff Hukum')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        $data = Data::where('data_id', '2')
+            ->where('disposisi', 'Staff Data & Informasi')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        $tek = Data::where('data_id', '2')
+            ->where('disposisi', 'Staff Teknis')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('nomor_surat', 'like', "%$searchQuery%")
+                    ->orWhere('perihal', 'like', "%$searchQuery%");
+            })
+            ->latest()
+            ->paginate(5);
+    
+        return view('Keuangan.suratKeluarStaff', [
+            'data' => $data,
+            'keu' => $keu,
+            'huk' => $huk,
+            'tek' => $tek,
+            'Halaman' => 'Keuangan'
+        ]);
+    }
+
+    public function searchSMStaff(Request $request)
+{
+    $searchQuery = $request->input('query');
+
+    $keu = Data::where('data_id', '2')
+        ->where('disposisi', 'Staff Keuangan')
+        ->where(function ($query) use ($searchQuery) {
+            $query->where('nomor_surat', 'like', "%$searchQuery%")
+                ->orWhere('perihal', 'like', "%$searchQuery%");
+        })
+        ->latest()
+        ->paginate(5);
+
+    $huk = Data::where('data_id', '2')
+        ->where('disposisi', 'Staff Hukum')
+        ->where(function ($query) use ($searchQuery) {
+            $query->where('nomor_surat', 'like', "%$searchQuery%")
+                ->orWhere('perihal', 'like', "%$searchQuery%");
+        })
+        ->latest()
+        ->paginate(5);
+
+    $data = Data::where('data_id', '2')
+        ->where('disposisi', 'Staff Data & Informasi')
+        ->where(function ($query) use ($searchQuery) {
+            $query->where('nomor_surat', 'like', "%$searchQuery%")
+                ->orWhere('perihal', 'like', "%$searchQuery%");
+        })
+        ->latest()
+        ->paginate(5);
+
+    $tek = Data::where('data_id', '2')
+        ->where('disposisi', 'Staff Teknis')
+        ->where(function ($query) use ($searchQuery) {
+            $query->where('nomor_surat', 'like', "%$searchQuery%")
+                ->orWhere('perihal', 'like', "%$searchQuery%");
+        })
+        ->latest()
+        ->paginate(5);
+
+    return view('Keuangan.suratKeluarStaff', [
+        'data' => $data,
+        'keu' => $keu,
+        'huk' => $huk,
+        'tek' => $tek,
+        'Halaman' => 'Keuangan'
+    ]);
+}
+
     public function masuk()
     {
 
         $keu = Data::where('data_id', '=', '1')
             ->where('disposisi', '=', 'Staff Keuangan')
             ->latest()
-            ->get();
+            ->paginate(5);
 
         $huk = Data::where('data_id', '=', '1')
             ->where('disposisi', '=', 'Staff Hukum')
             ->latest()
-            ->get();
+            ->paginate(5);
 
         $data = Data::where('data_id', '=', '1')
             ->where('disposisi', '=', 'Staff Data & Informasi')
             ->latest()
-            ->get();
+            ->paginate(5);
 
         $tek = Data::where('data_id', '=', '1')
             ->where('disposisi', '=', 'Staff Teknis')
             ->latest()
-            ->get();
+            ->paginate(5);
 
         return view('Keuangan.masukStaff', [
 

@@ -2,7 +2,21 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Data Masuk {{ auth()->user()->nama }} </h2>
+        <h2 class="text-dark font-weight-bold mb-3"> Data Surat Masuk </h2>
+    </div>
+    <div class="search-field d-xl-block mb-0">
+        <form class="d-flex align-items-center h-100" action="{{ route('masuk-search-staff') }}" method="GET">
+            <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                    {{-- <i class="input-group-text border-0 mdi mdi-magnify"></i> --}}
+                </div>
+                <input type="text" class="form-control bg-white border-0" name="query"
+                    placeholder="Cari berdasarkan nomor surat atau perihal">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Cari</button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -32,46 +46,46 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($keu as $keu)
+                                                            @foreach ($keu as $k)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $keu->nomor_agenda }}</td>
-                                                                    <td>{{ $keu->nomor_surat }}</td>
-                                                                    <td>{{ $keu->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $keu->asal_surat }}</td>
-                                                                    <td>{{ $keu->disposisi }}</td>
-                                                                    <td>{{ $keu->tanggal }}</td>
+                                                                    <td>{{ $k->nomor_agenda }}</td>
+                                                                    <td>{{ $k->nomor_surat }}</td>
+                                                                    <td>{{ $k->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $k->asal_surat }}</td>
+                                                                    <td>{{ $k->disposisi }}</td>
+                                                                    <td>{{ $k->tanggal }}</td>
                                                                     <td>
-                                                                        @if ($keu->status == 'Selesai Disposisi')
+                                                                        @if ($k->status == 'Selesai Disposisi')
                                                                             <span class="badge badge-success"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="mdi mdi-check"></i>
-                                                                                {{ $keu->status }}
+                                                                                {{ $k->status }}
                                                                             </span>
-                                                                        @elseif($keu->status == 'Disposisi')
+                                                                        @elseif($k->status == 'Disposisi')
                                                                             <span class="badge badge-danger"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="fa-solid fa-share"></i></i>
-                                                                                {{ $keu->status }}
+                                                                                {{ $k->status }}
                                                                             </span>
                                                                         @endif
                                                                     </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
                                                                             data-toggle="modal"
-                                                                            data-target="#myModal{{ $keu->id }}">
+                                                                            data-target="#myModal{{ $k->id }}">
                                                                             Lihat File
                                                                         </a>
 
-                                                                        <div class="modal fade" id="myModal{{ $keu->id }}"
+                                                                        <div class="modal fade" id="myModal{{ $k->id }}"
                                                                             tabindex="-1" role="dialog"
-                                                                            aria-labelledby="myModalLabel{{ $keu->id }}"
+                                                                            aria-labelledby="myModalLabel{{ $k->id }}"
                                                                             aria-hidden="true">
                                                                             <div class="modal-dialog" role="document">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
                                                                                         <h5 class="modal-title"
-                                                                                            id="myModalLabel{{ $keu->id }}">
+                                                                                            id="myModalLabel{{ $k->id }}">
                                                                                             Masukkan Password
                                                                                             Dekripsi</h5>
                                                                                         <button type="button" class="close"
@@ -83,7 +97,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $keu->id }}"
+                                                                                            action="/dekripsi/{{ $k->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -93,7 +107,7 @@
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
                                                                                                     name="pass_id"
-                                                                                                    value="{{ $keu->pass_id }}"
+                                                                                                    value="{{ $k->pass_id }}"
                                                                                                     hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
@@ -110,9 +124,9 @@
                                                                     </td>
                                                                     <td>
                                                                     <td>
-                                                                        @if ($keu->status == 'Disposisi')
+                                                                        @if ($k->status == 'Disposisi')
                                                                             <form id="submitForm"
-                                                                                action="/{{ $keu->id }}/terima-sm"
+                                                                                action="/{{ $k->id }}/terima-sm"
                                                                                 method="POST" class="forms-sample"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf
@@ -127,17 +141,17 @@
                                                                                     document.getElementById('submitForm').submit();
                                                                                 }
                                                                             </script>
-                                                                        @elseif ($keu->status == 'Selesai Disposisi')
+                                                                        @elseif ($k->status == 'Selesai Disposisi')
                                                                             <div class="d-flex">
                                                                                 <div class="mr-1">
-                                                                                    <a href="/{{ $keu->id }}/staff/konfirm-sm"
+                                                                                    <a href="/{{ $k->id }}/staff/konfirm-sm"
                                                                                         class="btn btn-primary btn-rounded">
                                                                                         <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <form action="/{{ $keu->id }}/hapus"
+                                                                                    <form action="/{{ $k->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <button type="submit"
@@ -171,46 +185,46 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($huk as $huk)
+                                                            @foreach ($huk as $h)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $huk->nomor_agenda }}</td>
-                                                                    <td>{{ $huk->nomor_surat }}</td>
-                                                                    <td>{{ $huk->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $huk->asal_surat }}</td>
-                                                                    <td>{{ $huk->disposisi }}</td>
-                                                                    <td>{{ $huk->tanggal }}</td>
+                                                                    <td>{{ $h->nomor_agenda }}</td>
+                                                                    <td>{{ $h->nomor_surat }}</td>
+                                                                    <td>{{ $h->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $h->asal_surat }}</td>
+                                                                    <td>{{ $h->disposisi }}</td>
+                                                                    <td>{{ $h->tanggal }}</td>
                                                                     <td>
-                                                                        @if ($huk->status == 'Selesai Disposisi')
+                                                                        @if ($h->status == 'Selesai Disposisi')
                                                                             <span class="badge badge-success"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="mdi mdi-check"></i>
-                                                                                {{ $huk->status }}
+                                                                                {{ $h->status }}
                                                                             </span>
-                                                                        @elseif($huk->status == 'Disposisi')
+                                                                        @elseif($h->status == 'Disposisi')
                                                                             <span class="badge badge-danger"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="fa-solid fa-share"></i></i>
-                                                                                {{ $huk->status }}
+                                                                                {{ $h->status }}
                                                                             </span>
                                                                         @endif
                                                                     </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
                                                                             data-toggle="modal"
-                                                                            data-target="#myModal{{ $huk->id }}">
+                                                                            data-target="#myModal{{ $h->id }}">
                                                                             Lihat File
                                                                         </a>
 
-                                                                        <div class="modal fade" id="myModal{{ $huk->id }}"
+                                                                        <div class="modal fade" id="myModal{{ $h->id }}"
                                                                             tabindex="-1" role="dialog"
-                                                                            aria-labelledby="myModalLabel{{ $huk->id }}"
+                                                                            aria-labelledby="myModalLabel{{ $h->id }}"
                                                                             aria-hidden="true">
                                                                             <div class="modal-dialog" role="document">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
                                                                                         <h5 class="modal-title"
-                                                                                            id="myModalLabel{{ $huk->id }}">
+                                                                                            id="myModalLabel{{ $h->id }}">
                                                                                             Masukkan Password
                                                                                             Dekripsi</h5>
                                                                                         <button type="button" class="close"
@@ -222,7 +236,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $huk->id }}"
+                                                                                            action="/dekripsi/{{ $h->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -232,7 +246,7 @@
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
                                                                                                     name="pass_id"
-                                                                                                    value="{{ $huk->pass_id }}"
+                                                                                                    value="{{ $h->pass_id }}"
                                                                                                     hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
@@ -248,9 +262,9 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        @if ($huk->status == 'Disposisi')
+                                                                        @if ($h->status == 'Disposisi')
                                                                             <form id="submitForm"
-                                                                                action="/{{ $huk->id }}/terima-sm"
+                                                                                action="/{{ $h->id }}/terima-sm"
                                                                                 method="POST" class="forms-sample"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf
@@ -265,17 +279,17 @@
                                                                                     document.getElementById('submitForm').submit();
                                                                                 }
                                                                             </script>
-                                                                        @elseif ($huk->status == 'Selesai Disposisi')
+                                                                        @elseif ($h->status == 'Selesai Disposisi')
                                                                             <div class="d-flex">
                                                                                 <div class="mr-1">
-                                                                                    <a href="/{{ $huk->id }}/staff/konfirm-sm"
+                                                                                    <a href="/{{ $h->id }}/staff/konfirm-sm"
                                                                                         class="btn btn-primary btn-rounded">
                                                                                         <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <form action="/{{ $huk->id }}/hapus"
+                                                                                    <form action="/{{ $h->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <button type="submit"
@@ -309,47 +323,47 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($data as $data)
+                                                            @foreach ($data as $item)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $data->nomor_agenda }}</td>
-                                                                    <td>{{ $data->nomor_surat }}</td>
-                                                                    <td>{{ $data->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $data->asal_surat }}</td>
-                                                                    <td>{{ $data->disposisi }}</td>
-                                                                    <td>{{ $data->tanggal }}</td>
+                                                                    <td>{{ $item->nomor_agenda }}</td>
+                                                                    <td>{{ $item->nomor_surat }}</td>
+                                                                    <td>{{ $item->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $item->asal_surat }}</td>
+                                                                    <td>{{ $item->disposisi }}</td>
+                                                                    <td>{{ $item->tanggal }}</td>
                                                                     <td>
-                                                                        @if ($data->status == 'Selesai Disposisi')
+                                                                        @if ($item->status == 'Selesai Disposisi')
                                                                             <span class="badge badge-success"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="mdi mdi-check"></i>
-                                                                                {{ $data->status }}
+                                                                                {{ $item->status }}
                                                                             </span>
-                                                                        @elseif($data->status == 'Disposisi')
+                                                                        @elseif($item->status == 'Disposisi')
                                                                             <span class="badge badge-danger"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="fa-solid fa-share"></i></i>
-                                                                                {{ $data->status }}
+                                                                                {{ $item->status }}
                                                                             </span>
                                                                         @endif
                                                                     </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
                                                                             data-toggle="modal"
-                                                                            data-target="#myModal{{ $data->id }}">
+                                                                            data-target="#myModal{{ $item->id }}">
                                                                             Lihat File
                                                                         </a>
 
                                                                         <div class="modal fade"
-                                                                            id="myModal{{ $data->id }}" tabindex="-1"
+                                                                            id="myModal{{ $item->id }}" tabindex="-1"
                                                                             role="dialog"
-                                                                            aria-labelledby="myModalLabel{{ $data->id }}"
+                                                                            aria-labelledby="myModalLabel{{ $item->id }}"
                                                                             aria-hidden="true">
                                                                             <div class="modal-dialog" role="document">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
                                                                                         <h5 class="modal-title"
-                                                                                            id="myModalLabel{{ $data->id }}">
+                                                                                            id="myModalLabel{{ $item->id }}">
                                                                                             Masukkan Password
                                                                                             Dekripsi</h5>
                                                                                         <button type="button" class="close"
@@ -361,7 +375,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $data->id }}"
+                                                                                            action="/dekripsi/{{ $item->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -371,7 +385,7 @@
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
                                                                                                     name="pass_id"
-                                                                                                    value="{{ $data->pass_id }}"
+                                                                                                    value="{{ $item->pass_id }}"
                                                                                                     hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
@@ -387,9 +401,9 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        @if ($data->status == 'Disposisi')
+                                                                        @if ($item->status == 'Disposisi')
                                                                             <form id="submitForm"
-                                                                                action="/{{ $data->id }}/terima-sm"
+                                                                                action="/{{ $item->id }}/terima-sm"
                                                                                 method="POST" class="forms-sample"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf
@@ -404,17 +418,17 @@
                                                                                     document.getElementById('submitForm').submit();
                                                                                 }
                                                                             </script>
-                                                                        @elseif ($data->status == 'Selesai Disposisi')
+                                                                        @elseif ($item->status == 'Selesai Disposisi')
                                                                             <div class="d-flex">
                                                                                 <div class="mr-1">
-                                                                                    <a href="/{{ $data->id }}/staff/konfirm-sm"
+                                                                                    <a href="/{{ $item->id }}/staff/konfirm-sm"
                                                                                         class="btn btn-primary btn-rounded">
                                                                                         <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <form action="/{{ $data->id }}/hapus"
+                                                                                    <form action="/{{ $item->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <button type="submit"
@@ -448,47 +462,47 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($tek as $tek)
+                                                            @foreach ($tek as $t)
                                                                 <tr>
                                                                     <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $tek->nomor_agenda }}</td>
-                                                                    <td>{{ $tek->nomor_surat }}</td>
-                                                                    <td>{{ $tek->kategori->kategori_surat }}</td>
-                                                                    <td>{{ $tek->asal_surat }}</td>
-                                                                    <td>{{ $tek->disposisi }}</td>
-                                                                    <td>{{ $tek->tanggal }}</td>
+                                                                    <td>{{ $t->nomor_agenda }}</td>
+                                                                    <td>{{ $t->nomor_surat }}</td>
+                                                                    <td>{{ $t->kategori->kategori_surat }}</td>
+                                                                    <td>{{ $t->asal_surat }}</td>
+                                                                    <td>{{ $t->disposisi }}</td>
+                                                                    <td>{{ $t->tanggal }}</td>
                                                                     <td>
-                                                                        @if ($tek->status == 'Selesai Disposisi')
+                                                                        @if ($t->status == 'Selesai Disposisi')
                                                                             <span class="badge badge-success"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="mdi mdi-check"></i>
-                                                                                {{ $tek->status }}
+                                                                                {{ $t->status }}
                                                                             </span>
-                                                                        @elseif($tek->status == 'Disposisi')
+                                                                        @elseif($t->status == 'Disposisi')
                                                                             <span class="badge badge-danger"
                                                                                 style="font-size: 0.8rem;">
                                                                                 <i class="fa-solid fa-share"></i></i>
-                                                                                {{ $tek->status }}
+                                                                                {{ $t->status }}
                                                                             </span>
                                                                         @endif
                                                                     </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
                                                                             data-toggle="modal"
-                                                                            data-target="#myModal{{ $tek->id }}">
+                                                                            data-target="#myModal{{ $t->id }}">
                                                                             Lihat File
                                                                         </a>
 
                                                                         <div class="modal fade"
-                                                                            id="myModal{{ $tek->id }}" tabindex="-1"
+                                                                            id="myModal{{ $t->id }}" tabindex="-1"
                                                                             role="dialog"
-                                                                            aria-labelledby="myModalLabel{{ $tek->id }}"
+                                                                            aria-labelledby="myModalLabel{{ $t->id }}"
                                                                             aria-hidden="true">
                                                                             <div class="modal-dialog" role="document">
                                                                                 <div class="modal-content">
                                                                                     <div class="modal-header">
                                                                                         <h5 class="modal-title"
-                                                                                            id="myModalLabel{{ $tek->id }}">
+                                                                                            id="myModalLabel{{ $t->id }}">
                                                                                             Masukkan Password
                                                                                             Dekripsi</h5>
                                                                                         <button type="button" class="close"
@@ -500,7 +514,7 @@
                                                                                     </div>
                                                                                     <div class="modal-body">
                                                                                         <form id="decryptForm"
-                                                                                            action="/dekripsi/{{ $tek->id }}"
+                                                                                            action="/dekripsi/{{ $t->id }}"
                                                                                             method="POST">
                                                                                             @csrf
                                                                                             <div class="form-group">
@@ -510,7 +524,7 @@
                                                                                                     class="form-control"
                                                                                                     id="pass_id"
                                                                                                     name="pass_id"
-                                                                                                    value="{{ $tek->pass_id }}"
+                                                                                                    value="{{ $t->pass_id }}"
                                                                                                     hidden>
                                                                                                 <input type="password"
                                                                                                     class="form-control"
@@ -526,9 +540,9 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        @if ($tek->status == 'Disposisi')
+                                                                        @if ($t->status == 'Disposisi')
                                                                             <form id="submitForm"
-                                                                                action="/{{ $tek->id }}/terima-sm"
+                                                                                action="/{{ $t->id }}/terima-sm"
                                                                                 method="POST" class="forms-sample"
                                                                                 enctype="multipart/form-data">
                                                                                 @csrf
@@ -543,17 +557,17 @@
                                                                                     document.getElementById('submitForm').submit();
                                                                                 }
                                                                             </script>
-                                                                        @elseif ($tek->status == 'Selesai Disposisi')
+                                                                        @elseif ($t->status == 'Selesai Disposisi')
                                                                             <div class="d-flex">
                                                                                 <div class="mr-1">
-                                                                                    <a href="/{{ $tek->id }}/staff/konfirm-sm"
+                                                                                    <a href="/{{ $t->id }}/staff/konfirm-sm"
                                                                                         class="btn btn-primary btn-rounded">
                                                                                         <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <form action="/{{ $tek->id }}/hapus"
+                                                                                    <form action="/{{ $t->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
                                                                                         <button type="submit"
@@ -571,6 +585,35 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                            @endcan
+                                            <br>
+                                            @can('staffKeu')
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $k->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffHuk')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $h->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffDat')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $data->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
+                                            @elsecan('staffTek')
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $t->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
                                             @endcan
                                         </div>
                                     </div>
