@@ -47,18 +47,47 @@
                 <label for="status" class="text-black"><strong>Status</strong></label>
                 <p class="text-black">{{ $data->status }}</p>
             </div>
-
+            
             <div class="form-group border-bottom">
                 <label for="tindakan" class="text-black"><strong>Tindakan</strong></label>
                 <select class="form-control" name="tindakan" id="tindakan" fdprocessedid="677jv">
                     <option>pilih</option>
-                        {{-- <option value="Ajukan Ke Ketua KPU">Ajukan Ke Ketua KPU</option> --}}
-                        <option value="Ajukan Ke Ketua KPU">Ajukan Ke Ketua KPU</option>
+                    <option value="Cek Kembali">Cek Kembali</option>
+                    <option value="Ajukan Ke Ketua KPU">Ajukan Ke Ketua KPU</option>
                 </select>
             </div>
-            <input type="text" name="status" class="form-control" id="status" placeholder=""
-                            fdprocessedid="zukfe7" value="Diajukan" hidden>
+            
+            <div id="pesan">
+                <label for="tindakan" class="text-black"><strong>Pesan</strong></label>
+                <input type="text" name="pesan" class="form-control" id="pesan" placeholder="">
+            </div>
+            
+            <!-- Input status -->
+            <input type="text" name="status" class="form-control" id="status" value="Diajukan" hidden>
 
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function(){
+                    // Sembunyikan form input pesan secara default
+                    $('#pesan').hide();
+            
+                    // Tangani perubahan pada select
+                    $('#tindakan').change(function(){
+                        var selectedOption = $(this).val();
+            
+                        // Jika opsi yang dipilih adalah "Cek Kembali", tampilkan form input pesan
+                        if(selectedOption == 'Cek Kembali'){
+                            $('#pesan').show();
+                            $('#status').val('Cek Kembali');
+                        } else {
+                            // Jika opsi yang dipilih bukan "Cek Kembali", sembunyikan form input pesan
+                            $('#pesan').hide();
+                            // Atur kembali nilai input status ke nilai default (misalnya, "Diajukan")
+                            $('#status').val('Diajukan');
+                        }
+                    });
+                });
+            </script>
             {{-- <div class="form-group border-bottom">
                 <label for="disposisi" class="text-black"><strong>Disposisi</strong></label>
                 @if($data->disposisi)

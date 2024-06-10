@@ -80,7 +80,15 @@
                 <select class="form-control" name="rak_id" id="rak_id" fdprocessedid="677jv">
                     <option>pilih</option>
                     @foreach ($rak as $rak )    
-                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @can('ketua')
+                    @if ($rak->pemilik_rak == 'Ketua KPU')
+                        <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @endif
+                    @elsecan('sekretaris')
+                    @if ($rak->pemilik_rak == 'Sekretaris')
+                        <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @endif
+                    @endcan
                     @endforeach
                 </select>
             </div>

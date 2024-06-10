@@ -55,11 +55,10 @@
                                                                 @endif
                                                                 </td>
                                                                 <td>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-info"
-                                                                                    fdprocessedid="91w77s">
-                                                                                    Reset Password
-                                                                                </button>
+                                                                    <form action="{{ route('reset-password.send', $data->id) }}" method="POST">
+                                                                        @csrf
+                                                                        <button type="submit" class="btn btn-info">Reset Password</button>
+                                                                    </form>
                                                                 </td>
 
                                                                 <td>

@@ -26,77 +26,80 @@
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <a href="{{ route('tambah-SK') }}"><button type="button"
-                                                    class="btn btn-primary btn-fw">Tambah Data</button>
-                                            </a>
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th> ID </th>
-                                                        <th> Nomor Agenda </th>
-                                                        <th> Nomor Surat </th>
-                                                        <th> Perihal </th>
-                                                        <th> Kategori Surat </th>
-                                                        <th> Tujuan Surat </th>
-                                                        <th> Lampiran </th>
-                                                        <th> Tgl Surat Keluar </th>
-                                                        <th> Status </th>
-                                                        <th> Berkas </th>
-                                                        <th> Action </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($data as $data)
+                                                        class="btn btn-primary btn-fw">Tambah Data</button>
+                                                </a>
+                                                <table class="table table-striped">
+                                                    <thead>
                                                         <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $data->nomor_agenda }}</td>
-                                                            <td>{{ $data->nomor_surat }}</td>
-                                                            <td>{{ $data->perihal }}</td>
-                                                            <td>{{ $data->kategori->kategori_surat }}</td>
-                                                            <td>{{ $data->asal_surat }}</td>
-                                                            <td>{{ $data->lampiran }}</td>
-                                                            <td>{{ $data->tanggal }}</td>
-                                                            <td>
-                                                                @if ($data->status == 'Selesai Disposisi')
-                                                                    <span class="badge badge-success"
-                                                                        style="font-size: 0.8rem;">
-                                                                        <i class="mdi mdi-check"></i>
-                                                                        {{ $data->status }}
-                                                                    </span>
-                                                                @elseif ($data->status == 'Proses Pengecekan')
-                                                                    <span class="badge badge-info"
-                                                                        style="font-size: 0.8rem;">
-                                                                        <i class="fas fa-spinner"></i>
-                                                                        {{ $data->status }}
-                                                                    </span>
-                                                                @elseif($data->status == 'Diajukan')
-                                                                    <span class="badge badge-warning"
-                                                                        style="font-size: 0.8rem;">
-                                                                        <i class="fa-regular fa-paper-plane"></i>
-                                                                        {{ $data->status }}
-                                                                    </span>
-                                                                @elseif($data->status == 'Disposisi')
-                                                                    <span class="badge badge-danger"
-                                                                        style="font-size: 0.8rem;">
-                                                                        <i class="fa-solid fa-share"></i></i>
-                                                                        {{ $data->status }}
-                                                                    </span>
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal"
-                                                                        target="blank">
+                                                            <th> ID </th>
+                                                            <th> Nomor Agenda </th>
+                                                            <th> Nomor Surat </th>
+                                                            <th> Perihal </th>
+                                                            <th> Kategori Surat </th>
+                                                            <th> Tujuan Surat </th>
+                                                            <th> Lampiran </th>
+                                                            <th> Tgl Surat Keluar </th>
+                                                            <th> Status </th>
+                                                            <th> Berkas </th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($data as $data)
+                                                            <tr>
+                                                                <td>{{ $loop->iteration }}</td>
+                                                                <td>{{ $data->nomor_agenda }}</td>
+                                                                <td>{{ $data->nomor_surat }}</td>
+                                                                <td>{{ $data->perihal }}</td>
+                                                                <td>{{ $data->kategori->kategori_surat }}</td>
+                                                                <td>{{ $data->asal_surat }}</td>
+                                                                <td>{{ $data->lampiran }}</td>
+                                                                <td>{{ $data->tanggal }}</td>
+                                                                <td>
+                                                                    @if ($data->status == 'Berkas Siap Dikirim')
+                                                                        <span class="badge badge-success"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif ($data->status == 'Proses Pengecekan')
+                                                                        <span class="badge badge-info"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fas fa-spinner"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif($data->status == 'Diajukan')
+                                                                        <span class="badge badge-warning"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-regular fa-paper-plane"></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @elseif($data->status == 'Perbaiki')
+                                                                        <span class="badge badge-danger"
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="fa-solid fa-share"></i></i>
+                                                                            {{ $data->status }}
+                                                                        </span>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" class="btn btn-primary btn-rounded"
+                                                                        data-toggle="modal"
+                                                                        data-target="#myModal{{ $data->id }}">
                                                                         Lihat File
                                                                     </a>
-                                                                    {{-- modal --}}
-                                                                    <div class="modal fade" id="myModal" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel"
+
+                                                                    <div class="modal fade"
+                                                                        id="myModal{{ $data->id }}" tabindex="-1"
+                                                                        role="dialog"
+                                                                        aria-labelledby="myModalLabel{{ $data->id }}"
                                                                         aria-hidden="true">
                                                                         <div class="modal-dialog" role="document">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title"
-                                                                                        id="myModalLabel">Masukkan Password
+                                                                                        id="myModalLabel{{ $data->id }}">
+                                                                                        Masukkan Password
                                                                                         Dekripsi</h5>
                                                                                     <button type="button" class="close"
                                                                                         data-dismiss="modal"
@@ -131,41 +134,41 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                            </td>
-                                                            <td>
-                                                            <td>
-                                                                <div class="d-flex">
-                                                                    <div class="mr-1">
-                                                                        <a href="/{{ $data->id }}/detail-surat"
-                                                                            class="btn btn-primary btn-rounded">
-                                                                            <i class="mdi mdi-eye"
-                                                                                style="font-size: 15px;"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="mr-1">
-                                                                        <a href="/{{ $data->id }}/edit-data"
-                                                                            class="btn btn-primary btn-rounded">
-                                                                            <i class="mdi mdi-tooltip-edit"
-                                                                                style="font-size: 15px;"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div>
-                                                                        <form action="/{{ $data->id }}/hapus"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            <button type="submit"
-                                                                                class="btn btn-danger btn-rounded btn-icon"
-                                                                                fdprocessedid="91w77s">
-                                                                                <i class="mdi mdi-delete"
+                                                                </td>
+                                                                <td>
+                                                                <td>
+                                                                    <div class="d-flex">
+                                                                        <div class="mr-1">
+                                                                            <a href="/{{ $data->id }}/detail-surat"
+                                                                                class="btn btn-primary btn-rounded">
+                                                                                <i class="mdi mdi-eye"
                                                                                     style="font-size: 15px;"></i>
-                                                                            </button>
-                                                                        </form>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="mr-1">
+                                                                            <a href="/{{ $data->id }}/edit-data"
+                                                                                class="btn btn-primary btn-rounded">
+                                                                                <i class="mdi mdi-tooltip-edit"
+                                                                                    style="font-size: 15px;"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div>
+                                                                            <form action="/{{ $data->id }}/hapus"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger btn-rounded btn-icon"
+                                                                                    fdprocessedid="91w77s">
+                                                                                    <i class="mdi mdi-delete"
+                                                                                        style="font-size: 15px;"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>  
+                                                                </td>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

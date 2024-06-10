@@ -59,63 +59,55 @@
                                                             <td>{{ $sek->status }}</td>
                                                             <td>
                                                                 <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal"
-                                                                        target="blank">
-                                                                        Lihat File
-                                                                    </a>
-                                                                    {{-- modal --}}
-                                                                    <div class="modal fade" id="myModal" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="myModalLabel">Masukkan Password
-                                                                                        Dekripsi</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
+                                                                data-toggle="modal" data-target="#myModal{{ $sek->id }}" target="blank">
+                                                                Lihat File
+                                                            </a>
+                                                    
+                                                            <div class="modal fade" id="myModal{{ $sek->id }}" tabindex="-1"
+                                                                role="dialog" aria-labelledby="myModalLabel{{ $sek->id }}"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="myModalLabel{{ $sek->id }}">Masukkan Password
+                                                                                Dekripsi</h5>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal"
+                                                                                aria-label="Close">
+                                                                                <span
+                                                                                    aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form id="decryptForm"
+                                                                                action="/dekripsi/{{ $sek->id }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                <div class="form-group">
+                                                                                    <label
+                                                                                        for="password">Password</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        id="pass_id"
+                                                                                        name="pass_id" value="{{ $sek->pass_id }}" hidden>
+                                                                                    <input type="password"
+                                                                                        class="form-control"
+                                                                                        id="password"
+                                                                                        name="password" required>
                                                                                 </div>
-                                                                                <div class="modal-body">
-                                                                                    <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $data->id }}"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <div class="form-group">
-                                                                                            <label
-                                                                                                for="password">Password</label>
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                id="pass_id"
-                                                                                                name="pass_id"
-                                                                                                value="{{ $data->pass_id }}"
-                                                                                                hidden>
-                                                                                            <input type="password"
-                                                                                                class="form-control"
-                                                                                                id="password"
-                                                                                                name="password" required>
-                                                                                        </div>
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Submit</button>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-primary">Submit</button>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
                                                             </td>
                                                             <td>
                                                             <td>
                                                                 <div class="d-flex">
                                                                     <div class="mr-1">
-                                                                        {{-- <a href="/{{ $sek->id }}/detail-surat"
-                                                                            class="btn btn-primary btn-rounded">
-                                                                            <i class="mdi mdi-eye"
-                                                                                style="font-size: 15px;"></i>
-                                                                        </a> --}}
                                                                     </div>
                                                                     <div class="mr-1">
                                                                         <a href="/{{ $sek->id }}/edit-data"
@@ -175,19 +167,18 @@
                                                         <td>{{ $ket->status }}</td>
                                                         <td>
                                                             <a href="#" class="btn btn-primary btn-rounded"
-                                                            data-toggle="modal" data-target="#myModal"
-                                                            target="blank">
+                                                            data-toggle="modal" data-target="#myModal{{ $ket->id }}" target="blank">
                                                             Lihat File
                                                         </a>
-                                                        {{-- modal --}}
-                                                        <div class="modal fade" id="myModal" tabindex="-1"
-                                                            role="dialog" aria-labelledby="myModalLabel"
+                                                
+                                                        <div class="modal fade" id="myModal{{ $ket->id }}" tabindex="-1"
+                                                            role="dialog" aria-labelledby="myModalLabel{{ $ket->id }}"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title"
-                                                                            id="myModalLabel">Masukkan Password
+                                                                            id="myModalLabel{{ $ket->id }}">Masukkan Password
                                                                             Dekripsi</h5>
                                                                         <button type="button" class="close"
                                                                             data-dismiss="modal"
@@ -198,7 +189,7 @@
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         <form id="decryptForm"
-                                                                            action="/dekripsi/{{ $data->id }}"
+                                                                            action="/dekripsi/{{ $ket->id }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             <div class="form-group">
@@ -207,9 +198,7 @@
                                                                                 <input type="text"
                                                                                     class="form-control"
                                                                                     id="pass_id"
-                                                                                    name="pass_id"
-                                                                                    value="{{ $data->pass_id }}"
-                                                                                    hidden>
+                                                                                    name="pass_id" value="{{ $ket->pass_id }}" hidden>
                                                                                 <input type="password"
                                                                                     class="form-control"
                                                                                     id="password"

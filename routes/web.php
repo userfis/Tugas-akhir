@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Datacontroller;
 use App\Http\Controllers\DataInformasicontroller;
 use App\Http\Controllers\DatakeluarController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TeknisController;
@@ -21,6 +22,10 @@ use App\Http\Controllers\HukumController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::post('/reset-password/{id}', [ForgotPasswordController::class, 'sendResetLink'])->name('reset-password.send');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('reset-password.form');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset-password.update');
+
 Route::get('/',[LoginController::class, 'login'])->middleware('guest')->name('login');
 Route::post('/login',[LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);

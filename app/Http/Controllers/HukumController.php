@@ -133,6 +133,7 @@ class HukumController extends Controller
             'status' => 'required|max:255',
             'tindakan' => 'required|max:255',
 
+
         ];
 
         
@@ -152,6 +153,7 @@ class HukumController extends Controller
 
             'status' => 'required|max:255',
             'tindakan' => 'required|max:255',
+            'pesan' => ''
 
         ];
 
@@ -159,7 +161,7 @@ class HukumController extends Controller
         $validatedData = $request->validate($rules);
         
         Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Surat Berhasil Diajukan !');
+        Alert::success('Success', 'Surat Berhasil di Konfirmasi !');
         return redirect('/cek-surat-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')
 
@@ -214,7 +216,7 @@ class HukumController extends Controller
 
     public function konfirmSKP(Data $data, Request $request)
     {
-        dd($request);
+        // dd($request);
         $rules = [
 
             'status' => 'required|max:255',
@@ -227,7 +229,7 @@ class HukumController extends Controller
         $validatedData = $request->validate($rules);
         
         Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Surat Berhasil Didisposisi !');
+        Alert::success('Success', 'Surat Berhasil di Konfirmasi !');
         return redirect('/cek-surat-keluar');
         // ->with('success', 'Artikel Berhasil Di Update!')
 

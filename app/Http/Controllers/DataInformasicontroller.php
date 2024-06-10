@@ -353,16 +353,14 @@ class DataInformasicontroller extends Controller
             $filePath = $file->getRealPath();
             $fileContent = file_get_contents($filePath);
 
-            // Encrypt the file content using AES encryption
+
             $encryptedContent = Crypt::encrypt($fileContent);
 
-            // Define a storage path and filename
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $fileName = 'data-informasi/' . $originalFileName . '.txt';
 
             Storage::put($fileName, $encryptedContent);
 
-            // Save the path to the database
             $validatedData['file'] = $fileName;
         }
 
@@ -432,28 +430,42 @@ class DataInformasicontroller extends Controller
     public function editDataInformasi(Data $data, Request $request)
     {
         $rules = [
-
-            'divisi_id' => 'required',
-            'data_id' => 'required',
+            'kategori_id' => 'required',
             'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'file' => 'file|max:2400|mimes:pdf',
-
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
+            'status' => 'required',
+            'file' => 'file|mimes:pdf',
         ];
-
-
+    
         $validatedData = $request->validate($rules);
-
+    
         if ($request->file('file')) {
-            if ($request->oldFile) {
-                Storage::delete($request->oldFile);
+            if ($data->file) {
+                Storage::delete($data->file);
             }
-            $validatedData['file'] = $request->file('file')->store('data-informasi');
+    
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+    
+            // Encrypt the file content using AES encryption
+            $encryptedContent = Crypt::encrypt($fileContent);
+    
+            // Define a storage path and filename
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = 'data-informasi/' . $originalFileName . '.txt';
+    
+            Storage::put($fileName, $encryptedContent);
+    
+            // Save the encrypted file path to the database
+            $validatedData['file'] = $fileName;
         }
-
-
-        Data::where('id', $data->id)->update($validatedData);
+    
+        $data->update($validatedData);
         Alert::success('Success', 'Update data berhasil !');
         return redirect('/data-masuk');
         // ->with('success', 'Artikel Berhasil Di Update!')

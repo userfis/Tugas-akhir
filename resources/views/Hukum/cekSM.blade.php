@@ -35,7 +35,6 @@
                                                                 <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
-                                                                <th> Disposisi </th>
                                                                 <th> Tgl Surat </th>
                                                                 <th> Status </th>
                                                                 <th> Berkas </th>
@@ -51,7 +50,6 @@
                                                                     <td>{{ $ket->perihal }}</td>
                                                                     <td>{{ $ket->kategori->kategori_surat }}</td>
                                                                     <td>{{ $ket->asal_surat }}</td>
-                                                                    <td>{{ $ket->disposisi }}</td>
                                                                     <td>{{ $ket->tanggal }}</td>
                                                                     <td>
                                                                         @if ($ket->status == 'Selesai Disposisi')
@@ -81,12 +79,54 @@
                                                                         @endif
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/storage/{{ $ket->file }}"
-                                                                            class="btn btn-primary btn-rounded" target="blank">
+                                                                        <a href="#" class="btn btn-primary btn-rounded"
+                                                                            data-toggle="modal" data-target="#myModal">
                                                                             Lihat File
                                                                         </a>
+
+                                                                        <!-- Modal -->
+                                                                        <div class="modal fade" id="myModal" tabindex="-1"
+                                                                            role="dialog" aria-labelledby="myModalLabel"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel">Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $ket->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                    <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id" value="{{ $ket->pass_id }}" hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </td>
-                                                                    <td>
+                                                                   
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             {{-- <div class="mr-1">
@@ -130,7 +170,6 @@
                                                                 <th> Perihal </th>
                                                                 <th> Kategori Surat </th>
                                                                 <th> Pengirim </th>
-                                                                <th> Disposisi </th>
                                                                 <th> Tgl Surat </th>
                                                                 <th> Status </th>
                                                                 <th> Berkas </th>
@@ -146,7 +185,6 @@
                                                                     <td>{{ $sek->perihal }}</td>
                                                                     <td>{{ $sek->kategori->kategori_surat }}</td>
                                                                     <td>{{ $sek->asal_surat }}</td>
-                                                                    <td>{{ $sek->disposisi }}</td>
                                                                     <td>{{ $sek->tanggal }}</td>
                                                                     <td>
                                                                         @if ($sek->status == 'Selesai Disposisi')
@@ -181,7 +219,6 @@
                                                                             Lihat File
                                                                         </a>
                                                                     </td>
-                                                                    <td>
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">

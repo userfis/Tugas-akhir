@@ -45,8 +45,8 @@
                         <label for="kategori_id">Kategori Surat</label>
                         <select class="form-control" name="kategori_id" id="kategori_id" fdprocessedid="677jv">
                             <option>pilih</option>
-                            @foreach ($kategori as $kategori)
-                                <option value="{{ $kategori->id }}">{{ $kategori->kategori_surat }}</option>
+                            @foreach ($kategori as $kat)
+                                <option value="{{ $kat->id }}">{{ $kat->kategori_surat }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -57,7 +57,7 @@
                     </div>
                     <br>
                     <input type="text" name="data_id" id="data_id" value="1" hidden>
-                    {{-- <input type="text" name="pass_id" id="pass_id" value="1" hidden> --}}
+                    <input type="text" name="pass_id" id="pass_id" value="1" hidden>
                     <input type="text" name="status" id="status" value="Proses Pengecekan" hidden>
                     <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
                     <a href="{{ route('masuk') }}" class="btn btn-light" fdprocessedid="p0f3cn">Cancel</a>

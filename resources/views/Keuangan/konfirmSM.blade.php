@@ -75,15 +75,31 @@
                     document.getElementById('tanggal_arsip').value = formattedDate;
                 });
             </script>
-            <div class="form-group border-bottom">
-                <label for="rak_id" class="text-black"><strong>Pilih Lokasi Arsip</strong></label>
-                <select class="form-control" name="rak_id" id="rak_id" fdprocessedid="677jv">
-                    <option>pilih</option>
-                    @foreach ($rak as $rak )    
-                    <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
-                    @endforeach
-                </select>
-            </div>
+           <div class="form-group border-bottom">
+            <label for="rak_id" class="text-black"><strong>Pilih Lokasi Arsip</strong></label>
+            <select class="form-control" name="rak_id" id="rak_id" fdprocessedid="677jv">
+                <option>pilih</option>
+                @foreach ($rak as $rak)
+                    @can('staffKeu')
+                        @if ($rak->pemilik_rak == 'Staff Keuangan')
+                            <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                        @endif
+                    @elsecan('staffDat')
+                    @if ($rak->pemilik_rak == 'Staff Data & Informasi')
+                        <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @endif
+                    @elsecan('staffHuk')
+                    @if ($rak->pemilik_rak == 'Staff Hukum')
+                        <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @endif
+                    @elsecan('staffTek')
+                    @if ($rak->pemilik_rak == 'Staff Teknis')
+                        <option value="{{ $rak->id }}">{{ $rak->nama_rak }}</option>
+                    @endif
+                    @endcan
+                @endforeach
+            </select>
+        </div>
             <br>
             <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
             <a href="{{ route('staff-sm') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>  

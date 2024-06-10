@@ -106,7 +106,7 @@
                                                                                 data-id="{{ $rak->id }}"
                                                                                 data-nama_rak="{{ $rak->nama_rak }}"
                                                                                 data-pemilik_rak="{{ $rak->pemilik_rak }}">
-                                                                                <i class="mdi mdi-tooltip-edit">edit</i>
+                                                                                <i class="mdi mdi-tooltip-edit" style="font-size: 15px"></i>
                                                                             </button>
                                                                         </div>
                                                                         {{-- @foreach ($rak as $item)                                                                                                                                                   --}}
@@ -114,7 +114,7 @@
                                                                         {{-- @endforeach --}}
 
 
-                                                                        <div>
+                                                                        {{-- <div>
                                                                             <form action="/{{ $rak->id }}/hapus/rak"
                                                                                 method="POST">
                                                                                 @csrf
@@ -125,7 +125,7 @@
                                                                                         style="font-size: 15px;"></i>
                                                                                 </button>
                                                                             </form>
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                 </td>
                                                             </tr>
