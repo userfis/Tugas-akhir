@@ -3,7 +3,7 @@
         <li class="nav-item nav-category">Main</li>
         @can('superadmin')
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('home') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Dashboard</span>
             </a>
@@ -16,10 +16,11 @@
             </a>
             <div class="collapse" id="master"> <!-- pastikan id unik -->
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip') }}">Arsip Surat</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Disposisi</a></li>
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{ route('arsip') }}">Arsip Surat</a></li> --}}
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('disposisi') }}">Disposisi</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('kategori') }}">Kategori Surat</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('rak') }}">Rak</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="#">Password File</a></li>
                 </ul>
             </div>
         </li>
@@ -33,6 +34,19 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="{{ route('masuk') }}">surat masuk</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('surat-keluar') }}">surat keluar</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#arsip" aria-expanded="false" aria-controls="arsip">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="arsip"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('surat-keluar-arsip') }}">Arsip Surat Keluar</a></li>
                 </ul>
             </div>
         </li>
@@ -63,10 +77,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Arsip Data</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsipstaff" aria-expanded="false" aria-controls="arsipstaff">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="arsipstaff"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sm') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sk') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
         
 
@@ -84,16 +105,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Unggah Data</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsipstaff" aria-expanded="false" aria-controls="arsipstaff">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Arsip Data</span>
-            </a>
+            <div class="collapse" id="arsipstaff"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sm') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sk') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
         
 
@@ -111,16 +133,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Unggah Data</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsipstaff" aria-expanded="false" aria-controls="arsipstaff">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Arsip Data</span>
-            </a>
+            <div class="collapse" id="arsipstaff"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sm') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sk') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
         
 
@@ -138,19 +161,19 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Unggah Data</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsippim" aria-expanded="false" aria-controls="arsippim">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Arsip Data</span>
-            </a>
+            <div class="collapse" id="arsippim"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sm') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-staff-sk') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
         
-
         @elsecan('sekretaris')
         <li class="nav-item">
             <a class="nav-link" href="{{ route('cek-sm') }}">
@@ -177,12 +200,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Cek Data Masuk</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsippim" aria-expanded="false" aria-controls="arsippim">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="arsippim"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-sm-pim') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('surat-keluar-arsip') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
-    
 
         @elsecan('ketua')
         <li class="nav-item">
@@ -210,13 +239,19 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Cek Data Masuk</span>
+            <a class="nav-link" data-toggle="collapse" href="#arsippim" aria-expanded="false" aria-controls="arsippim">
+                <span class="icon-bg"><i class="mdi mdi-database menu-icon"></i></span>
+                <span class="menu-title">Arsip</span>
+                <i class="menu-arrow"></i>
             </a>
+            <div class="collapse" id="arsippim"> <!-- pastikan id unik -->
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-sm-pim') }}">Arsip Surat Masuk</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('arsip-sk-pim') }}">Arsip Surat Keluar</a></li>
+                </ul>
+            </div>
         </li>
-        @endcan
-        
+        @endcan   
     </ul>
 </nav>
 

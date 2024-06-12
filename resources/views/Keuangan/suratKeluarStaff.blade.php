@@ -70,94 +70,105 @@
                                                                     <td>{{ $h->asal_surat }}</td>
                                                                     <td>{{ $h->lampiran }}</td>
                                                                     <td>{{ $h->tanggal }}</td>
-                                                                    <td>@if ($h->status == 'Berkas Siap Dikirim')
-                                                                        <span class="badge badge-success"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="mdi mdi-check"></i>
-                                                                            {{ $h->status }}
-                                                                        </span>
-                                                                    @elseif ($h->status == 'Proses Pengecekan')
-                                                                        <span class="badge badge-info"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fas fa-spinner"></i>
-                                                                            {{ $h->status }}
-                                                                        </span>
-                                                                    @elseif($h->status == 'Diajukan')
-                                                                        <span class="badge badge-warning"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $h->status }}
-                                                                        </span>
-                                                                    @elseif($h->status == 'Perbaiki')
-                                                                        <span class="badge badge-danger"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $h->status }}
-                                                                        </span>
-                                                                    @endif</td>
                                                                     <td>
-                                                                          <a href="#" class="btn btn-primary btn-rounded"
-                                                                    data-toggle="modal" data-target="#myModal{{ $h->id }}" target="blank">
-                                                                    Lihat File
-                                                                </a>
-                                                        
-                                                                <div class="modal fade" id="myModal{{ $h->id }}" tabindex="-1"
-                                                                    role="dialog" aria-labelledby="myModalLabel{{ $h->id }}"
-                                                                    aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="myModalLabel{{ $h->id }}">Masukkan Password
-                                                                                    Dekripsi</h5>
-                                                                                <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                    <span
-                                                                                        aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form id="decryptForm"
-                                                                                    action="/dekripsi/{{ $h->id }}"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="password">Password</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            id="pass_id"
-                                                                                            name="pass_id" value="{{ $h->pass_id }}" hidden>
-                                                                                        <input type="password"
-                                                                                            class="form-control"
-                                                                                            id="password"
-                                                                                            name="password" required>
+                                                                        @if ($h->status == 'Berkas Siap Dikirim')
+                                                                            <a href="/{{ $h->id }}/kirim-email"
+                                                                                class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $h->status }}
+                                                                            </a>
+                                                                        @elseif ($h->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $h->status }}
+                                                                            </span>
+                                                                        @elseif($h->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $h->status }}
+                                                                            </span>
+                                                                        @elseif($h->status == 'Perbaiki')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $h->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="#" class="btn btn-primary btn-rounded"
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $h->id }}"
+                                                                            target="blank">
+                                                                            Lihat File
+                                                                        </a>
+
+                                                                        <div class="modal fade" id="myModal{{ $h->id }}"
+                                                                            tabindex="-1" role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $h->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $h->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
                                                                                     </div>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary">Submit</button>
-                                                                                </form>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $h->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $h->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $h->id }}/detail-surat"
+                                                                                <a href="/{{ $h->id }}/staff/konfirm-sk"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $h->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
+                                                                            @if ($h->status != 'Diajukan' && $h->status != 'Berkas Siap Dikirim')
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $h->id }}/staff/edit-sk"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            @endif
                                                                             <div>
                                                                                 <form action="/{{ $h->id }}/hapus"
                                                                                     method="POST">
@@ -206,78 +217,88 @@
                                                                     <td>{{ $item->asal_surat }}</td>
                                                                     <td>{{ $item->lampiran }}</td>
                                                                     <td>{{ $item->tanggal }}</td>
-                                                                    <td>@if ($item->status == 'Berkas Siap Dikirim')
-                                                                        <span class="badge badge-success"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="mdi mdi-check"></i>
-                                                                            {{ $item->status }}
-                                                                        </span>
-                                                                    @elseif ($item->status == 'Proses Pengecekan')
-                                                                        <span class="badge badge-info"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fas fa-spinner"></i>
-                                                                            {{ $item->status }}
-                                                                        </span>
-                                                                    @elseif($item->status == 'Diajukan')
-                                                                        <span class="badge badge-warning"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $item->status }}
-                                                                        </span>
-                                                                    @elseif($item->status == 'Perbaiki')
-                                                                        <span class="badge badge-danger"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $item->status }}
-                                                                        </span>
-                                                                    @endif</td>
+                                                                    <td>
+                                                                        @if ($item->status == 'Berkas Siap Dikirim')
+                                                                            <a href="/{{ $item->id }}/kirim-email"
+                                                                                class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $item->status }}
+                                                                            </a>
+                                                                        @elseif ($item->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $item->status }}
+                                                                            </span>
+                                                                        @elseif($item->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $item->status }}
+                                                                            </span>
+                                                                        @elseif($item->status == 'Perbaiki')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $item->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <!-- Tombol Lihat File -->
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal{{ $item->id }}" target="blank">
-                                                                        Lihat File
-                                                                    </a>
-                                                            
-                                                                    <div class="modal fade" id="myModal{{ $item->id }}" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel{{ $item->id }}"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="myModalLabel{{ $item->id }}">Masukkan Password
-                                                                                        Dekripsi</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $item->id }}"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <div class="form-group">
-                                                                                            <label
-                                                                                                for="password">Password</label>
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                id="pass_id"
-                                                                                                name="pass_id" value="{{ $item->pass_id }}" hidden>
-                                                                                            <input type="password"
-                                                                                                class="form-control"
-                                                                                                id="password"
-                                                                                                name="password" required>
-                                                                                        </div>
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Submit</button>
-                                                                                    </form>
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $item->id }}"
+                                                                            target="blank">
+                                                                            Lihat File
+                                                                        </a>
+
+                                                                        <div class="modal fade"
+                                                                            id="myModal{{ $item->id }}" tabindex="-1"
+                                                                            role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $item->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $item->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $item->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $item->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
 
                                                                         {{-- <a href="/storage/{{ $item->file }}"
                                                                 class="btn btn-primary btn-rounded" target="blank">
@@ -287,19 +308,21 @@
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $item->id }}/detail-surat"
+                                                                                <a href="/{{ $item->id }}/staff/konfirm-sk"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $item->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
+                                                                            @if ($item->status != 'Diajukan' && $item->status != 'Berkas Siap Dikirim')
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $item->id }}/staff/edit-sk"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            @endif
                                                                             <div>
                                                                                 <form action="/{{ $item->id }}/hapus"
                                                                                     method="POST">
@@ -348,94 +371,106 @@
                                                                     <td>{{ $k->asal_surat }}</td>
                                                                     <td>{{ $k->lampiran }}</td>
                                                                     <td>{{ $k->tanggal }}</td>
-                                                                    <td>@if ($k->status == 'Berkas Siap Dikirim')
-                                                                        <span class="badge badge-success"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="mdi mdi-check"></i>
-                                                                            {{ $k->status }}
-                                                                        </span>
-                                                                    @elseif ($k->status == 'Proses Pengecekan')
-                                                                        <span class="badge badge-info"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fas fa-spinner"></i>
-                                                                            {{ $k->status }}
-                                                                        </span>
-                                                                    @elseif($k->status == 'Diajukan')
-                                                                        <span class="badge badge-warning"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $k->status }}
-                                                                        </span>
-                                                                    @elseif($k->status == 'Perbaiki')
-                                                                        <span class="badge badge-danger"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $k->status }}
-                                                                        </span>
-                                                                    @endif</td>
+                                                                    <td>
+                                                                        @if ($k->status == 'Berkas Siap Dikirim')
+                                                                            <a href="/{{ $k->id }}/kirim-email"
+                                                                                class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $k->status }}
+                                                                            </a>
+                                                                        @elseif ($k->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $k->status }}
+                                                                            </span>
+                                                                        @elseif($k->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $k->status }}
+                                                                            </span>
+                                                                        @elseif($k->status == 'Perbaiki')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $k->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                    data-toggle="modal" data-target="#myModal{{ $k->id }}" target="blank">
-                                                                    Lihat File
-                                                                </a>
-                                                        
-                                                                <div class="modal fade" id="myModal{{ $k->id }}" tabindex="-1"
-                                                                    role="dialog" aria-labelledby="myModalLabel{{ $k->id }}"
-                                                                    aria-hidden="true">
-                                                                    <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title"
-                                                                                    id="myModalLabel{{ $k->id }}">Masukkan Password
-                                                                                    Dekripsi</h5>
-                                                                                <button type="button" class="close"
-                                                                                    data-dismiss="modal"
-                                                                                    aria-label="Close">
-                                                                                    <span
-                                                                                        aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <form id="decryptForm"
-                                                                                    action="/dekripsi/{{ $k->id }}"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <div class="form-group">
-                                                                                        <label
-                                                                                            for="password">Password</label>
-                                                                                        <input type="text"
-                                                                                            class="form-control"
-                                                                                            id="pass_id"
-                                                                                            name="pass_id" value="{{ $k->pass_id }}" hidden>
-                                                                                        <input type="password"
-                                                                                            class="form-control"
-                                                                                            id="password"
-                                                                                            name="password" required>
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $k->id }}"
+                                                                            target="blank">
+                                                                            Lihat File
+                                                                        </a>
+
+                                                                        <div class="modal fade"
+                                                                            id="myModal{{ $k->id }}" tabindex="-1"
+                                                                            role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $k->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $k->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
                                                                                     </div>
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-primary">Submit</button>
-                                                                                </form>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $k->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $k->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $k->id }}/detail-surat"
+                                                                                <a href="/{{ $k->id }}/staff/konfirm-sk"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $k->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
+                                                                            @if ($k->status != 'Diajukan' && $k->status != 'Berkas Siap Dikirim')
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $k->id }}/staff/edit-sk"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            @endif
                                                                             <div>
                                                                                 <form action="/{{ $k->id }}/hapus"
                                                                                     method="POST">
@@ -484,94 +519,106 @@
                                                                     <td>{{ $t->asal_surat }}</td>
                                                                     <td>{{ $t->lampiran }}</td>
                                                                     <td>{{ $t->tanggal }}</td>
-                                                                    <td>@if ($t->status == 'Berkas Siap Dikirim')
-                                                                        <span class="badge badge-success"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="mdi mdi-check"></i>
-                                                                            {{ $t->status }}
-                                                                        </span>
-                                                                    @elseif ($t->status == 'Proses Pengecekan')
-                                                                        <span class="badge badge-info"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fas fa-spinner"></i>
-                                                                            {{ $t->status }}
-                                                                        </span>
-                                                                    @elseif($t->status == 'Diajukan')
-                                                                        <span class="badge badge-warning"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-regular fa-paper-plane"></i>
-                                                                            {{ $t->status }}
-                                                                        </span>
-                                                                    @elseif($t->status == 'Perbaiki')
-                                                                        <span class="badge badge-danger"
-                                                                            style="font-size: 0.8rem;">
-                                                                            <i class="fa-solid fa-share"></i></i>
-                                                                            {{ $t->status }}
-                                                                        </span>
-                                                                    @endif</td>
+                                                                    <td>
+                                                                        @if ($t->status == 'Berkas Siap Dikirim')
+                                                                            <a href="/{{ $t->id }}/kirim-email"
+                                                                                class="badge badge-success"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="mdi mdi-check"></i>
+                                                                                {{ $t->status }}
+                                                                            </a>
+                                                                        @elseif ($t->status == 'Proses Pengecekan')
+                                                                            <span class="badge badge-info"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fas fa-spinner"></i>
+                                                                                {{ $t->status }}
+                                                                            </span>
+                                                                        @elseif($t->status == 'Diajukan')
+                                                                            <span class="badge badge-warning"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-regular fa-paper-plane"></i>
+                                                                                {{ $t->status }}
+                                                                            </span>
+                                                                        @elseif($t->status == 'Perbaiki')
+                                                                            <span class="badge badge-danger"
+                                                                                style="font-size: 0.8rem;">
+                                                                                <i class="fa-solid fa-share"></i></i>
+                                                                                {{ $t->status }}
+                                                                            </span>
+                                                                        @endif
+                                                                    </td>
                                                                     <td>
                                                                         <a href="#" class="btn btn-primary btn-rounded"
-                                                                        data-toggle="modal" data-target="#myModal{{ $t->id }}" target="blank">
-                                                                        Lihat File
-                                                                    </a>
-                                                            
-                                                                    <div class="modal fade" id="myModal{{ $t->id }}" tabindex="-1"
-                                                                        role="dialog" aria-labelledby="myModalLabel{{ $t->id }}"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="myModalLabel{{ $t->id }}">Masukkan Password
-                                                                                        Dekripsi</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal"
-                                                                                        aria-label="Close">
-                                                                                        <span
-                                                                                            aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <form id="decryptForm"
-                                                                                        action="/dekripsi/{{ $t->id }}"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <div class="form-group">
-                                                                                            <label
-                                                                                                for="password">Password</label>
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                id="pass_id"
-                                                                                                name="pass_id" value="{{ $t->pass_id }}" hidden>
-                                                                                            <input type="password"
-                                                                                                class="form-control"
-                                                                                                id="password"
-                                                                                                name="password" required>
-                                                                                        </div>
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-primary">Submit</button>
-                                                                                    </form>
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $t->id }}"
+                                                                            target="blank">
+                                                                            Lihat File
+                                                                        </a>
+
+                                                                        <div class="modal fade"
+                                                                            id="myModal{{ $t->id }}" tabindex="-1"
+                                                                            role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $t->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $t->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $t->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $t->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex">
                                                                             <div class="mr-1">
-                                                                                <a href="/{{ $t->id }}/detail-surat"
+                                                                                <a href="/{{ $t->id }}/staff/konfirm-sk"
                                                                                     class="btn btn-primary btn-rounded">
                                                                                     <i class="mdi mdi-eye"
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
-                                                                            <div class="mr-1">
-                                                                                <a href="/{{ $t->id }}/edit-data"
-                                                                                    class="btn btn-primary btn-rounded">
-                                                                                    <i class="mdi mdi-tooltip-edit"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </a>
-                                                                            </div>
+                                                                            @if ($item->status != 'Diajukan' && $item->status != 'Berkas Siap Dikirim')
+                                                                                <div class="mr-1">
+                                                                                    <a href="/{{ $t->id }}/staff/edit-sk"
+                                                                                        class="btn btn-primary btn-rounded">
+                                                                                        <i class="mdi mdi-tooltip-edit"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            @endif
                                                                             <div>
                                                                                 <form action="/{{ $t->id }}/hapus"
                                                                                     method="POST">
@@ -593,32 +640,32 @@
                                             </div>
                                             <br>
                                             @can('staffKeu')
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    {{ $keu->links('pagination::bootstrap-4') }}
-                                                </ul>
-                                            </nav>
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-center">
+                                                        {{ $keu->links('pagination::bootstrap-4') }}
+                                                    </ul>
+                                                </nav>
                                             @elsecan('staffHuk')
-                                            <br>
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    {{ $huk->links('pagination::bootstrap-4') }}
-                                                </ul>
-                                            </nav>
+                                                <br>
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-center">
+                                                        {{ $huk->links('pagination::bootstrap-4') }}
+                                                    </ul>
+                                                </nav>
                                             @elsecan('staffDat')
-                                            <br>
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    {{ $data->links('pagination::bootstrap-4') }}
-                                                </ul>
-                                            </nav>
+                                                <br>
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-center">
+                                                        {{ $data->links('pagination::bootstrap-4') }}
+                                                    </ul>
+                                                </nav>
                                             @elsecan('staffTek')
-                                            <br>
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    {{ $tek->links('pagination::bootstrap-4') }}
-                                                </ul>
-                                            </nav>
+                                                <br>
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination justify-content-center">
+                                                        {{ $tek->links('pagination::bootstrap-4') }}
+                                                    </ul>
+                                                </nav>
                                             @endcan
                                         </div>
                                     </div>

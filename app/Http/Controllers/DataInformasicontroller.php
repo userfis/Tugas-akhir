@@ -122,6 +122,20 @@ class DataInformasicontroller extends Controller
         ]);
     }
 
+    public function disposisi(){
+        $data = Data::where('status', '=', 'Disposisi')
+        ->orWhere('status', '=', 'Selesai Disposisi')
+        ->latest()
+        ->paginate(10);
+
+        return view('dataInformasi.disposisi', [
+
+            'Halaman' => 'Data & Informasi',
+            'data' => $data
+        ]);
+
+    }
+
     public function keluar()
     {
 
@@ -176,11 +190,75 @@ class DataInformasicontroller extends Controller
         // $arsip = Arsip::with('data')
         // // ->where('data_id', '=', '1')
         // ->get();
+        // $arsip = DB::table('data')->where('data_id', '1')
+        //     ->leftJoin('arsips', 'arsips.surat_id', 'data.data_id')
+        //     ->leftJoin('raks', 'raks.id', 'arsips.rak_id')
+        //     ->get();
+        // dd($arsip);
 
-        $arsip = DB::table('data')->where('data_id', '1')
-            ->leftJoin('arsips', 'arsips.surat_id', 'data.data_id')
-            ->leftJoin('raks', 'raks.id', 'arsips.rak_id')
-            ->get();
+        $arsip = DB::table('data')
+        ->select(
+            'data.id as data_id', 
+            'data.nomor_agenda', 
+            'data.nomor_surat', 
+            'data.perihal', 
+            'data.asal_surat', 
+            'data.lampiran', 
+            'arsips.tanggal_arsip', 
+            'data.file as data_file', 
+            'data.pass_id', 
+            'raks.nama_rak',
+            'arsips.created_at' // Select created_at from arsips for ordering
+        )
+        ->where('data.data_id', '1')
+        ->join('arsips', 'arsips.surat_id', '=', 'data.id') // Use inner join to ensure data is in arsips
+        ->join('raks', 'raks.id', '=', 'arsips.rak_id')
+        ->orderBy('arsips.created_at', 'desc') // Order by created_at from arsips in descending order
+        ->get();
+
+        // dd($arsip);
+
+        return view('dataInformasi.arsip', [
+
+            'Halaman' => 'Data & Informasi',
+            'arsip' => $arsip
+        ]);
+    }
+
+    public function arsipKeluar()
+    {
+
+        // $arsip = Arsip::where('data_id', '=', '1')->leftJoin('arsips' , 'arsips.surat_id', 'data.id')
+        // ->get();
+        // $arsip = Arsip::with('data')
+        // // ->where('data_id', '=', '1')
+        // ->get();
+        // $arsip = DB::table('data')->where('data_id', '1')
+        //     ->leftJoin('arsips', 'arsips.surat_id', 'data.data_id')
+        //     ->leftJoin('raks', 'raks.id', 'arsips.rak_id')
+        //     ->get();
+        // dd($arsip);
+
+        $arsip = DB::table('data')
+        ->select(
+            'data.id as data_id', 
+            'data.nomor_agenda', 
+            'data.nomor_surat', 
+            'data.perihal', 
+            'data.asal_surat', 
+            'data.lampiran', 
+            'arsips.tanggal_arsip', 
+            'data.file as data_file', 
+            'data.pass_id', 
+            'raks.nama_rak',
+            'arsips.created_at' // Select created_at from arsips for ordering
+        )
+        ->where('data.data_id', '2')
+        ->join('arsips', 'arsips.surat_id', '=', 'data.id') // Use inner join to ensure data is in arsips
+        ->join('raks', 'raks.id', '=', 'arsips.rak_id')
+        ->orderBy('arsips.created_at', 'desc') // Order by created_at from arsips in descending order
+        ->get();
+
         // dd($arsip);
 
         return view('dataInformasi.arsip', [
@@ -371,19 +449,28 @@ class DataInformasicontroller extends Controller
     {
         $request->merge(['pass_id' => (string) 1]);
         // dd($request);
-        $validatedData = $request->validate([
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+
+        $rules = [
             'kategori_id' => 'required',
-            'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
             'tanggal' => 'required',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
             'lampiran' => 'required|max:255',
             'nomor_agenda' => 'required|max:255',
-            'status' => '',
-            'file' => 'required|file|max:2400|mimes:pdf',
-            'pass_id' => 'required|string'
-        ]);
+            'status' => 'required',
+            'tindakan' => 'required',
+            'file' => 'nullable|file|mimes:pdf',
+            'pass_id' => 'required'
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
 
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -466,6 +553,16 @@ class DataInformasicontroller extends Controller
 
     public function editDataInformasi(Data $data, Request $request)
     {
+
+        $request->merge(['pass_id' => (string) 1]);
+        // dd($request);
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+
         $rules = [
             'kategori_id' => 'required',
             'nomor_surat' => 'required|max:255',
@@ -474,11 +571,12 @@ class DataInformasicontroller extends Controller
             'perihal' => 'required|max:255',
             'lampiran' => 'required|max:255',
             'nomor_agenda' => 'required|max:255',
-            'status' => 'required',
-            'file' => 'file|mimes:pdf',
+            // 'status' => 'required',
+            'file' => 'nullable|file|mimes:pdf',
+            'pass_id' => 'required'
         ];
     
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules, $messages);
     
         if ($request->file('file')) {
             if ($data->file) {
@@ -489,16 +587,13 @@ class DataInformasicontroller extends Controller
             $filePath = $file->getRealPath();
             $fileContent = file_get_contents($filePath);
     
-            // Encrypt the file content using AES encryption
             $encryptedContent = Crypt::encrypt($fileContent);
     
-            // Define a storage path and filename
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $fileName = 'data-informasi/' . $originalFileName . '.txt';
     
             Storage::put($fileName, $encryptedContent);
-    
-            // Save the encrypted file path to the database
+
             $validatedData['file'] = $fileName;
         }
     
@@ -509,31 +604,6 @@ class DataInformasicontroller extends Controller
 
     }
 
-    public function adminEditDataInformasi(Data $data, Request $request)
-    {
-        $rules = [
-
-            'divisi_id' => 'required',
-            'data_id' => 'required',
-            'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'status' => 'required',
-            'pesan' => 'nullable'
-
-
-        ];
-
-
-        $validatedData = $request->validate($rules);
-
-
-        Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', ' data berhasil !');
-        return redirect('/data-masuk');
-        // ->with('success', 'Artikel Berhasil Di Update!')
-
-    }
 
     public function hapusDatainformasi(Data $data)
     {

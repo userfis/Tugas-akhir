@@ -31,6 +31,7 @@ Route::post('/login',[LoginController::class, 'authenticate']);
 Route::post('/logout',[LoginController::class, 'logout']);
 
 Route::get('/home',[Datacontroller::class, 'dashboard'])->middleware('auth')->name('home');
+// Route::get('/{data:id}/kirim-email',[DatakeluarController::class, 'kirimData'])->middleware('auth');
 Route::get('/surat-masuk/search', [DataInformasicontroller::class, 'search'])->name('data-search');
 Route::get('/surat-keluar',[DataInformasicontroller::class, 'keluar'])->middleware('auth')->name('surat-keluar');
 Route::get('/surat-keluar/search', [DataInformasicontroller::class, 'searchSK'])->middleware('auth')->name('keluar-search');
@@ -41,8 +42,10 @@ Route::post('/{user:id}/update-user',[DataInformasicontroller::class, 'updateUse
 Route::post('/create/data-user', [DataInformasicontroller::class, 'createUser'])->name('create-user');
 Route::get('/decrypt-file/{data:id}',[DataInformasicontroller::class, 'show'])->middleware('auth');
 Route::get('/data-masuk',[DataInformasicontroller::class, 'masuk'])->middleware('auth')->name('masuk');
-Route::get('/master/arsip',[DataInformasicontroller::class, 'arsip'])->middleware('auth')->name('arsip');
+Route::get('/master/arsip-sm',[DataInformasicontroller::class, 'arsip'])->middleware('auth')->name('arsip');
+Route::get('/master/arsip-sk',[DataInformasicontroller::class, 'arsipKeluar'])->middleware('auth')->name('surat-keluar-arsip');
 Route::get('/master/kategori',[DataInformasicontroller::class, 'kategori'])->middleware('auth')->name('kategori');
+Route::get('/master/disposisi',[DataInformasicontroller::class, 'disposisi'])->middleware('auth')->name('disposisi');
 Route::get('/master/daftar-rak',[DataInformasicontroller::class, 'rak'])->middleware('auth')->name('rak');
 Route::post('/create/rak',[DataInformasicontroller::class, 'createRak'])->middleware('auth')->name('tambah-rak');
 Route::post('/rak/update/{id}', [DataInformasicontroller::class, 'updateRak'])->name('rak.update');
@@ -74,8 +77,16 @@ Route::post('/keuangan/create-data',[KeuanganController::class, 'createKeluar'])
 Route::post('/{data:id}/keuangan/hapus',[KeuanganController::class, 'hapusKeuangan'])->middleware(['auth','multiple.roles:3,4,5,6']);
 Route::get('/{data:id}/staff/konfirm-sm',[KeuanganController::class, 'viewEdit'])->middleware(['auth','multiple.roles:3,4,5,6']);
 Route::post('/{data:id}/staff/update-sm',[KeuanganController::class, 'konfirmSM'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::get('/{data:id}/staff/konfirm-sk',[KeuanganController::class, 'viewEdit'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::post('/{data:id}/staff/update-konfirm-sk',[KeuanganController::class, 'konfirmSK'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::get('/{data:id}/staff/edit-sk',[KeuanganController::class, 'editSK'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::post('/{data:id}/update/edit-sk',[KeuanganController::class, 'updateSk'])->middleware(['auth','multiple.roles:3,4,5,6']);
 Route::post('/{data:id}/terima-sm',[KeuanganController::class, 'terimaSM'])->middleware(['auth','multiple.roles:3,4,5,6']);
 Route::post('/{data:id}/keuangan/admin/update-data',[KeuanganController::class, 'adminEditKeuangan'])->middleware(['auth','multiple.roles:3,4,5,6']);
+Route::get('/staff/arsip-sm',[KeuanganController::class, 'arsipSM'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('arsip-staff-sm');
+Route::get('/staff/arsip-sk',[KeuanganController::class, 'arsipSK'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('arsip-staff-sk');
+Route::get('/search/arsip-sm',[KeuanganController::class, 'searchSM'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('search-sm');
+Route::get('/search/arsip-sk',[KeuanganController::class, 'searchSK'])->middleware(['auth','multiple.roles:3,4,5,6'])->name('search-sk');
 Route::post('/dekripsi/{data:id}',[KeuanganController::class, 'dekripsi'])->middleware('auth');
 
 // Route::get('/teknis/master-data',[TeknisController::class, 'master'])->middleware('auth')->name('master-teknis');
@@ -106,11 +117,16 @@ Route::post('/{data:id}/hukum/admin/update-data',[HukumController::class, 'admin
 Route::post('/{data:id}/hukum/hapus',[HukumController::class, 'hapusDatahukum'])->middleware('auth');
 Route::get('/{data:id}/pimpinan/konfirm-smp',[HukumController::class, 'viewEdit'])->middleware('auth');
 Route::post('/{data:id}/pimpinan/update-smp',[HukumController::class, 'arsipSM'])->middleware('auth');
+Route::get('/pimpinan/arsip-sm',[HukumController::class, 'arsipSMP'])->middleware('auth')->name('arsip-sm-pim');
+Route::get('/pimpinan/arsip-sk',[HukumController::class, 'arsipSKP'])->middleware('auth')->name('arsip-sk-pim');
+Route::get('search/pimpinan/arsip-sm',[HukumController::class, 'arsipSMP'])->middleware('auth')->name('search-arsip-sm-pim');
+Route::get('search/pimpinan/arsip-sk',[HukumController::class, 'searchSK'])->middleware('auth')->name('search-arsip-sk-pim');
 
 
 
-Route::get('/{data:id}/kirim-data',[DatakeluarController::class, 'kirimData'])->middleware('auth');
-Route::post('/{data:id}/kirim-email',[DatakeluarController::class, 'email'])->middleware('auth');
+
+Route::get('/{data:id}/kirim-email',[DatakeluarController::class, 'kirimData'])->middleware('auth');
+Route::post('/{data:id}/send-kirim-email',[DatakeluarController::class, 'email'])->middleware('auth');
 
 
 

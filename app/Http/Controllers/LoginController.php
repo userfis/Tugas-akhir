@@ -51,7 +51,7 @@ class LoginController extends Controller
             // return redirect()->intended('/home');
         }
         else{
-            return redirect('login')->with('alert','Username atau Password, Salah !');
+            return redirect('/login')->with('alert','Username atau Password, Salah !');
         }
 
         return back()->withErrors([

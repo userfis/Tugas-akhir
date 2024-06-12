@@ -34,8 +34,9 @@ class Data extends Model
     }
 
     
-    public function arsip(){
-        return $this->hasMany(Arsip::class,'surat_id', 'id');
+    public function arsip()
+    {
+        return $this->hasOne(Arsip::class, 'surat_id', 'id');
     }
 
 }

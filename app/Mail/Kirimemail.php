@@ -8,48 +8,40 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Kirimemail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
 
-    
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+    public $encryptedData;
+    public $filePath;
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'KPU SIDOARJO',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'kirimEmail',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
+     * Create a new message instance.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @param  mixed  $encryptedData
+     * @param  string  $filePath
+     * @return void
      */
-    public function attachments(): array
+    public function __construct($encryptedData, $filePath)
     {
-        return [
-            public_path('storage/' . $this->data->surat->file),
-        ];
+        $this->encryptedData = $encryptedData;
+        $this->filePath = $filePath;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        // dd($this->encryptedData);
+        return $this->subject('Subject Email Anda')
+                    ->view('kirimEmail')
+                    ->with([
+                        'encryptedData' => $this->encryptedData,
+                    ])
+                    ->attach($this->filePath);
     }
 }

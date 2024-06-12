@@ -317,22 +317,32 @@ class HukumController extends Controller
 
     public function createKeluar(Request $request)
     {
-        $request->merge(['pass_id' => (string) 1]);
-        // dd($request);
-        $validatedData = $request->validate([
+        $request->merge(['pass_id' => (string) 2]);
+
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+    
+        $rules = [
             'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
-            'tanggal' => 'required',
+            'tanggal' => 'required|date',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
             'lampiran' => 'required|max:255',
             'nomor_agenda' => 'required|max:255',
             'status' => '',
+            'tindakan' => 'required',
             'disposisi' => 'required',
             'file' => 'required|file|max:2400|mimes:pdf',
-            'pass_id' => 'required|string'
-        ]);
+            'pass_id' => 'required'
+        ];
+
+        $validatedData = $request->validate($rules, $messages);
 
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -354,8 +364,150 @@ class HukumController extends Controller
 
         Data::create($validatedData);
         Alert::success('Success', 'Tambah data berhasil !');
-        return redirect('/staff/surat-keluar');
+        return redirect('/pimpinan/surat-keluar');
     }
+
+
+    public function searchSM(Request $request)
+{
+    $search = $request->input('search');
+
+    $ket = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Ketua KPU');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+    $sek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Sekretaris');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+    
+
+        return view('hukum.arsipSMPim', [
+            'ket' => $ket,
+            'sek' => $sek,
+        ]);
+}
+
+    public function arsipSMP(){
+
+        $ket = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Ketua KPU');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $sek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Sekretaris');
+        })
+        ->latest()
+        ->paginate(10);
+
+
+    return view('hukum.arsipSMPim', [
+        'ket' => $ket,
+        'sek' => $sek,
+    ]);
+
+
+    }
+
+    public function arsipSKP(){
+
+        $ket = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Ketua KPU');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $sek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Sekretaris');
+        })
+        ->latest()
+        ->paginate(10);
+
+
+    return view('hukum.arsipSKPim', [
+        'ket' => $ket,
+        'sek' => $sek,
+    ]);
+
+
+    }
+
+    public function searchSK(Request $request)
+{
+    $search = $request->input('search');
+
+    $ket = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Ketua KPU');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+    $sek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Sekretaris');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+    
+
+        return view('hukum.arsipSMPim', [
+            'ket' => $ket,
+            'sek' => $sek,
+        ]);
+}
+
+
+
 
    
 
@@ -368,30 +520,6 @@ class HukumController extends Controller
         // ->with('success', 'Data Berhasil di Hapus !')
     }
 
-    public function adminEdithukum(Data $data, Request $request)
-    {
-        // dd($request->all());
-        $rules = [
-
-            'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'divisi_id' => 'required',
-            'data_id' => 'required',
-            'status' => 'required',
-            'pesan' => 'nullable'
-
-        ];
-
-        
-        $validatedData = $request->validate($rules);
-       
-        Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Update data berhasil !');
-        return redirect('/hukum/data-masuk');
-        // ->with('success', 'Artikel Berhasil Di Update!')
-
-    }
 
 
 }

@@ -133,32 +133,36 @@
                             <select class="form-control" name="tindakan" id="tindakan">
                                 <option value="">pilih</option>
                                 <option value="Perbaiki">Perbaiki</option>
-                                <option value="Kirim Berkas">Kirim Berkas</option>
+                                <option value="Ajukan Ke Ketua KPU">Ajukan Ke Ketua KPU</option>
                             </select>
                         </div>
-                        <input type="text" name="status" class="form-control" id="status" placeholder="" value="Berkas Siap Dikirim" hidden>
-
+                        
+                        <!-- Input pesan akan muncul di sini jika opsi "Perbaiki" dipilih -->
+                        <div class="form-group" id="pesanInput" style="display: none;">
+                            <label for="pesan" class="text-black"><strong>Catatan</strong></label>
+                            <input type="text" name="pesan" class="form-control" id="pesan" placeholder="">
+                        </div>
+                        
+                        <input type="text" name="status" class="form-control" id="status" value="Diajukan" hidden>
+                        
                         <script>
                             document.getElementById('tindakan').addEventListener('change', function() {
                                 var tindakanValue = this.value;
                                 var statusInput = document.getElementById('status');
-                                
+                                var pesanInput = document.getElementById('pesanInput');
+                        
                                 if (tindakanValue === 'Perbaiki') {
                                     statusInput.value = 'Perbaiki';
-                                } else if (tindakanValue === 'Kirim Berkas') {
-                                    statusInput.value = 'Berkas Siap Dikirim';
+                                    pesanInput.style.display = 'block'; // Tampilkan input pesan
+                                } else if (tindakanValue === 'Ajukan Ke Ketua KPU') {
+                                    statusInput.value = 'Diajukan';
+                                    pesanInput.style.display = 'none'; // Sembunyikan input pesan
                                 } else {
                                     statusInput.value = '';
+                                    pesanInput.style.display = 'none'; // Sembunyikan input pesan
                                 }
                             });
                         </script>
-
-                        <div class="form-group">
-                            <label for="pesan" class="text-black"><strong>Catatan</strong></label>
-                            <input type="text" name="pesan" class="form-control" id="pesan" placeholder=""
-                                fdprocessedid="zukfe7">
-                        </div>
-
 
                         {{-- <div class="form-group border-bottom">
                 <label for="disposisi" class="text-black"><strong>Disposisi</strong></label>

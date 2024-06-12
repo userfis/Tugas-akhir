@@ -590,14 +590,14 @@
                                             @can('staffKeu')
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-center">
-                                                    {{ $k->links('pagination::bootstrap-4') }}
+                                                    {{ $keu->links('pagination::bootstrap-4') }}
                                                 </ul>
                                             </nav>
                                             @elsecan('staffHuk')
                                             <br>
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-center">
-                                                    {{ $h->links('pagination::bootstrap-4') }}
+                                                    {{ $huk->links('pagination::bootstrap-4') }}
                                                 </ul>
                                             </nav>
                                             @elsecan('staffDat')
@@ -611,7 +611,7 @@
                                             <br>
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination justify-content-center">
-                                                    {{ $t->links('pagination::bootstrap-4') }}
+                                                    {{ $tek->links('pagination::bootstrap-4') }}
                                                 </ul>
                                             </nav>
                                             @endcan

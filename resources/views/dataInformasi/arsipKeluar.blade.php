@@ -2,7 +2,7 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Arsip Surat Masuk </h2>
+        <h2 class="text-dark font-weight-bold mb-2"> Arsip Surat Keluar </h2>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -26,6 +26,7 @@
                                                             <th> Lampiran </th>
                                                             <th> Tanggal Arsip </th>
                                                             <th> Kode Rak </th>
+                                                            <th>pass_id</th>
                                                             <th>File</th>
                                                         </tr>
                                                     </thead>
@@ -40,6 +41,7 @@
                                                                 <td>{{ $item->lampiran }}</td>
                                                                 <td>{{ $item->tanggal_arsip }}</td>
                                                                 <td>{{ $item->nama_rak }}</td>
+                                                                <td>{{ $item->pass_id }}</td>
                                                                 <td>
                                                                     <a href="#" class="btn btn-primary btn-rounded"
                                                                         data-toggle="modal" data-target="#myModal{{ $item->data_id }}">

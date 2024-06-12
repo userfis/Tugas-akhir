@@ -14,7 +14,8 @@ class Arsip extends Model
     protected $guarded = ['id'];
 
     public function rak(){
-        return $this->belongsTo(Rak::class);
+        
+        return $this->belongsTo(Rak::class, 'rak_id', 'id');
     }
 
     public function data(){

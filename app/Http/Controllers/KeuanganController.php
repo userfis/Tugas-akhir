@@ -195,11 +195,19 @@ class KeuanganController extends Controller
     {
         // dd($request);
         $request->merge(['pass_id' => (string) 2]);
-        $validatedData = $request->validate([
+
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+    
+        $rules = [
             'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
-            'tanggal' => 'required',
+            'tanggal' => 'required|date',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
             'lampiran' => 'required|max:255',
@@ -208,7 +216,9 @@ class KeuanganController extends Controller
             'disposisi' => 'required',
             'file' => 'required|file|max:2400|mimes:pdf',
             'pass_id' => 'required'
-        ]);
+        ];
+    
+        $validatedData = $request->validate($rules, $messages);
 
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -264,32 +274,6 @@ class KeuanganController extends Controller
 }
 
 
-    // public function createKeluar(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'kategori_id' => 'required',
-    //         'data_id' => 'required',
-    //         'nomor_surat' => 'required|max:255',
-    //         'tanggal' => 'required',
-    //         'asal_surat' => 'required|max:255',
-    //         'perihal' => 'required|max:255',
-    //         'lampiran' => 'required|max:255',
-    //         'nomor_agenda' => 'required|max:255',
-    //         'status' => '',
-    //         'disposisi' => 'required',            
-    //         'file' => 'required|file|max:2400|mimes:pdf',
-
-    //     ]);
-
-    //     if ($request->file('file')) {
-    //         $validatedData['file'] = $request->file('file')->store('keuangan');
-    //     }
-
-    //     Data::create($validatedData);
-    //     Alert::success('Success', 'Tambah data berhasil !');
-    //     return redirect('/keuangan/master-data');
-    //     // ->with('success', 'Data berhasil di upload')
-    // }
 
     public function hapusKeuangan(Data $data)
     {
@@ -298,6 +282,71 @@ class KeuanganController extends Controller
         Alert::success('Success', 'Hapus data berhasil !');
         return redirect('/keuangan/data-masuk');
         // ->with('success', 'Data Berhasil di Hapus !')
+    }
+
+    public function editSK(Data $data)
+    {
+
+        // $arsip = Arsip::where('surat_id', $data->id)->first();
+        return view('Keuangan.editSK', [
+            'data' => $data,
+            'rak' => Rak::all(),
+            'kategori' => Ketegori::all()
+            // 'arsip' => $arsip
+        ]);
+    }
+
+    public function updateSk(Data $data, Request $request)
+    {
+
+        $request->merge(['pass_id' => (string) 2]);
+        // dd($request);
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+
+        $rules = [
+            'kategori_id' => 'required',
+            'nomor_surat' => 'required|max:255',
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
+            'status' => 'required',
+            'file' => 'nullable|file|mimes:pdf',
+            'pass_id' => 'required'
+        ];
+    
+        $validatedData = $request->validate($rules, $messages);
+    
+        if ($request->file('file')) {
+            if ($data->file) {
+                Storage::delete($data->file);
+            }
+    
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+    
+            $encryptedContent = Crypt::encrypt($fileContent);
+    
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = 'data-informasi/' . $originalFileName . '.txt';
+    
+            Storage::put($fileName, $encryptedContent);
+
+            $validatedData['file'] = $fileName;
+        }
+    
+        $data->update($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/staff/surat-keluar');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
     }
 
     public function viewEdit(Data $data)
@@ -309,6 +358,34 @@ class KeuanganController extends Controller
             'rak' => Rak::all(),
             'arsip' => $arsip
         ]);
+    }
+
+    public function viewkonfirmSk(Data $data)
+    {
+
+        $arsip = Arsip::where('surat_id', $data->id)->first();
+        return view('Keuangan.konfirmSK', [
+            'data' => $data,
+            'rak' => Rak::all(),
+            'arsip' => $arsip
+        ]);
+    }
+
+    public function konfirmSK(Data $data, Request $request)
+    {
+        $rules = [
+            'surat_id' => 'required|max:255',
+            'tanggal_arsip' => 'required',
+            'rak_id' => 'required|max:255'
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        Arsip::create($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/staff/surat-keluar');
+        // ->with('success', 'Artikel Berhasil Di Update!')
+
     }
 
     public function konfirmSM(Data $data, Request $request)
@@ -347,26 +424,237 @@ class KeuanganController extends Controller
 
     }
 
-    public function adminEditKeuangan(Data $data, Request $request)
-    {
-        $rules = [
+    public function searchSM(Request $request)
+{
+    $search = $request->input('search');
 
-            'nomor_surat' => 'required|max:255',
-            'judul' => 'required|max:255',
-            'tahun' => 'required|max:255',
-            'divisi_id' => 'required',
-            'data_id' => 'required',
-            'status' => 'required',
-            'pesan' => 'nullable'
-        ];
+    $data = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Data & Informasi');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
 
+    $tek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Teknis');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
 
-        $validatedData = $request->validate($rules);
+    $huk = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Hukum');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
 
-        Data::where('id', $data->id)->update($validatedData);
-        Alert::success('Success', 'Update data berhasil !');
-        return redirect('/keuangan/data-masuk');
-        // ->with('success', 'Artikel Berhasil Di Update!')
+    $keu = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Keuangan');
+        })
+        ->when($search, function ($query, $search) {
+            return $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                  ->orWhere('perihal', 'LIKE', "%{$search}%")
+                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+            });
+        })
+        ->latest()
+        ->paginate(10);
+
+        return view('Keuangan.arsipSMStaff', [
+            'data' => $data,
+            'keu' => $keu,
+            'tek' => $tek,
+            'huk' => $huk
+        ]);
+}
+
+    public function arsipSM(){
+
+        $data = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Data & Informasi');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $tek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Teknis');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $huk = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Hukum');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $keu = Data::with(['arsip.rak'])
+        ->where('data.data_id', '1')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Keuangan');
+        })
+        ->latest()
+        ->paginate(10);
+
+    return view('Keuangan.arsipSMStaff', [
+        'data' => $data,
+        'keu' => $keu,
+        'tek' => $tek,
+        'huk' => $huk
+    ]);
+
 
     }
+
+
+    public function searchSK(Request $request)
+    {
+        $search = $request->input('search');
+    
+        $data = Data::with(['arsip.rak'])
+            ->where('data.data_id', '2')
+            ->whereHas('arsip.rak', function ($query) {
+                $query->where('pemilik_rak', 'Staff Data & Informasi');
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                      ->orWhere('perihal', 'LIKE', "%{$search}%")
+                      ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
+    
+        $tek = Data::with(['arsip.rak'])
+            ->where('data.data_id', '2')
+            ->whereHas('arsip.rak', function ($query) {
+                $query->where('pemilik_rak', 'Staff Teknis');
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                      ->orWhere('perihal', 'LIKE', "%{$search}%")
+                      ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
+    
+        $huk = Data::with(['arsip.rak'])
+            ->where('data.data_id', '2')
+            ->whereHas('arsip.rak', function ($query) {
+                $query->where('pemilik_rak', 'Staff Hukum');
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                      ->orWhere('perihal', 'LIKE', "%{$search}%")
+                      ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
+    
+        $keu = Data::with(['arsip.rak'])
+            ->where('data.data_id', '2')
+            ->whereHas('arsip.rak', function ($query) {
+                $query->where('pemilik_rak', 'Staff Keuangan');
+            })
+            ->when($search, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('nomor_surat', 'LIKE', "%{$search}%")
+                      ->orWhere('perihal', 'LIKE', "%{$search}%")
+                      ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->paginate(10);
+    
+            return view('Keuangan.arsipSKStaff', [
+                'data' => $data,
+                'keu' => $keu,
+                'tek' => $tek,
+                'huk' => $huk
+            ]);
+    }
+
+    public function arsipSK(){
+
+        $data = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Data & Informasi');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $tek = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Teknis');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $huk = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Hukum');
+        })
+        ->latest()
+        ->paginate(10);
+
+        $keu = Data::with(['arsip.rak'])
+        ->where('data.data_id', '2')
+        ->whereHas('arsip.rak', function ($query) {
+            $query->where('pemilik_rak', 'Staff Keuangan');
+        })
+        ->latest()
+        ->paginate(10);
+
+    return view('Keuangan.arsipSKStaff', [
+
+        'data' => $data,
+        'keu' => $keu,
+        'tek' => $tek,
+        'huk' => $huk   
+    ]);
+
+    }
+    
 }
