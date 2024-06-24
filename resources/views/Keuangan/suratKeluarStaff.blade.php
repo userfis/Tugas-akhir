@@ -46,7 +46,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -62,7 +62,7 @@
                                                         <tbody>
                                                             @foreach ($huk as $h)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    
                                                                     <td>{{ $h->nomor_agenda }}</td>
                                                                     <td>{{ $h->nomor_surat }}</td>
                                                                     <td>{{ $h->perihal }}</td>
@@ -72,12 +72,11 @@
                                                                     <td>{{ $h->tanggal }}</td>
                                                                     <td>
                                                                         @if ($h->status == 'Berkas Siap Dikirim')
-                                                                            <a href="/{{ $h->id }}/kirim-email"
-                                                                                class="badge badge-success"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="mdi mdi-check"></i>
-                                                                                {{ $h->status }}
-                                                                            </a>
+                                                                        <a href="/{{ $h->id }}/kirim-email" class="badge badge-success" 
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $h->status }}
+                                                                        </a>
                                                                         @elseif ($h->status == 'Proses Pengecekan')
                                                                             <span class="badge badge-info"
                                                                                 style="font-size: 0.8rem;">
@@ -168,19 +167,19 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $h->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             @endif
-                                                                            <div>
-                                                                                <form action="/{{ $h->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
-                                                                                            style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                             @endforeach
@@ -193,7 +192,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -209,7 +208,7 @@
                                                         <tbody>
                                                             @foreach ($data as $item)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    
                                                                     <td>{{ $item->nomor_agenda }}</td>
                                                                     <td>{{ $item->nomor_surat }}</td>
                                                                     <td>{{ $item->perihal }}</td>
@@ -219,12 +218,11 @@
                                                                     <td>{{ $item->tanggal }}</td>
                                                                     <td>
                                                                         @if ($item->status == 'Berkas Siap Dikirim')
-                                                                            <a href="/{{ $item->id }}/kirim-email"
-                                                                                class="badge badge-success"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="mdi mdi-check"></i>
-                                                                                {{ $item->status }}
-                                                                            </a>
+                                                                        <a href="/{{ $item->id }}/kirim-email" class="badge badge-success" 
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $item->status }}
+                                                                        </a>
                                                                         @elseif ($item->status == 'Proses Pengecekan')
                                                                             <span class="badge badge-info"
                                                                                 style="font-size: 0.8rem;">
@@ -322,19 +320,19 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $item->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             @endif
-                                                                            <div>
-                                                                                <form action="/{{ $item->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
-                                                                                            style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                             @endforeach
@@ -347,7 +345,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -363,7 +361,7 @@
                                                         <tbody>
                                                             @foreach ($keu as $k)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    
                                                                     <td>{{ $k->nomor_agenda }}</td>
                                                                     <td>{{ $k->nomor_surat }}</td>
                                                                     <td>{{ $k->perihal }}</td>
@@ -373,12 +371,11 @@
                                                                     <td>{{ $k->tanggal }}</td>
                                                                     <td>
                                                                         @if ($k->status == 'Berkas Siap Dikirim')
-                                                                            <a href="/{{ $k->id }}/kirim-email"
-                                                                                class="badge badge-success"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="mdi mdi-check"></i>
-                                                                                {{ $k->status }}
-                                                                            </a>
+                                                                        <a href="/{{ $k->id }}/kirim-email" class="badge badge-success" 
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $k->status }}
+                                                                        </a>
                                                                         @elseif ($k->status == 'Proses Pengecekan')
                                                                             <span class="badge badge-info"
                                                                                 style="font-size: 0.8rem;">
@@ -470,19 +467,19 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $k->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             @endif
-                                                                            <div>
-                                                                                <form action="/{{ $k->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
-                                                                                            style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                             @endforeach
@@ -495,7 +492,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -511,7 +508,7 @@
                                                         <tbody>
                                                             @foreach ($tek as $t)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    
                                                                     <td>{{ $t->nomor_agenda }}</td>
                                                                     <td>{{ $t->nomor_surat }}</td>
                                                                     <td>{{ $t->perihal }}</td>
@@ -521,12 +518,11 @@
                                                                     <td>{{ $t->tanggal }}</td>
                                                                     <td>
                                                                         @if ($t->status == 'Berkas Siap Dikirim')
-                                                                            <a href="/{{ $t->id }}/kirim-email"
-                                                                                class="badge badge-success"
-                                                                                style="font-size: 0.8rem;">
-                                                                                <i class="mdi mdi-check"></i>
-                                                                                {{ $t->status }}
-                                                                            </a>
+                                                                        <a href="/{{ $t->id }}/kirim-email" class="badge badge-success" 
+                                                                            style="font-size: 0.8rem;">
+                                                                            <i class="mdi mdi-check"></i>
+                                                                            {{ $t->status }}
+                                                                        </a>
                                                                         @elseif ($t->status == 'Proses Pengecekan')
                                                                             <span class="badge badge-info"
                                                                                 style="font-size: 0.8rem;">
@@ -610,7 +606,7 @@
                                                                                         style="font-size: 15px;"></i>
                                                                                 </a>
                                                                             </div>
-                                                                            @if ($item->status != 'Diajukan' && $item->status != 'Berkas Siap Dikirim')
+                                                                            @if ($t->status != 'Diajukan' && $t->status != 'Berkas Siap Dikirim')
                                                                                 <div class="mr-1">
                                                                                     <a href="/{{ $t->id }}/staff/edit-sk"
                                                                                         class="btn btn-primary btn-rounded">
@@ -618,19 +614,19 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
+                                                                                <div>
+                                                                                    <form action="/{{ $t->id }}/hapus"
+                                                                                        method="POST">
+                                                                                        @csrf
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-danger btn-rounded btn-icon"
+                                                                                            fdprocessedid="91w77s">
+                                                                                            <i class="mdi mdi-delete"
+                                                                                                style="font-size: 15px;"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                </div>
                                                                             @endif
-                                                                            <div>
-                                                                                <form action="/{{ $t->id }}/hapus"
-                                                                                    method="POST">
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="btn btn-danger btn-rounded btn-icon"
-                                                                                        fdprocessedid="91w77s">
-                                                                                        <i class="mdi mdi-delete"
-                                                                                            style="font-size: 15px;"></i>
-                                                                                    </button>
-                                                                                </form>
-                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                             @endforeach

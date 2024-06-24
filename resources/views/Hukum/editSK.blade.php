@@ -9,13 +9,18 @@
                         @csrf
                         <h3 class="card-title">Detail Surat</h3>
                         <div class="form-group border-bottom">
-                            <label for="tanggal" class="text-black"><strong>Tanggal</strong></label>
+                            <label for="tanggal" class="text-black"><strong>Tanggal Surat Keluar</strong></label>
                             <p class="text-black">{{ $data->tanggal }}</p>
                         </div>
 
                         <div class="form-group border-bottom">
                             <label for="nomor_agenda" class="text-black"><strong>Nomor Agenda</strong></label>
                             <p class="text-black">{{ $data->nomor_agenda }}</p>
+                        </div>
+
+                        <div class="form-group border-bottom">
+                            <label for="nomor_agenda" class="text-black"><strong>Sifat</strong></label>
+                            <p class="text-black">{{ $data->sifat }}</p>
                         </div>
 
                         <div class="form-group border-bottom">
@@ -41,6 +46,11 @@
                         <div class="form-group border-bottom">
                             <label for="kategori_surat" class="text-black"><strong>Kategori Surat</strong></label>
                             <p class="text-black">{{ $data->kategori->kategori_surat }}</p>
+                        </div>
+
+                        <div class="form-group border-bottom">
+                            <label for="nomor_agenda" class="text-black"><strong>Dari Disposisi</strong></label>
+                            <p class="text-black">{{ $data->disposisi }}</p>
                         </div>
 
                         <div class="form-group border-bottom">
@@ -74,7 +84,6 @@
                         </script>
                         <br>
                         <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-                        <a href="{{ route('masuk') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>
                     </form>
                 </div>
             @elsecan('ketua')
@@ -84,13 +93,18 @@
                         @csrf
                         <h3 class="card-title">Detail Surat</h3>
                         <div class="form-group border-bottom">
-                            <label for="tanggal" class="text-black"><strong>Tanggal</strong></label>
+                            <label for="tanggal" class="text-black"><strong>Tanggal Surat Keluar</strong></label>
                             <p class="text-black">{{ $data->tanggal }}</p>
                         </div>
 
                         <div class="form-group border-bottom">
                             <label for="nomor_agenda" class="text-black"><strong>Nomor Agenda</strong></label>
                             <p class="text-black">{{ $data->nomor_agenda }}</p>
+                        </div>
+
+                        <div class="form-group border-bottom">
+                            <label for="sifat" class="text-black"><strong>Sifat</strong></label>
+                            <p class="text-black">{{ $data->sifat }}</p>
                         </div>
 
                         <div class="form-group border-bottom">
@@ -119,6 +133,11 @@
                         </div>
 
                         <div class="form-group border-bottom">
+                            <label for="nomor_agenda" class="text-black"><strong>Dari Disposisi</strong></label>
+                            <p class="text-black">{{ $data->disposisi }}</p>
+                        </div>
+
+                        <div class="form-group border-bottom">
                             <label for="status" class="text-black"><strong>Status</strong></label>
                             <p class="text-black">{{ $data->status }}</p>
                         </div>
@@ -128,16 +147,25 @@
                             <p class="text-black">{{ $data->tindakan }}</p>
                         </div>
 
-                        <div class="form-group border-bottom">
+                        {{-- <div class="form-group border-bottom">
                             <label for="tindakan" class="text-black"><strong>Tindakan</strong></label>
                             <select class="form-control" name="tindakan" id="tindakan">
                                 <option value="">pilih</option>
                                 <option value="Perbaiki">Perbaiki</option>
-                                <option value="Ajukan Ke Ketua KPU">Ajukan Ke Ketua KPU</option>
+                                <option value="Berkas Siap Dikirim">Berkas Siap Dikirim</option>
+                            </select>
+                        </div> --}}
+                        
+                        <!-- Input pesan akan muncul di sini jika opsi "Perbaiki" dipilih -->
+                        <div class="form-group">
+                            <label for="tindakan" class="text-black"><strong>Tindakan</strong></label>
+                            <select class="form-control" name="tindakan" id="tindakan">
+                                <option value="">Pilih</option>
+                                <option value="Perbaiki">Perbaiki</option>
+                                <option value="Berkas Siap Dikirim">Berkas Siap Dikirim</option>
                             </select>
                         </div>
                         
-                        <!-- Input pesan akan muncul di sini jika opsi "Perbaiki" dipilih -->
                         <div class="form-group" id="pesanInput" style="display: none;">
                             <label for="pesan" class="text-black"><strong>Catatan</strong></label>
                             <input type="text" name="pesan" class="form-control" id="pesan" placeholder="">
@@ -157,34 +185,17 @@
                                 } else if (tindakanValue === 'Ajukan Ke Ketua KPU') {
                                     statusInput.value = 'Diajukan';
                                     pesanInput.style.display = 'none'; // Sembunyikan input pesan
+                                } else if (tindakanValue === 'Berkas Siap Dikirim') {
+                                    statusInput.value = 'Berkas Siap Dikirim';
+                                    pesanInput.style.display = 'block'; // Tampilkan input pesan
                                 } else {
                                     statusInput.value = '';
                                     pesanInput.style.display = 'none'; // Sembunyikan input pesan
                                 }
                             });
                         </script>
-
-                        {{-- <div class="form-group border-bottom">
-                <label for="disposisi" class="text-black"><strong>Disposisi</strong></label>
-                @if ($data->disposisi)
-                    <p class="text-black">{{ $data->disposisi }}</p>
-                @else
-                    <p class="text-black">Belum ada disposisi</p>
-                @endif
-            </div>
-
-            <div class="form-group border-bottom">
-                <label for="pesan" class="text-black"><strong>Catatan</strong></label>
-                @if ($data->pesan)
-                <p class="text-black">{{ $data->pesan }}</p>
-            @else
-                <p class="text-black">Belum ada Catatan</p>
-            @endif
-            </div>
-             --}}
                         <br>
                         <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-                        <a href="{{ route('masuk') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>
                     </form>
                 </div>
             @endcan

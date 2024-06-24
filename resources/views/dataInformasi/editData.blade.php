@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="nomor_agenda">Nomor Agenda</label>
                         <input type="text" name="nomor_agenda" class="form-control" id="nomor_agenda" placeholder=""
-                            value="{{ old('nomor_agenda', $data->nomor_agenda) }}">
+                            value="{{ old('nomor_agenda', $data->nomor_agenda) }}" readonly>
                         @error('nomor_agenda')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -30,6 +30,19 @@
                             value="{{ old('nomor_surat', $data->nomor_surat) }}">
                         @error('nomor_surat')
                             <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="sifat">Sifat</label>
+                        <select class="form-control" name="sifat" id="sifat">
+                            <option value="">Pilih</option>
+                            <option value="Penting" {{ $data->sifat == 'Penting' ? 'selected' : '' }}>Penting</option>
+                            <option value="Biasa" {{ $data->sifat == 'Biasa' ? 'selected' : '' }}>Biasa</option>
+                            <option value="Segera" {{ $data->sifat == 'Segera' ? 'selected' : '' }}>Segera</option>
+                            <option value="Sangat Segera" {{ $data->sifat == 'Sangat Segera' ? 'selected' : '' }}>Sangat Segera</option>
+                        </select>
+                        @error('sifat')
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
@@ -85,7 +98,6 @@
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <a href="{{ route('masuk') }}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>

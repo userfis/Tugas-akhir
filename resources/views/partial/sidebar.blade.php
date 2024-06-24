@@ -20,7 +20,7 @@
                     <li class="nav-item"> <a class="nav-link" href="{{ route('disposisi') }}">Disposisi</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('kategori') }}">Kategori Surat</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ route('rak') }}">Rak</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Password File</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('pass') }}">Password File</a></li>
                 </ul>
             </div>
         </li>
@@ -59,6 +59,12 @@
         
         @elsecan('staffKeu')
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
@@ -68,12 +74,6 @@
             <a class="nav-link" href="{{ route('staff-sk') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Keluar</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Unggah Data</span>
             </a>
         </li>
         <li class="nav-item">
@@ -92,6 +92,12 @@
         
 
         @elsecan('staffHuk')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
@@ -121,6 +127,12 @@
 
         @elsecan('staffDat')
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
@@ -149,6 +161,12 @@
 
         @elsecan('staffTek')
         <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('staff-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
                 <span class="menu-title">Surat Masuk</span>
@@ -175,6 +193,12 @@
         </li>
         
         @elsecan('sekretaris')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('cek-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
@@ -214,6 +238,12 @@
         </li>
 
         @elsecan('ketua')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('home') }}">
+                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('cek-sm') }}">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>

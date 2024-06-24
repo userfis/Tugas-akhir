@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label for="nomor_agenda">Nomor Agenda</label>
-                        <input type="text" name="nomor_agenda" class="form-control" id="nomor_agenda" placeholder="">
+                        <input type="text" name="nomor_agenda" class="form-control" id="nomor_agenda" placeholder="" value="00{{ $agenda + 1 }}" readonly>
                         @error('nomor_agenda')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -24,6 +24,19 @@
                         <label for="nomor_surat">Nomor Surat</label>
                         <input type="text" name="nomor_surat" class="form-control" id="nomor_surat" placeholder="">
                         @error('nomor_surat')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="sifat">Sifat</label>
+                        <select class="form-control" name="sifat" id="sifat">
+                            <option>pilih</option>
+                            <option value="Penting">Penting</option>
+                            <option value="Biasa">Biasa</option>
+                            <option value="Segera">Segera</option>
+                            <option value="Sangat Segera">Sangat Segera</option>
+                        </select>
+                        @error('sifat')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -80,7 +93,6 @@
                     {{-- <input type="text" name="pass_id" id="pass_id" value="1" hidden> --}}
                     <input type="text" name="status" id="status" value="Proses Pengecekan" hidden>
                     <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-                    <a href="{{ route('masuk') }}" class="btn btn-light" fdprocessedid="p0f3cn">Cancel</a>
                 </form>
                     {{-- <button class="btn btn-light" fdprocessedid="p0f3cn">Cancel</button> --}}
             </div>

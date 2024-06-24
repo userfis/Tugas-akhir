@@ -17,7 +17,7 @@
                                             <div class="table-responsive">
                                                 <button type="button" class="btn btn-primary btn-fw" data-toggle="modal"
                                                     data-target="#tambahrak">
-                                                    Tambah Kategori
+                                                    Tambah Rak
                                                 </button>
                                                 <style>
                                                     /* Mengatur warna teks di dalam modal menjadi hitam */
@@ -91,7 +91,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($rak as $rak)
+                                                        @foreach ($raks as $rak)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $rak->pemilik_rak }}</td>
@@ -133,6 +133,10 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <br>
+                                            <ul class="pagination justify-content-center">
+                                                {{ $raks->links('pagination::bootstrap-4') }}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

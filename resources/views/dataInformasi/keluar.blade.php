@@ -45,7 +45,6 @@
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th> ID </th>
                                                             <th> Nomor Agenda </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
@@ -61,7 +60,6 @@
                                                     <tbody>
                                                         @foreach ($data as $item)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $item->nomor_agenda }}</td>
                                                                 <td>{{ $item->nomor_surat }}</td>
                                                                 <td>{{ $item->perihal }}</td>
@@ -153,31 +151,33 @@
                                                                 <td>
                                                                     <div class="d-flex">
                                                                         <div class="mr-1">
-                                                                            <a href="/{{ $item->id }}/detail-surat"
+                                                                            <a href="/{{ $item->id }}/detail-surat-keluar"
                                                                                 class="btn btn-primary btn-rounded">
                                                                                 <i class="mdi mdi-eye"
                                                                                     style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
                                                                         <div class="mr-1">
-                                                                            <a href="/{{ $item->id }}/edit-data"
+                                                                            <a href="/{{ $item->id }}/edit-data-sk"
                                                                                 class="btn btn-primary btn-rounded">
                                                                                 <i class="mdi mdi-tooltip-edit"
                                                                                     style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
-                                                                        <div>
-                                                                            <form action="/{{ $item->id }}/hapus"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                <button type="submit"
-                                                                                    class="btn btn-danger btn-rounded btn-icon"
-                                                                                    fdprocessedid="91w77s">
-                                                                                    <i class="mdi mdi-delete"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
+                                                                        @if ($item->status != 'Diajukan' && $item->status != 'Berkas Siap Dikirim')
+                                                                            <div>
+                                                                                <form action="/{{ $item->id }}/hapus"
+                                                                                    method="POST">
+                                                                                    @csrf
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger btn-rounded btn-icon"
+                                                                                        fdprocessedid="91w77s">
+                                                                                        <i class="mdi mdi-delete"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                         @endforeach

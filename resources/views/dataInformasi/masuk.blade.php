@@ -2,7 +2,7 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Data Masuk {{ $Halaman }} </h2>
+        <h2 class="text-dark font-weight-bold mb-2"> Surat Masuk </h2>
     </div>
     <div class="search-field d-xl-block mb-1">
         <form class="d-flex align-items-center h-100" action="{{ route('data-search') }}" method="GET">
@@ -34,7 +34,6 @@
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th> ID </th>
                                                             <th> Nomor Agenda </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
@@ -50,7 +49,6 @@
                                                     <tbody>
                                                         @foreach ($data as $item)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $item->nomor_agenda }}</td>
                                                                 <td>{{ $item->nomor_surat }}</td>
                                                                 <td>{{ $item->perihal }}</td>
@@ -151,6 +149,7 @@
                                                                                     style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
+
                                                                         <div class="mr-1">
                                                                             <a href="/{{ $item->id }}/edit-data"
                                                                                 class="btn btn-primary btn-rounded">
@@ -158,18 +157,20 @@
                                                                                     style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
-                                                                        <div>
-                                                                            <form action="/{{ $item->id }}/hapus"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                <button type="submit"
-                                                                                    class="btn btn-danger btn-rounded btn-icon"
-                                                                                    fdprocessedid="91w77s">
-                                                                                    <i class="mdi mdi-delete"
-                                                                                        style="font-size: 15px;"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        </div>
+                                                                        @if ($item->status != 'Selesai Disposisi')
+                                                                            <div>
+                                                                                <form action="/{{ $item->id }}/hapus"
+                                                                                    method="POST">
+                                                                                    @csrf
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-danger btn-rounded btn-icon"
+                                                                                        fdprocessedid="91w77s">
+                                                                                        <i class="mdi mdi-delete"
+                                                                                            style="font-size: 15px;"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                 </td>
                                                             </tr>

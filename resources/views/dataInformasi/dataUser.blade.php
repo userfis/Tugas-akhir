@@ -31,7 +31,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($data as $data)
+                                                        @foreach ($user as $data)
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $data->nama}}</td>
@@ -70,12 +70,8 @@
                                                                                     style="font-size: 15px;"></i>
                                                                             </a>
                                                                         </div>
-                                                                        {{-- @foreach ($rak as $item)                                                                                                                                                   --}}
-
-                                                                        {{-- @endforeach --}}
-
                                                                         <div>
-                                                                            <form action=""
+                                                                            <form action="/{{ $data->id }}/hapus-user"
                                                                                 method="POST">
                                                                                 @csrf
                                                                                 <button type="submit"
@@ -93,6 +89,12 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <br>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    {{ $user->links('pagination::bootstrap-4') }}
+                                                </ul>
+                                            </nav>
                                         </div>
                                     </div>
                                 </div>

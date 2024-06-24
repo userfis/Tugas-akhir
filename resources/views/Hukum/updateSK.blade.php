@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Data</h4>
-                <form class="forms-sample" action="/{{ $data->id }}/update/edit-sk" method="POST" enctype="multipart/form-data">
+                <form class="forms-sample" action="/{{ $data->id }}/update/sk" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -30,19 +30,6 @@
                             value="{{ old('nomor_surat', $data->nomor_surat) }}">
                         @error('nomor_surat')
                             <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="sifat">Sifat</label>
-                        <select class="form-control" name="sifat" id="sifat">
-                            <option value="">Pilih</option>
-                            <option value="Penting" {{ $data->sifat == 'Penting' ? 'selected' : '' }}>Penting</option>
-                            <option value="Biasa" {{ $data->sifat == 'Biasa' ? 'selected' : '' }}>Biasa</option>
-                            <option value="Segera" {{ $data->sifat == 'Segera' ? 'selected' : '' }}>Segera</option>
-                            <option value="Sangat Segera" {{ $data->sifat == 'Sangat Segera' ? 'selected' : '' }}>Sangat Segera</option>
-                        </select>
-                        @error('sifat')
-                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">

@@ -7,7 +7,8 @@
 </head>
 <body>
     <p><strong>Nomor Surat:</strong> {{ $encryptedData->nomor_surat }}</p>
-    <p><strong>Nama Data:</strong> {{ $encryptedData->judul }}</p>
+    <p><strong>Perihal:</strong> {{ $encryptedData->perihal }}</p>
+    {{-- <p><strong>Nama Data:</strong> {{ $encryptedData->judul }}</p> --}}
     <p><strong>File:</strong> <a href="{{ asset('storage/' . $encryptedData->file) }}" download>{{ $encryptedData->judul }}</a></p>
 </body>
 </html>

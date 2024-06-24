@@ -33,7 +33,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -49,7 +49,7 @@
                                                         <tbody>
                                                             @foreach ($ket as $k)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                   
                                                                     <td>{{ $k->nomor_agenda }}</td>
                                                                     <td>{{ $k->nomor_surat }}</td>
                                                                     <td>{{ $k->perihal }}</td>
@@ -158,7 +158,7 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div>
+                                                                                {{-- <div>
                                                                                     <form action="/{{ $k->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
@@ -169,7 +169,7 @@
                                                                                                 style="font-size: 15px;"></i>
                                                                                         </button>
                                                                                     </form>
-                                                                                </div>
+                                                                                </div> --}}
                                                                             </div>
                                                                         @endif
                                                                     </td>
@@ -180,7 +180,7 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
+                                                                
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Perihal </th>
@@ -196,7 +196,7 @@
                                                         <tbody>
                                                             @foreach ($sek as $s)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
+                                                                   
                                                                     <td>{{ $s->nomor_agenda }}</td>
                                                                     <td>{{ $s->nomor_surat }}</td>
                                                                     <td>{{ $s->perihal }}</td>
@@ -305,7 +305,7 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div>
+                                                                                {{-- <div>
                                                                                     <form action="/{{ $s->id }}/hapus"
                                                                                         method="POST">
                                                                                         @csrf
@@ -316,7 +316,7 @@
                                                                                                 style="font-size: 15px;"></i>
                                                                                         </button>
                                                                                     </form>
-                                                                                </div>
+                                                                                </div> --}}
                                                                             </div>
                                                                         @endif
                                                                     </td>

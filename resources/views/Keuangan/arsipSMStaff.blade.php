@@ -32,7 +32,7 @@
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th> ID </th>
+                                                        
                                                             <th> Nomor Agenda </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
@@ -47,7 +47,7 @@
                                                     <tbody>
                                                         @foreach ($data as $item)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $item->nomor_agenda }}</td>
                                                                 <td>{{ $item->nomor_surat }}</td>
                                                                 <td>{{ $item->perihal }}</td>
@@ -108,7 +108,7 @@
                                                     <tbody>
                                                         @foreach ($huk as $h)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $h->nomor_agenda }}</td>
                                                                 <td>{{ $h->nomor_surat }}</td>
                                                                 <td>{{ $h->perihal }}</td>
@@ -168,7 +168,7 @@
                                                     <tbody>
                                                         @foreach ($keu as $k)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $k->nomor_agenda }}</td>
                                                                 <td>{{ $k->nomor_surat }}</td>
                                                                 <td>{{ $k->perihal }}</td>
@@ -228,7 +228,7 @@
                                                     <tbody>
                                                         @foreach ($tek as $t)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $t->nomor_agenda }}</td>
                                                                 <td>{{ $t->nomor_surat }}</td>
                                                                 <td>{{ $t->perihal }}</td>

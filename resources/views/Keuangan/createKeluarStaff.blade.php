@@ -17,8 +17,7 @@
                     </div>
                     <div class="form-group">
                         <label for="nomor_agenda">Nomor Agenda</label>
-                        <input type="text" name="nomor_agenda" class="form-control" id="nomor_agenda" placeholder=""
-                            fdprocessedid="a8ntcq" value="{{ old('nomor_agenda') }}">
+                        <input type="text" name="nomor_agenda" class="form-control" id="nomor_agenda" placeholder=""  value="00{{ $agenda + 1 }}" readonly>
                         @error('nomor_agenda')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -31,6 +30,20 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="sifat">Sifat</label>
+                        <select class="form-control" name="sifat" id="sifat">
+                            <option>pilih</option>
+                            <option value="Penting">Penting</option>
+                            <option value="Biasa">Biasa</option>
+                            <option value="Segera">Segera</option>
+                            <option value="Sangat Segera">Sangat Segera</option>
+                        </select>
+                        @error('sifat')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <label for="asal_surat">Tujuan Surat</label>
                         <input type="text" name="asal_surat" class="form-control" id="asal_surat" placeholder=""

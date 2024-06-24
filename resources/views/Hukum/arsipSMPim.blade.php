@@ -32,7 +32,7 @@
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th> ID </th>
+                                                          
                                                             <th> Nomor Agenda </th>
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
@@ -47,7 +47,7 @@
                                                     <tbody>
                                                         @foreach ($ket as $item)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $item->nomor_agenda }}</td>
                                                                 <td>{{ $item->nomor_surat }}</td>
                                                                 <td>{{ $item->perihal }}</td>
@@ -108,7 +108,7 @@
                                                     <tbody>
                                                         @foreach ($sek as $h)
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
+                                                                
                                                                 <td>{{ $h->nomor_agenda }}</td>
                                                                 <td>{{ $h->nomor_surat }}</td>
                                                                 <td>{{ $h->perihal }}</td>

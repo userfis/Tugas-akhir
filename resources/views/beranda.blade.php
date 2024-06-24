@@ -36,66 +36,57 @@
         color: #fff; /* Warna ikon putih */
     }
 </style>
-<div class="row ">
-    <div class="col-md-12 ">
-        <div class="tab-content tab-transparent-content">
-            <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">
-                <div class="row">
-                    <div class="col-md-2 col-lg-2">
-                        <div class="card square-card">
-                            <div class="card square-card">
-                                <div class="card-body text-center">
-                                    <h5 class="mb-2 font-weight-normal">Jumlah Surat Masuk</h5>
-                                    <h2 class="mb-4 font-weight-bold">{{ $data }}</h2>
-                                    <div id="circle-progress-1" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
-                                        <i class="mdi mdi-email-outline icon-md absolute-center"></i>
-                                    </div>
-                                    <p class="mt-4 mb-0">Surat Masuk Hari Ini</p>
-                                    <h3 class="mb-0 font-weight-bold mt-2">{{ $dathar}}</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <div class="card square-card" style="background-color:#8ae34a; border-radius: 15px">
-                            <div class="card-body text-center">
-                                <h5 class="mb-2 text-white font-weight-normal">Jumlah Surat Keluar</h5>
-                                <h2 class="mb-4 text-white font-weight-bold">{{ $keluar }}</h2>
-                                <div id="circle-progress-1" class="dashboard-progress d-flex align-items-center justify-content-center item-parent" >
-                                    <i class="mdi mdi-email-open icon-md absolute-center text-white"></i>
-                                </div>
-                                <p class="mt-4 mb-0">Completed</p>
-                                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $kelhar }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <div class="card square-card" style="background-color: #d7a74c; ">
-                            <div class="card-body text-center">
-                                <h5 class="mb-2 text-white font-weight-normal">Di Arsipkan</h5>
-                                <h2 class="mb-4 text-white font-weight-bold">{{ $arsip }}</h2>
-                                <div id="circle-progress-2" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
-                                    <i class="mdi mdi-file icon-md absolute-center text-white"></i>
-                                </div>
-                                <p class="mt-4 mb-0">Diarsipkan Hari Ini</p>
-                                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $arhar }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-lg-2">
-                        <div class="card square-card" style="background-color: #5fa3da; ">
-                            <div class="card-body text-center">
-                                <h5 class="mb-2 text-white font-weight-normal">Disposisi</h5>
-                                <h2 class="mb-4 text-white font-weight-bold">{{ $dis }}</h2>
-                                <div id="circle-progress-3" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
-                                    <i class="mdi mdi-account-multiple icon-md absolute-center text-white"></i>
-                                </div>
-                                <p class="mt-4 mb-0">Disposisi Hari Ini</p>
-                                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $dishar }}</h3>
-                            </div>
-                        </div>
-                    </div>
+<div class="row justify-content-center">
+    
+    <div class="col-md-3 col-lg-3">
+        <div class="card square-card">
+            <div class="card-body text-center">
+                <h5 class="mb-2 font-weight-normal">Jumlah Surat Masuk</h5>
+                <h2 class="mb-4 font-weight-bold">{{ $data }}</h2>
+                <div id="circle-progress-1" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
+                    <i class="mdi mdi-email-outline icon-md absolute-center"></i>
                 </div>
+                <p class="mt-4 mb-0">Surat Masuk Hari Ini</p>
+                <h3 class="mb-0 font-weight-bold mt-2">{{ $dathar }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div class="card square-card" style="background-color:#8ae34a;">
+            <div class="card-body text-center">
+                <h5 class="mb-2 text-white font-weight-normal">Jumlah Surat Keluar</h5>
+                <h2 class="mb-4 text-white font-weight-bold">{{ $keluar }}</h2>
+                <div id="circle-progress-1" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
+                    <i class="mdi mdi-email-open icon-md absolute-center text-white"></i>
+                </div>
+                <p class="mt-4 mb-0">Surat Keluar Hari Ini</p>
+                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $kelhar }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div class="card square-card" style="background-color: #d7a74c;">
+            <div class="card-body text-center">
+                <h5 class="mb-2 text-white font-weight-normal">Di Arsipkan</h5>
+                <h2 class="mb-4 text-white font-weight-bold">{{ $arsip }}</h2>
+                <div id="circle-progress-2" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
+                    <i class="mdi mdi-file icon-md absolute-center text-white"></i>
+                </div>
+                <p class="mt-4 mb-0">Diarsipkan Hari Ini</p>
+                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $arhar }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div class="card square-card" style="background-color: #5fa3da;">
+            <div class="card-body text-center">
+                <h5 class="mb-2 text-white font-weight-normal">Disposisi</h5>
+                <h2 class="mb-4 text-white font-weight-bold">{{ $dis }}</h2>
+                <div id="circle-progress-3" class="dashboard-progress d-flex align-items-center justify-content-center item-parent">
+                    <i class="mdi mdi-account-multiple icon-md absolute-center text-white"></i>
+                </div>
+                <p class="mt-4 mb-0">Disposisi Hari Ini</p>
+                <h3 class="mb-0 font-weight-bold mt-2 text-white">{{ $dishar }}</h3>
             </div>
         </div>
     </div>

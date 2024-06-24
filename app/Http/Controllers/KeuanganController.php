@@ -102,16 +102,17 @@ class KeuanganController extends Controller
 {
     $searchQuery = $request->input('query');
 
-    $keu = Data::where('data_id', '2')
-        ->where('disposisi', 'Staff Keuangan')
-        ->where(function ($query) use ($searchQuery) {
-            $query->where('nomor_surat', 'like', "%$searchQuery%")
-                ->orWhere('perihal', 'like', "%$searchQuery%");
-        })
-        ->latest()
-        ->paginate(5);
+    $keu = Data::where('data_id', '1')
+    ->where('disposisi', 'Staff Keuangan')
+    ->where(function ($query) use ($searchQuery) {
+        $query->where('nomor_surat', 'like', "%$searchQuery%")
+              ->orWhere('perihal', 'like', "%$searchQuery%");
+    })
+    ->latest()
+    ->paginate(5);
 
-    $huk = Data::where('data_id', '2')
+
+    $huk = Data::where('data_id', '1')
         ->where('disposisi', 'Staff Hukum')
         ->where(function ($query) use ($searchQuery) {
             $query->where('nomor_surat', 'like', "%$searchQuery%")
@@ -120,7 +121,7 @@ class KeuanganController extends Controller
         ->latest()
         ->paginate(5);
 
-    $data = Data::where('data_id', '2')
+    $data = Data::where('data_id', '1')
         ->where('disposisi', 'Staff Data & Informasi')
         ->where(function ($query) use ($searchQuery) {
             $query->where('nomor_surat', 'like', "%$searchQuery%")
@@ -129,8 +130,8 @@ class KeuanganController extends Controller
         ->latest()
         ->paginate(5);
 
-    $tek = Data::where('data_id', '2')
-        ->where('disposisi', 'Staff Teknis')
+    $tek = Data::where('data_id', '1')
+        ->where('disposisi','=','Staff Teknis')
         ->where(function ($query) use ($searchQuery) {
             $query->where('nomor_surat', 'like', "%$searchQuery%")
                 ->orWhere('perihal', 'like', "%$searchQuery%");
@@ -138,7 +139,7 @@ class KeuanganController extends Controller
         ->latest()
         ->paginate(5);
 
-    return view('Keuangan.suratKeluarStaff', [
+    return view('Keuangan.masukStaff', [
         'data' => $data,
         'keu' => $keu,
         'huk' => $huk,
@@ -185,9 +186,11 @@ class KeuanganController extends Controller
 
         $data = Divisi::all();
         $kategori = Ketegori::all();
+        $agenda = Data::where('data_id', '=', '2')->count();
         return view('Keuangan.createKeluarStaff', [
             'data' => $data,
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'agenda' => $agenda
         ]);
     }
 
@@ -207,6 +210,7 @@ class KeuanganController extends Controller
             'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
+            'sifat' => 'required|max:255',
             'tanggal' => 'required|date',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
@@ -224,11 +228,7 @@ class KeuanganController extends Controller
             $file = $request->file('file');
             $filePath = $file->getRealPath();
             $fileContent = file_get_contents($filePath);
-
-            // Encrypt the file content using AES encryption
             $encryptedContent = Crypt::encrypt($fileContent);
-
-            // Define a storage path and filename
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $fileName = 'keuangan/' . $originalFileName . '.txt';
 
@@ -250,26 +250,19 @@ class KeuanganController extends Controller
 
     ]);
         $passwordData = Enkrippass::find($request->pass_id);
-        // dd($passwordData);
-    // Ambil konten file terenkripsi dari storage
     if ($passwordData && password_verify($request->password, $passwordData->password)) {
-        // Ambil konten file terenkripsi dari storage
         $encryptedContent = Storage::get($data->file);
-
-        // Dekripsi konten file
         $decryptedContent = Crypt::decrypt($encryptedContent);
-
-        // Simpan konten terdekripsi ke dalam file sementara
         $tempFilePath = tempnam(sys_get_temp_dir(), 'decrypted_file_') . '.pdf';
         file_put_contents($tempFilePath, $decryptedContent);
-
-        // Return response berupa file PDF yang telah didekripsi
         return response()->file($tempFilePath, [
             'Content-Disposition' => 'inline; filename="' . basename($data->file, '.txt') . '.pdf"'
         ]);
     } else {
         // Password salah, kembalikan pesan kesalahan
-        return response()->json(['error' => 'Password salah.'], 403);
+        Alert::error('Error', 'Password salah');
+        return back()->with('error', 'Password salah.');
+        // return response()->json(['error' => 'Password salah.'], 403);
     }
 }
 
@@ -280,18 +273,19 @@ class KeuanganController extends Controller
 
         Data::destroy($data->id);
         Alert::success('Success', 'Hapus data berhasil !');
-        return redirect('/keuangan/data-masuk');
+        return back();
         // ->with('success', 'Data Berhasil di Hapus !')
     }
 
     public function editSK(Data $data)
     {
 
-        // $arsip = Arsip::where('surat_id', $data->id)->first();
+        $agenda = $agenda = Data::where('data_id', '=', '1')->count();
         return view('Keuangan.editSK', [
             'data' => $data,
             'rak' => Rak::all(),
-            'kategori' => Ketegori::all()
+            'kategori' => Ketegori::all(),
+            'agenda' => $agenda
             // 'arsip' => $arsip
         ]);
     }
@@ -311,6 +305,7 @@ class KeuanganController extends Controller
         $rules = [
             'kategori_id' => 'required',
             'nomor_surat' => 'required|max:255',
+            'sifat' => 'required|max:255',
             'tanggal' => 'required',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
@@ -335,7 +330,7 @@ class KeuanganController extends Controller
             $encryptedContent = Crypt::encrypt($fileContent);
     
             $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $fileName = 'data-informasi/' . $originalFileName . '.txt';
+            $fileName = 'keuangan/' . $originalFileName . '.txt';
     
             Storage::put($fileName, $encryptedContent);
 
@@ -428,65 +423,86 @@ class KeuanganController extends Controller
 {
     $search = $request->input('search');
 
-    $data = Data::with(['arsip.rak'])
-        ->where('data.data_id', '1')
-        ->whereHas('arsip.rak', function ($query) {
-            $query->where('pemilik_rak', 'Staff Data & Informasi');
-        })
-        ->when($search, function ($query, $search) {
-            return $query->where(function ($q) use ($search) {
-                $q->where('nomor_surat', 'LIKE', "%{$search}%")
-                  ->orWhere('perihal', 'LIKE', "%{$search}%")
-                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
-            });
-        })
-        ->latest()
-        ->paginate(10);
+    // if (!$search) {
+    //     return redirect()->back()->with('error', 'Query search is empty.');
+    // }
+
+    // dd($request->all());
+
+    $data  = Data::with(['arsip.rak'])
+    ->where('data_id', '1')
+    ->whereHas('arsip', function ($query) {
+        $query->whereHas('rak', function ($q) {
+            $q->where('pemilik_rak', 'Staff Data & Informasi');
+        });
+    })
+    ->when($search, function ($query) use ($search) {
+        return $query->where(function ($q) use ($search) {
+            $q->where('nomor_surat', 'LIKE', "%{$search}%")
+              ->orWhere('perihal', 'LIKE', "%{$search}%")
+              ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+        });
+    })
+    ->latest()
+    ->paginate(10);
+
+    // dd($data);
 
     $tek = Data::with(['arsip.rak'])
-        ->where('data.data_id', '1')
-        ->whereHas('arsip.rak', function ($query) {
-            $query->where('pemilik_rak', 'Staff Teknis');
-        })
-        ->when($search, function ($query, $search) {
-            return $query->where(function ($q) use ($search) {
-                $q->where('nomor_surat', 'LIKE', "%{$search}%")
-                  ->orWhere('perihal', 'LIKE', "%{$search}%")
-                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
-            });
-        })
-        ->latest()
-        ->paginate(10);
+    ->where('data_id', '1')
+    ->whereHas('arsip', function ($query) {
+        $query->whereHas('rak', function ($q) {
+            $q->where('pemilik_rak', 'Staff Teknis');
+        });
+    })
+    ->when($search, function ($query) use ($search) {
+        return $query->where(function ($q) use ($search) {
+            $q->where('nomor_surat', 'LIKE', "%{$search}%")
+              ->orWhere('perihal', 'LIKE', "%{$search}%")
+              ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+        });
+    })
+    ->latest()
+    ->paginate(10);
 
     $huk = Data::with(['arsip.rak'])
-        ->where('data.data_id', '1')
-        ->whereHas('arsip.rak', function ($query) {
-            $query->where('pemilik_rak', 'Staff Hukum');
-        })
-        ->when($search, function ($query, $search) {
-            return $query->where(function ($q) use ($search) {
-                $q->where('nomor_surat', 'LIKE', "%{$search}%")
-                  ->orWhere('perihal', 'LIKE', "%{$search}%")
-                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
-            });
-        })
-        ->latest()
-        ->paginate(10);
+    ->where('data_id', '1')
+    ->whereHas('arsip', function ($query) {
+        $query->whereHas('rak', function ($q) {
+            $q->where('pemilik_rak', 'Staff Hukum');
+        });
+    })
+    ->when($search, function ($query) use ($search) {
+        return $query->where(function ($q) use ($search) {
+            $q->where('nomor_surat', 'LIKE', "%{$search}%")
+              ->orWhere('perihal', 'LIKE', "%{$search}%")
+              ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+        });
+    })
+    ->latest()
+    ->paginate(10);
 
-    $keu = Data::with(['arsip.rak'])
-        ->where('data.data_id', '1')
-        ->whereHas('arsip.rak', function ($query) {
-            $query->where('pemilik_rak', 'Staff Keuangan');
-        })
-        ->when($search, function ($query, $search) {
-            return $query->where(function ($q) use ($search) {
-                $q->where('nomor_surat', 'LIKE', "%{$search}%")
-                  ->orWhere('perihal', 'LIKE', "%{$search}%")
-                  ->orWhere('asal_surat', 'LIKE', "%{$search}%");
+    // $search = $request->input('query');
+
+    $keu = Data::where('data_id', '1')
+        ->whereHas('arsip', function ($query) use ($search) {
+            $query->whereHas('rak', function ($q) {
+                $q->where('pemilik_rak', 'Staff Keuangan');
+            })
+            ->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'like', "%{$search}%")
+                  ->orWhere('perihal', 'like', "%{$search}%")
+                  ->orWhere('asal_surat', 'like', "%{$search}%");
             });
         })
-        ->latest()
-        ->paginate(10);
+        ->with(['arsip.rak'])
+    ->latest()
+    ->paginate(10);
+
+    // dd($request->all(), $keu);
+
+// Debugging input and query result
+    // dd($request->all(), $keu);
 
         return view('Keuangan.arsipSMStaff', [
             'data' => $data,

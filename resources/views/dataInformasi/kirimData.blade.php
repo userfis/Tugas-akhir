@@ -3,7 +3,7 @@
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Edit data</h4>
+                <h4 class="card-title">Kirim surat keluar</h4>
                 {{-- <div class="form-group">
                     <label for="nomor_surat">Nomor Surat</label>
                     <input type="text" name="nomor_surat" class="form-control" id="nomor_surat" placeholder=""

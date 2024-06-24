@@ -33,7 +33,6 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Kategori Surat </th>
@@ -48,7 +47,6 @@
                                                         <tbody>
                                                             @foreach ($keu as $k)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $k->nomor_agenda }}</td>
                                                                     <td>{{ $k->nomor_surat }}</td>
                                                                     <td>{{ $k->kategori->kategori_surat }}</td>
@@ -123,7 +121,6 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                    <td>
                                                                         @if ($k->status == 'Disposisi')
                                                                             <form id="submitForm"
                                                                                 action="/{{ $k->id }}/terima-sm"
@@ -150,18 +147,6 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <form action="/{{ $k->id }}/hapus"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-danger btn-rounded btn-icon"
-                                                                                            fdprocessedid="91w77s">
-                                                                                            <i class="mdi mdi-delete"
-                                                                                                style="font-size: 15px;"></i>
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </div>
                                                                             </div>
                                                                         @endif
                                                                     </td>
@@ -172,7 +157,6 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Kategori Surat </th>
@@ -187,7 +171,6 @@
                                                         <tbody>
                                                             @foreach ($huk as $h)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $h->nomor_agenda }}</td>
                                                                     <td>{{ $h->nomor_surat }}</td>
                                                                     <td>{{ $h->kategori->kategori_surat }}</td>
@@ -288,18 +271,6 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <form action="/{{ $h->id }}/hapus"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-danger btn-rounded btn-icon"
-                                                                                            fdprocessedid="91w77s">
-                                                                                            <i class="mdi mdi-delete"
-                                                                                                style="font-size: 15px;"></i>
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </div>
                                                                             </div>
                                                                         @endif
                                                                     </td>
@@ -310,7 +281,6 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Kategori Surat </th>
@@ -325,7 +295,6 @@
                                                         <tbody>
                                                             @foreach ($data as $item)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $item->nomor_agenda }}</td>
                                                                     <td>{{ $item->nomor_surat }}</td>
                                                                     <td>{{ $item->kategori->kategori_surat }}</td>
@@ -427,18 +396,6 @@
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div>
-                                                                                    <form action="/{{ $item->id }}/hapus"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-danger btn-rounded btn-icon"
-                                                                                            fdprocessedid="91w77s">
-                                                                                            <i class="mdi mdi-delete"
-                                                                                                style="font-size: 15px;"></i>
-                                                                                        </button>
-                                                                                    </form>
-                                                                                </div>
                                                                             </div>
                                                                         @endif
                                                                     </td>
@@ -449,7 +406,6 @@
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th> ID </th>
                                                                 <th> Nomor Agenda </th>
                                                                 <th> Nomor Surat </th>
                                                                 <th> Kategori Surat </th>
@@ -464,7 +420,6 @@
                                                         <tbody>
                                                             @foreach ($tek as $t)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $t->nomor_agenda }}</td>
                                                                     <td>{{ $t->nomor_surat }}</td>
                                                                     <td>{{ $t->kategori->kategori_surat }}</td>
@@ -565,18 +520,6 @@
                                                                                         <i class="mdi mdi-eye"
                                                                                             style="font-size: 15px;"></i>
                                                                                     </a>
-                                                                                </div>
-                                                                                <div>
-                                                                                    <form action="/{{ $t->id }}/hapus"
-                                                                                        method="POST">
-                                                                                        @csrf
-                                                                                        <button type="submit"
-                                                                                            class="btn btn-danger btn-rounded btn-icon"
-                                                                                            fdprocessedid="91w77s">
-                                                                                            <i class="mdi mdi-delete"
-                                                                                                style="font-size: 15px;"></i>
-                                                                                        </button>
-                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         @endif

@@ -23,6 +23,11 @@
             </div>
 
             <div class="form-group border-bottom">
+                <label for="sifat" class="text-black"><strong>Sifat</strong></label>
+                <p class="text-black">{{ $data->sifat }}</p>
+            </div>
+
+            <div class="form-group border-bottom">
                 <label for="asal_surat" class="text-black"><strong>Asal Surat</strong></label>
                 <p class="text-black">{{ $data->asal_surat }}</p>
             </div>
@@ -94,14 +99,12 @@
             </div>
             <br>
             <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-            <a href="{{ route('staff-sm') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>  
             @else
             <div class="form-group border-bottom">
                 <label for="rak_id" class="text-black"><strong>Status Arsip</strong></label>
                 <p class="text-black">Surat Sudah Diarsip</p>
             </div>
-            <br>
-            <a href="{{ route('masuk-hukum') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>  
+            <br> 
              @endif
            
             </form>

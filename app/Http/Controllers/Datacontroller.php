@@ -13,7 +13,7 @@ class Datacontroller extends Controller
 
         $data = Data::where('data_id', '=', '1')->count();
 
-        $keluar = Data::where('data_id', '=', '1')->count();
+        $keluar = Data::where('data_id', '=', '2')->count();
         
         $dathar = Data::where('data_id', 1)
         ->whereDate('created_at', Carbon::today())

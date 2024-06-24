@@ -5,7 +5,7 @@
         <h2 class="text-dark font-weight-bold mb-2"> Data Surat Disposisi </h2>
     </div>
     <div class="search-field d-xl-block mb-1">
-        <form class="d-flex align-items-center h-100" action="{{ route('data-search') }}" method="GET">
+        <form class="d-flex align-items-center h-100" action="{{ route('search-disposisi') }}" method="GET">
             <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                     {{-- <i class="input-group-text border-0 mdi mdi-magnify"></i> --}}
@@ -29,8 +29,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <a href="{{ route('tambah') }}"><button type="button"
-                                                        class="btn btn-primary btn-fw">Tambah Data</button></a>
+                                                {{-- <a href="{{ route('tambah') }}"><button type="button"
+                                                        class="btn btn-primary btn-fw">Tambah Data</button></a> --}}
                                                 <table class="table table-striped">
                                                     <thead>
                                                         <tr>
@@ -39,7 +39,7 @@
                                                             <th> Nomor Surat </th>
                                                             <th> Perihal </th>
                                                             <th> Kategori Surat </th>
-                                                            <th> Pengirim </th>
+                                                            <th> Asal Surat </th>
                                                             <th> Lampiran </th>
                                                             <th> Tgl Surat </th>
                                                             <th> Status </th>

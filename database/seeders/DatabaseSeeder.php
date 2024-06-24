@@ -134,11 +134,13 @@ class DatabaseSeeder extends Seeder
 
 
              Enkrippass::create([
+                'id' => '1',
                 'jenis_surat' => 'surat masuk',
                 'password' => bcrypt('111111'),
             ]);
 
                  Enkrippass::create([
+                // 'id' => '2',
                 'jenis_surat' => 'surat keluar',
                 'password' => bcrypt('222222'),
             ]);

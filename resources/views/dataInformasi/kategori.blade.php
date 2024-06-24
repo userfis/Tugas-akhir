@@ -91,6 +91,10 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <br>
+                                            <ul class="pagination justify-content-center">
+                                                {{ $kategori->links('pagination::bootstrap-4') }}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

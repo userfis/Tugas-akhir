@@ -158,10 +158,14 @@ class HukumController extends Controller
 
         $data = Divisi::all();
         $kategori = Ketegori::all();
+        $agenda = Data::where('data_id', '=', '2')->count();
 
+
+    
         return view('Hukum.createKeluar',[
             'data' => $data,
-            'kategori' => $kategori
+            'kategori' => $kategori,
+            'agenda' =>$agenda
         ]);
     }
 
@@ -191,6 +195,7 @@ class HukumController extends Controller
 
             'status' => 'required|max:255',
             'tindakan' => 'required|max:255',
+            'pesan' => ''
 
 
         ];
@@ -253,6 +258,33 @@ class HukumController extends Controller
             'rak' =>Rak::all(),
             'arsip' =>$arsip
         ]);
+
+    }
+
+    public function viewarsipkanSKP(Data $data){
+
+        $arsip = Arsip::where('surat_id', $data->id)->first();
+        return view('Hukum.konfirmSKP',[
+            'data' => $data,
+            'rak' =>Rak::all(),
+            'arsip' =>$arsip
+        ]);
+
+    }
+
+    public function arsipkanSKP(Data $data, Request $request){
+        $rules = [
+            'surat_id' => 'required|max:255',
+            'tanggal_arsip' => 'required',
+            'rak_id' => 'required|max:255'
+        ];
+       
+        $validatedData = $request->validate($rules);
+        
+        Arsip::create($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/pimpinan/surat-keluar');
+        // ->with('success', 'Artikel Berhasil Di Update!')
 
     }
 
@@ -330,6 +362,7 @@ class HukumController extends Controller
             'kategori_id' => 'required',
             'data_id' => 'required',
             'nomor_surat' => 'required|max:255',
+            'sifat' => 'required|max:255',
             'tanggal' => 'required|date',
             'asal_surat' => 'required|max:255',
             'perihal' => 'required|max:255',
@@ -365,6 +398,71 @@ class HukumController extends Controller
         Data::create($validatedData);
         Alert::success('Success', 'Tambah data berhasil !');
         return redirect('/pimpinan/surat-keluar');
+    }
+
+    public function editSK(Data $data)
+    {
+
+        $agenda = $agenda = Data::where('data_id', '=', '2')->count();
+        return view('hukum.updateSK', [
+            'data' => $data,
+            'rak' => Rak::all(),
+            'kategori' => Ketegori::all(),
+            'agenda' => $agenda
+            // 'arsip' => $arsip
+        ]);
+    }
+
+    public function editKeluar(Data $data, Request $request){
+        // dd($request);
+        $request->merge(['pass_id' => (string) 2]);
+        // dd($request);
+        $messages = [
+            'required' => 'Form tidak boleh kosong',
+            'max' => 'Tidak boleh lebih dari :max karakter',
+            'file' => 'File harus berupa file yang valid',
+            'mimes' => 'File harus berupa file dengan tipe: :values',
+        ];
+
+        $rules = [
+            'kategori_id' => 'required',
+            'nomor_surat' => 'required|max:255',
+            'sifat' => 'required|max:255',
+            'tanggal' => 'required',
+            'asal_surat' => 'required|max:255',
+            'perihal' => 'required|max:255',
+            'lampiran' => 'required|max:255',
+            'nomor_agenda' => 'required|max:255',
+            // 'status' => 'required',
+            'file' => 'nullable|file|mimes:pdf',
+            'pass_id' => 'required'
+        ];
+    
+        $validatedData = $request->validate($rules, $messages);
+    
+        if ($request->file('file')) {
+            if ($data->file) {
+                Storage::delete($data->file);
+            }
+    
+            $file = $request->file('file');
+            $filePath = $file->getRealPath();
+            $fileContent = file_get_contents($filePath);
+    
+            $encryptedContent = Crypt::encrypt($fileContent);
+    
+            $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileName = 'data-hukum/' . $originalFileName . '.txt';
+    
+            Storage::put($fileName, $encryptedContent);
+
+            $validatedData['file'] = $fileName;
+        }
+    
+        $data->update($validatedData);
+        Alert::success('Success', 'Update data berhasil !');
+        return redirect('/pimpinan/surat-keluar');
+        // ->with('success', 'Artikel Berhasil Di Update!')
     }
 
 

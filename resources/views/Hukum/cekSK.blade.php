@@ -2,7 +2,7 @@
 
 @section('page-header')
     <div class="d-xl-flex justify-content-between align-items-start">
-        <h2 class="text-dark font-weight-bold mb-2"> Data Masuk {{ $Halaman }} </h2>
+        <h2 class="text-dark font-weight-bold mb-2"> Cek Surat Keluar </h2>
     </div>
     {{-- <div class="search-field d-none d-xl-block">
         <form class="d-flex align-items-center h-100" action="#">
@@ -75,10 +75,58 @@
                                                                         @endif
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/storage/{{ $k->file }}"
-                                                                            class="btn btn-primary btn-rounded" target="blank">
+                                                                        <a href="#" class="btn btn-primary btn-rounded"
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $k->id }}"
+                                                                            target="blank">
                                                                             Lihat File
                                                                         </a>
+
+                                                                        <div class="modal fade"
+                                                                            id="myModal{{ $k->id }}" tabindex="-1"
+                                                                            role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $k->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $k->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $k->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $k->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex">
@@ -163,10 +211,58 @@
                                                                     @endif
                                                                     </td>
                                                                     <td>
-                                                                        <a href="/storage/{{ $s->file }}"
-                                                                            class="btn btn-primary btn-rounded" target="blank">
+                                                                        <a href="#" class="btn btn-primary btn-rounded"
+                                                                            data-toggle="modal"
+                                                                            data-target="#myModal{{ $s->id }}"
+                                                                            target="blank">
                                                                             Lihat File
                                                                         </a>
+
+                                                                        <div class="modal fade"
+                                                                            id="myModal{{ $s->id }}" tabindex="-1"
+                                                                            role="dialog"
+                                                                            aria-labelledby="myModalLabel{{ $s->id }}"
+                                                                            aria-hidden="true">
+                                                                            <div class="modal-dialog" role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="myModalLabel{{ $s->id }}">
+                                                                                            Masukkan Password
+                                                                                            Dekripsi</h5>
+                                                                                        <button type="button" class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <form id="decryptForm"
+                                                                                            action="/dekripsi/{{ $s->id }}"
+                                                                                            method="POST">
+                                                                                            @csrf
+                                                                                            <div class="form-group">
+                                                                                                <label
+                                                                                                    for="password">Password</label>
+                                                                                                <input type="text"
+                                                                                                    class="form-control"
+                                                                                                    id="pass_id"
+                                                                                                    name="pass_id"
+                                                                                                    value="{{ $s->pass_id }}"
+                                                                                                    hidden>
+                                                                                                <input type="password"
+                                                                                                    class="form-control"
+                                                                                                    id="password"
+                                                                                                    name="password" required>
+                                                                                            </div>
+                                                                                            <button type="submit"
+                                                                                                class="btn btn-primary">Submit</button>
+                                                                                        </form>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                     </td>
 
                                                                     <td>
@@ -202,8 +298,8 @@
                                                             @endforeach
                                                         </tbody>
                                                     </table>
-                                                </div>
-                                            @endcan
+                                                @endcan
+                                            </div>
                                             <br>
                                             @can('ketua')
                                             <nav aria-label="Page navigation example">

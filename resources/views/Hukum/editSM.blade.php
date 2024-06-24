@@ -9,7 +9,7 @@
              @csrf
             <h3 class="card-title">Detail Surat</h3>
             <div class="form-group border-bottom">
-                <label for="tanggal" class="text-black"><strong>Tanggal Surat Keluar</strong></label>
+                <label for="tanggal" class="text-black"><strong>Tanggal Surat masuk</strong></label>
                 <p class="text-black">{{ $data->tanggal }}</p>
             </div>
 
@@ -21,6 +21,11 @@
             <div class="form-group border-bottom">
                 <label for="nomor_surat" class="text-black"><strong>Nomor Surat</strong></label>
                 <p class="text-black">{{ $data->nomor_surat }}</p>
+            </div>
+
+            <div class="form-group border-bottom">
+                <label for="sifat" class="text-black"><strong>Sifat</strong></label>
+                <p class="text-black">{{ $data->sifat }}</p>
             </div>
 
             <div class="form-group border-bottom">
@@ -108,7 +113,6 @@
              --}}
             <br>
             <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-            <a href="{{ route('masuk') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>
         </form>
         </div>
         @elsecan('ketua')  
@@ -117,7 +121,7 @@
              @csrf
             <h3 class="card-title">Detail Surat</h3>
             <div class="form-group border-bottom">
-                <label for="tanggal" class="text-black"><strong>Tanggal</strong></label>
+                <label for="tanggal" class="text-black"><strong>Tanggal Surat Masuk</strong></label>
                 <p class="text-black">{{ $data->tanggal }}</p>
             </div>
 
@@ -129,6 +133,11 @@
             <div class="form-group border-bottom">
                 <label for="nomor_surat" class="text-black"><strong>Nomor Surat</strong></label>
                 <p class="text-black">{{ $data->nomor_surat }}</p>
+            </div>
+
+            <div class="form-group border-bottom">
+                <label for="sifat" class="text-black"><strong>Sifat</strong></label>
+                <p class="text-black">{{ $data->sifat }}</p>
             </div>
 
             <div class="form-group border-bottom">
@@ -203,7 +212,6 @@
              --}}
             <br>
             <button type="submit" class="btn btn-primary mr-2" fdprocessedid="cha8ou">Submit</button>
-            <a href="{{ route('masuk') }}" class="btn btn-primary" fdprocessedid="p0f3cn">Kembali</a>
         </form>
         </div>
         @endcan
